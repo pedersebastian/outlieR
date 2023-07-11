@@ -1,4 +1,4 @@
-#' Title
+#' Outlier filter
 #'
 #' @param .data  data.frame or tibble
 #' @param ...  variables to filter outlier

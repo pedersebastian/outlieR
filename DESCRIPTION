@@ -20,3 +20,6 @@ Imports:
     tidyselect
 URL: https://github.com/pedersebastian/outlieR
 BugReports: https://github.com/pedersebastian/outlieR/issues
+Suggests: 
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
