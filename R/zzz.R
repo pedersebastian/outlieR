@@ -1,0 +1,15 @@
+utils::globalVariables(c(
+  "median",
+  "median_var",
+  "resid_median",
+  "sd",
+  "mean_var",
+  "sd_var",
+  "q_75",
+  "q_25",
+  "interquartile_deviation"
+))
+
+
+
+# usethis::use_import_from("stats", "median")
