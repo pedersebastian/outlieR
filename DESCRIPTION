@@ -18,3 +18,5 @@ Imports:
     rlang,
     stats, 
     tidyselect
+URL: https://github.com/pedersebastian/outlieR
+BugReports: https://github.com/pedersebastian/outlieR/issues
