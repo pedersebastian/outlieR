@@ -16,8 +16,9 @@ You can install the development version of outlieR from
 [GitHub](https://github.com/) with:
 
 ``` r
-# install.packages("devtools")
-devtools::install_github("pedersebastian/outlieR")
+# Or the development version from GitHub:
+# install.packages("pak")
+pak::pak("pedersebastian/outlieR")
 ```
 
 ## Example

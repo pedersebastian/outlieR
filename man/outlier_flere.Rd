@@ -2,7 +2,7 @@
 % Please edit documentation in R/outlier_more.R
 \name{outlier_flere}
 \alias{outlier_flere}
-\title{Title}
+\title{Outlier filter}
 \usage{
 outlier_flere(
   .data,
@@ -27,7 +27,7 @@ outlier_flere(
 data.frame or tibble
 }
 \description{
-Title
+Outlier filter
 }
 \examples{
 
@@ -37,4 +37,5 @@ filtred <-
   mtcars |> outlier_flere(V1, V2)
 
 paste(nrow(mtcars), "rows before filtered and", nrow(filtred), "rows after")
+ #"32 rows before filtered and 28 rows after"
 }
