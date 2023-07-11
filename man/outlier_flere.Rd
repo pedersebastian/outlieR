@@ -9,7 +9,8 @@ outlier_flere(
   ...,
   method = c("mean_sd", "MAD", "IQD", "t_test"),
   threshold = "default",
-  conf_int = NULL
+  conf_int = NULL,
+  na_action = c("keep", "omit")
 )
 }
 \arguments{
@@ -22,6 +23,8 @@ outlier_flere(
 \item{threshold}{threshold for the other methods than t-test. Default is 3 for mean and sd method and MAD method, IQD uses 2.2.}
 
 \item{conf_int}{confidence interval if method is t-test}
+
+\item{na_action}{to also filter NA´s ?}
 }
 \value{
 data.frame or tibble

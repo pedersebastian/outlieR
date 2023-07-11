@@ -14,9 +14,10 @@ Imports:
     cli,
     dplyr,
     glue,
+    pillar,
     purrr,
     rlang,
-    stats, 
+    stats,
     tidyselect
 URL: https://github.com/pedersebastian/outlieR
 BugReports: https://github.com/pedersebastian/outlieR/issues

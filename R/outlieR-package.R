@@ -8,6 +8,7 @@
 #' @importFrom dplyr mutate
 #' @importFrom dplyr summarise
 #' @importFrom glue glue
+#' @importFrom pillar type_sum
 #' @importFrom purrr map
 #' @importFrom purrr map_lgl
 #' @importFrom purrr pluck
