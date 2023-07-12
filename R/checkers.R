@@ -1,9 +1,33 @@
-check_outlier <- function(.data, ..., method = c("mean_sd", "MAD", "IQD", "t_test"), threshold = "default", conf_int = NULL) {
+check_outlier <- function(.data, ..., method, threshold, conf_int) {
   dots_n <- function(...) nargs()
   if (dots_n(...) == 0) {
     cli::cli_abort("Variables to be filtred must be ")
   }
   validate_cols(.data, ...)
+  if (method == "t_test") {
+    conf_int_check(conf_int)
+  }
+
+}
+
+
+
+
+conf_int_check <- function(conf_int) {
+  if (is.null(conf_int)) return(invisible(NULL))
+
+  if (is.numeric(conf_int)) {
+    if (conf_int >= 1 | conf_int <= 0 | length(conf_int) > 1) {
+      cli::cli_abort("conf_int must be a singel number between 0 and 1 or NULL")
+    }
+    else {
+      return(invisible(NULL))
+    }
+  }
+  cli::cli_abort("conf_int must be NULL or numeric")
+
+
+
 }
 
 # check_outlier("HEI")

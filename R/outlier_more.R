@@ -33,20 +33,18 @@ outlier_flere.data.frame <- function(.data, ..., method = c("mean_sd", "MAD", "I
   method <- match.arg(method, c("mean_sd", "MAD", "IQD", "t_test"), several.ok = FALSE)
   na_action = match.arg(na_action, c("keep", "omit"), several.ok = FALSE)
 
-  check_outlier(.data, ..., method = method, threshold = threshold, conf_int = conf_int)
+
 
   if (!method %in% c("t_test")) {
     threshold <-
       outlier_threshold(method, threshold)
-  } else if (method == "t_test") {
-    if (is.null(conf_level)) {
-      conf_level <- 0.95
-    } else if (!is.numeric(conf_level)) {
-      cli::cli_abort("conf_int must be numeric")
-    } else if (conf_level >= 1 | conf_level <= 0 | length(conf_level) > 1) {
-      cli::cli_abort("'conf_level' must be a single number between 0 and 1")
-    }
+  } else if (method == "t_test" & is.null(conf_level)) {
+    conf_level <- 0.95
+
   }
+
+
+  check_outlier(.data, ..., method = method, threshold = threshold, conf_int = conf_int)
   # vars <- rlang::as_quosures(names())
   # print(names(select_loc(.data, ...)))
   # print(vars)
