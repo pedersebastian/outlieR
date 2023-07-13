@@ -20,7 +20,7 @@ You can install the development version of outlieR from
 pak::pak("pedersebastian/outlieR")
 ```
 
-## Example
+## Example dsaaa
 
 This is a basic example which shows you how to solve a common problem:
 

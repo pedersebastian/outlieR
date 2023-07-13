@@ -1,7 +1,7 @@
 filter_outlier <- function(.data, var, ..., method = c("mean_sd", "MAD", "IQD", "t_test"), threshold = "default", conf_int = NULL) {
-  # if (missing(.data)) {
-  #   rlang::abort(".data must be supplied")
-  # }
+  if (missing(.data)) {
+    rlang::abort(".data must be supplied")
+  }
   UseMethod("filter_outlier")
 }
 
@@ -19,30 +19,7 @@ filter_outlier.default <- function(.data, var, ..., method, threshold) {
   rlang::abort(mes)
 }
 
-outlier_threshold <- function(method, threshold) {
-  if (threshold == "default") {
-    threshold <- switch(method,
-      "mean_sd" = 3,
-      "MAD" = 3,
-      "IQD" = 2.2,
-      "t_test" = 3,
-      rlang::abort(paste(method, "is not valid method"))
-    )
-  } else if (!is.numeric(threshold)) {
-    rlang::abort("if threshold is not default it must be numeric", )
-  } else if (length(threshold) != 1) {
-    rlang::abort("threshold must be of length 1")
-  }
-  if (threshold < 0) {
-    rlang::warn("threshold must be positive - using absolute value")
-    threshold <- abs(threshold)
-  }
 
-  if (threshold > 5 | threshold < 1) {
-    rlang::warn("Extreme value of threshold")
-  }
-  threshold
-}
 
 filter_outlier.data.frame <- function(.data, var, ..., method, threshold = "default", conf_level = NULL) {
   method <- match.arg(method, c("mean_sd", "MAD", "IQD", "t_test"), several.ok = FALSE)
@@ -91,24 +68,3 @@ outlier_return <- function(.data, var, upper, lower, tbl, verbose = TRUE) {
 
   filtred
 }
-
-
-# quo_name(quo(heio))
-
-# mtcars$mpg |>
-
-
-# mtcars["heii"] = c(rnorm(30), -100,100)
-#
-# x <-
-#   mtcars |> as_tibble() |> filter_outlier(var = heii, method = "t_test")
-# x
-
-# tibble::rownames_to_column(x)
-
-
-# rownames(x)[!x$tet]
-
-
-
-# mtcars[mtcars$heii < 76, ]

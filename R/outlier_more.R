@@ -16,7 +16,7 @@
 #'   mtcars |> outlier_flere(V1, V2)
 #'
 #' paste(nrow(mtcars), "rows before filtered and", nrow(filtred), "rows after")
-#'  #"32 rows before filtered and 28 rows after"
+#' # "32 rows before filtered and 28 rows after"
 outlier_flere <- function(.data, ..., method = c("mean_sd", "MAD", "IQD", "t_test"), threshold = "default", conf_int = NULL, na_action = c("keep", "omit")) {
   if (missing(.data)) {
     rlang::abort(".data must be supplied")
@@ -31,23 +31,17 @@ outlier_flere.default <- function(.data, ...) {
 #' @export
 outlier_flere.data.frame <- function(.data, ..., method = c("mean_sd", "MAD", "IQD", "t_test"), threshold = "default", conf_int = NULL, na_action = c("keep", "omit")) {
   method <- match.arg(method, c("mean_sd", "MAD", "IQD", "t_test"), several.ok = FALSE)
-  na_action = match.arg(na_action, c("keep", "omit"), several.ok = FALSE)
-
-
+  na_action <- match.arg(na_action, c("keep", "omit"), several.ok = FALSE)
 
   if (!method %in% c("t_test")) {
     threshold <-
       outlier_threshold(method, threshold)
   } else if (method == "t_test" & is.null(conf_level)) {
     conf_level <- 0.95
-
   }
 
 
   check_outlier(.data, ..., method = method, threshold = threshold, conf_int = conf_int)
-  # vars <- rlang::as_quosures(names())
-  # print(names(select_loc(.data, ...)))
-  # print(vars)
 
   vars <- rlang::names2(select_loc(..., .data = .data)) |>
     rlang::syms() |>

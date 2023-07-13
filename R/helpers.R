@@ -8,19 +8,6 @@ get_tbl <- function(.data, var, method, threshold, conf_level) {
   tbl
 }
 
-# outlier_mean_sd <- function(.data, var, threshold) {
-#   tbl <-
-#     dplyr::summarise(.data,
-#                      var = rlang::quo_name(var),
-#                      mean_var = mean(!!{{var}}, na.rm = TRUE),
-#                      sd_var = sd(!!{{var}}, na.rm = TRUE),
-#                      upper = mean_var + sd_var * threshold,
-#                      lower = mean_var - sd_var * threshold
-#     )
-#
-#   tbl
-# }
-#
 outlier_mean_sd <- function(.data, var, threshold) {
   tbl <-
     dplyr::summarise(.data,

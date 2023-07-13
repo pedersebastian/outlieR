@@ -40,5 +40,5 @@ filtred <-
   mtcars |> outlier_flere(V1, V2)
 
 paste(nrow(mtcars), "rows before filtered and", nrow(filtred), "rows after")
- #"32 rows before filtered and 28 rows after"
+# "32 rows before filtered and 28 rows after"
 }

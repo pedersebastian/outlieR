@@ -1,9 +1,9 @@
 set.seed(123)
-mtcars["V1"] = c(rnorm(29), -100,100, NA)
+mtcars["V1"] <- c(rnorm(29), -100, 100, NA)
 set.seed(234)
-mtcars["V2"] = c(-50,32, rnorm(30))
+mtcars["V2"] <- c(-50, 32, rnorm(30))
 set.seed(345)
-mtcars["V3"] = c(rep(TRUE, 31), FALSE)
+mtcars["V3"] <- c(rep(TRUE, 31), FALSE)
 
 
 
@@ -49,20 +49,13 @@ test_that("equals", {
 })
 
 test_that("warnings and errors", {
-
-
   expect_error(outlier_flere(mtcars, "hei"))
   expect_error(outlier_flere())
-  expect_error(outlier_flere(mtcars,  fakevar))
+  expect_error(outlier_flere(mtcars, fakevar))
   expect_warning(outlier_flere(mtcars, V1, V2, V3, method = "mean_sd", threshold = 100))
   expect_error(outlier_flere(mtcars, V1, V2, V3, na_action = "fake", threshold = 100, conf_int = 1000))
   expect_error(outlier_flere(mtcars, V1, V2, V3, method = "t_test", conf_int = 1000))
   ## Ikke implementert faktorer
   expect_error(dplyr::mutate(mtcars, am = factor(am)) |> outlier_flere(am))
   expect_error(outlier_flere(date_tbl, date_var))
-
-
 })
-
-
-
