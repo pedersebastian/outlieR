@@ -73,6 +73,9 @@ outlier_flere.impl <- function(.data, vars, method, threshold, conf_level, na_ac
     res[row] <- y[row, ] |> sum() == 0
   }
 
+  res <- subset(.data, res)
+  class(res) <- c("outlieR", class(res))
+  attributes(res) <- c(attributes(res), list(old_df = .data, tbls = tbls))
 
-  return(subset(.data, res))
+  return(res)
 }

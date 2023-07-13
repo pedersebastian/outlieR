@@ -9,7 +9,3 @@ utils::globalVariables(c(
   "q_25",
   "interquartile_deviation"
 ))
-
-
-
-# usethis::use_import_from("stats", "median")
