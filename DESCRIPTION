@@ -18,6 +18,7 @@ Imports:
     pillar,
     purrr,
     rlang,
+    scales,
     stats,
     tidyselect
 URL: https://github.com/pedersebastian/outlieR
