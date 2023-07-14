@@ -20,6 +20,7 @@ Imports:
     rlang,
     scales,
     stats,
+    tidyr,
     tidyselect
 URL: https://github.com/pedersebastian/outlieR
 BugReports: https://github.com/pedersebastian/outlieR/issues

@@ -43,8 +43,8 @@ test_that("equals", {
   expect_equal(nrow(filtred_V_ALL_omit), 27)
   expect_equal(nrow(filtred_everything), 27)
 
-  expect_identical(subset(mtcars, c(FALSE, FALSE, rep(TRUE, 30))), filtred_V2|> as.data.frame(), ignore_attr = c("tbls", "old_df"))
-  expect_identical(subset(mtcars, c(rep(TRUE, 29), FALSE, FALSE, TRUE)), filtred_V1|> as.data.frame(), ignore_attr = c("tbls", "old_df"))
+  expect_identical(subset(mtcars, c(FALSE, FALSE, rep(TRUE, 30))), filtred_V2 |> as.data.frame(), ignore_attr = c("tbls", "old_df"))
+  expect_identical(subset(mtcars, c(rep(TRUE, 29), FALSE, FALSE, TRUE)), filtred_V1 |> as.data.frame(), ignore_attr = c("tbls", "old_df"))
   expect_identical(subset(mtcars, c(rep(TRUE, 29), FALSE, FALSE, FALSE)), filtred_V1_omit |> as.data.frame(), ignore_attr = c("tbls", "old_df"))
 })
 

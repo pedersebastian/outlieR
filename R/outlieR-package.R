@@ -5,7 +5,10 @@
 #' @importFrom cli cli_abort
 #' @importFrom cli cli_inform
 #' @importFrom dplyr bind_rows
+#' @importFrom dplyr case_when
 #' @importFrom dplyr filter
+#' @importFrom dplyr join_by
+#' @importFrom dplyr left_join
 #' @importFrom dplyr mutate
 #' @importFrom dplyr summarise
 #' @importFrom ggplot2 aes
@@ -36,5 +39,6 @@
 #' @importFrom stats median
 #' @importFrom stats quantile
 #' @importFrom stats t.test
+#' @importFrom tidyr pivot_longer
 ## usethis namespace: end
 NULL

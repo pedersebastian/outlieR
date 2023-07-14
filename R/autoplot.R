@@ -1,4 +1,3 @@
-
 #' @importFrom ggplot2 autoplot
 #' @export
 
@@ -20,39 +19,36 @@ autoplot.outlier <- function(object, ..., type = c("histogram", "count")) {
 
 
 
-##.  DATA PREP
+## .  DATA PREP
 
-prep_data  <- function(object, ...) {
- if (length(attributes(object)$tbls) >1) {
-   data <- prep_data_many(object, ...)
- }
-  else if (length(attributes(object)$tbls) == 1) {
+prep_data <- function(object, ...) {
+  if (length(attributes(object)$tbls) > 1) {
+    data <- prep_data_many(object, ...)
+  } else if (length(attributes(object)$tbls) == 1) {
     data <- prep_data_one(object, ...)
-  }
-  else {
+  } else {
     cli::cli_abort("noe feil as")
   }
   data
-
 }
 
 prep_data_one <- function(object, ...) {
-
   summary_tbl <- attr(object, "tbl")[[1]]
   var_name <- summary_tbl$var
   dat <- attr(object, "old_df")
 
   dat["out_textlll"] <- ifelse(dat[[var_name]] > summary_tbl$upper, "Outlier (>)", ifelse(dat[[var_name]] < summary_tbl$lower, "Outlier (<)", "No Outlier"))
   dat <- dat |>
-    dplyr::mutate(out_textlll = factor(out_textlll, levels = c("Outlier (<)","No Outlier",  "Outlier (>)"))) |>
+    dplyr::mutate(out_textlll = factor(out_textlll, levels = c("Outlier (<)", "No Outlier", "Outlier (>)"))) |>
     dplyr::filter(!is.na(out_textlll))
 
 
   out <- structure(
-    list(summary_tbl = summary_tbl,
-         var_name = var_name,
-         dat = dat
-         ),
+    list(
+      summary_tbl = summary_tbl,
+      var_name = var_name,
+      dat = dat
+    ),
     one_variable = TRUE
   )
   out
@@ -64,22 +60,22 @@ prep_data_many <- function(object, ...) {
 
   dat <-
     attr(object, "old_df") |>
-    select(all_of(vars_name)) |>
-    pivot_longer(everything(), names_to = "var") |>
-    filter(!is.na(value)) |>
-    left_join(sum_tbl, by = join_by("var")) |>
-    na.omit() |>
-    mutate(test = case_when(
+    dplyr::select(all_of(vars_name)) |>
+    tidyr::pivot_longer(everything(), names_to = "var") |>
+    dplyr::filter(!is.na(value)) |>
+    dplyr::left_join(sum_tbl, by = dplyr::join_by("var")) |>
+    dplyr::mutate(test = dplyr::case_when(
       value > upper ~ "Outlier (>)",
-      value < lower~ "Outlier (<)",
+      value < lower ~ "Outlier (<)",
       TRUE ~ "No Outlier"
     ))
 
 
   out <- structure(
-    list(summary_tbl = summary_tbl,
-         vars_name = vars_name,
-         dat = dat
+    list(
+      summary_tbl = summary_tbl,
+      vars_name = vars_name,
+      dat = dat
     ),
     one_variable = FALSE
   )
@@ -91,7 +87,7 @@ prep_data_many <- function(object, ...) {
 
 
 
-#$
+# $
 
 # xxx <- prep_data_one(filtred)
 #
