@@ -42,19 +42,14 @@ prep_data_one <- function(object, ...) {
   var_name <- summary_tbl$var
   dat <- attr(object, "old_df")
 
-
-
   dat["out_textlll"] <- ifelse(dat[[var_name]] > summary_tbl$upper, "Outlier (>)", ifelse(dat[[var_name]] < summary_tbl$lower, "Outlier (<)", "No Outlier"))
-
-
   dat <- dat |>
     dplyr::mutate(out_textlll = factor(out_textlll, levels = c("Outlier (<)","No Outlier",  "Outlier (>)"))) |>
     dplyr::filter(!is.na(out_textlll))
 
 
   out <- structure(
-    list(old_obj = object,
-         summary_tbl = summary_tbl,
+    list(summary_tbl = summary_tbl,
          var_name = var_name,
          dat = dat
          ),
@@ -64,10 +59,33 @@ prep_data_one <- function(object, ...) {
 }
 
 prep_data_many <- function(object, ...) {
-  out <- object
-  attributes(out) <- c("one_variable" = FALSE, attributes(out))
-}
+  summary_tbl <- attr(object, "tbls") |> dplyr::bind_rows()
+  vars_name <- summary_tbl$var
 
+  dat <-
+    attr(object, "old_df") |>
+    select(all_of(vars_name)) |>
+    pivot_longer(everything(), names_to = "var") |>
+    filter(!is.na(value)) |>
+    left_join(sum_tbl, by = join_by("var")) |>
+    na.omit() |>
+    mutate(test = case_when(
+      value > upper ~ "Outlier (>)",
+      value < lower~ "Outlier (<)",
+      TRUE ~ "No Outlier"
+    ))
+
+
+  out <- structure(
+    list(summary_tbl = summary_tbl,
+         vars_name = vars_name,
+         dat = dat
+    ),
+    one_variable = FALSE
+  )
+
+  out
+}
 
 
 

@@ -4,6 +4,7 @@
 ## usethis namespace: start
 #' @importFrom cli cli_abort
 #' @importFrom cli cli_inform
+#' @importFrom dplyr bind_rows
 #' @importFrom dplyr filter
 #' @importFrom dplyr mutate
 #' @importFrom dplyr summarise
