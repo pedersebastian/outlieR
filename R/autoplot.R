@@ -64,11 +64,12 @@ prep_data_many <- function(object, ...) {
     tidyr::pivot_longer(everything(), names_to = "var") |>
     dplyr::filter(!is.na(value)) |>
     dplyr::left_join(sum_tbl, by = dplyr::join_by("var")) |>
-    dplyr::mutate(test = dplyr::case_when(
+    dplyr::mutate(outlier_var = dplyr::case_when(
       value > upper ~ "Outlier (>)",
       value < lower ~ "Outlier (<)",
       TRUE ~ "No Outlier"
-    ))
+    ),
+    outlier_var = factor(outlier_var, levels = c("Outlier (<)", "No Outlier", "Outlier (>)")))
 
 
   out <- structure(
@@ -83,7 +84,7 @@ prep_data_many <- function(object, ...) {
   out
 }
 
-fu
+
 
 
 
