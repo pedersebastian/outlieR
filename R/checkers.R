@@ -12,8 +12,6 @@ check_outlier <- function(.data, ..., method, threshold, conf_int) {
 }
 
 
-
-
 conf_int_check <- function(conf_int) {
   if (is.null(conf_int)) {
     return(invisible(NULL))

@@ -47,7 +47,6 @@ outlier_flere.data.frame <- function(.data, ..., method = c("mean_sd", "MAD", "I
     rlang::syms() |>
     rlang::as_quosures(env = rlang::current_env())
 
-  # return(vars)
   outlier_flere.impl(.data, vars, method = method, threshold = threshold, conf_level = conf_level, na_action = na_action)
 }
 

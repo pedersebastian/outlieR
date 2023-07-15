@@ -20,12 +20,10 @@ filtred_V_ALL_omit <-
 test_that("plots_error", {
   expect_error(autoplot(filtred_V_ALL_omit, type = 123))
   expect_error(autoplot(filtred_V_ALL_omit, type = "da"))
-  #expect_error(autoplot(filtred_V_ALL_omit, type = NULL))
-
+  # expect_error(autoplot(filtred_V_ALL_omit, type = NULL))
 })
 
 
 test_that("plots_plot", {
   vdiffr::expect_doppelganger("A blank plot", ggplot2::ggplot())
-
 })

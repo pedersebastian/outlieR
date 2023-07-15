@@ -1,8 +1,6 @@
 utils::globalVariables(c(
-  "median",
   "median_var",
   "resid_median",
-  "sd",
   "mean_var",
   "sd_var",
   "q_75",
@@ -13,5 +11,6 @@ utils::globalVariables(c(
   "sum_tbl",
   "upper",
   "value",
-  "var"
+  "var",
+  "pct"
 ))

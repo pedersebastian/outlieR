@@ -1,5 +1,6 @@
-
 ## .  DATA PREP
+
+
 
 prep_data <- function(object, type, ...) {
   if (length(attr(object, "tbls")) > 1) {
@@ -12,8 +13,6 @@ prep_data <- function(object, type, ...) {
   } else {
     cli::cli_abort("noe feil as")
   }
-
-
   data
 }
 
@@ -22,42 +21,27 @@ prep_data_one <- function(object, ...) {
   var_name <- summary_tbl$var
   dat <- attr(object, "old_df")
 
-  dat["outlier_var"] <- ifelse(dat[[var_name]] > summary_tbl$upper, "Outlier (>)", ifelse(dat[[var_name]] < summary_tbl$lower, "Outlier (<)", "No Outlier"))
-
-
 
   if (summary_tbl$var_type == "lgl") {
-    if (summary_tbl["outlier_exist"] & summary_tbl["mean_var"]>0.5) {
-      #mest True
-      dat <- dat |>
-        mutate(outlier_var = ifelse(outlier_var == "No Outlier", "No Outlier (TRUE)", "Outlier (FALSE)"),
-               outlier_var = factor(outlier_var, levels = c("Outlier (FALSE)", "No Outlier (TRUE)")))
-    }
-    else if (summary_tbl["outlier_exist"] & summary_tbl["mean_var"]<0.5) {
-      ##mest false
-      dat <- dat |>
-        mutate(outlier_var = ifelse(outlier_var == "No Outlier", "No Outlier (FALSE)", "Outlier (TRUE)"),
-               outlier_var = factor(outlier_var, levels = c("No Outlier (FALSE)", "Outlier (TRUE)")))
-    }
-    ##Hvis det ikke finnes outlier er data ok som det er.
+  print("hehjehe")
+    #dat <- prep_logical_data(dat, summary_tbl["outlier_exist"], summary_tbl["mean_var"])
+   dat <-  prep_data_many_logical(data = dat, var_name, summary_tbl)
 
-
-  }
-  else if (summary_tbl$var_type %in% c("dbl")) {
+    ## Hvis det ikke finnes outlier er data ok som det er.
+  } else if (summary_tbl$var_type %in% c("dbl")) {
+    dat["outlier_var"] <- ifelse(dat[[var_name]] > summary_tbl$upper, "Outlier (>)", ifelse(dat[[var_name]] < summary_tbl$lower, "Outlier (<)", "No Outlier"))
     dat <- dat |>
       dplyr::mutate(outlier_var = factor(outlier_var, levels = c("Outlier (<)", "No Outlier", "Outlier (>)"))) |>
       dplyr::filter(!is.na(outlier_var))
   }
-
-
-
   out <- structure(
     list(
       summary_tbl = summary_tbl,
       var_name = var_name,
       dat = dat
     ),
-    one_variable = TRUE
+    one_variable = TRUE,
+    variable_type = summary_tbl$var_type
   )
   out
 }
@@ -66,29 +50,128 @@ prep_data_many <- function(object, ...) {
   summary_tbl <- attr(object, "tbls") |> dplyr::bind_rows()
   vars_name <- summary_tbl$var
 
-  dat <-
-    attr(object, "old_df") |>
-    dplyr::select(all_of(vars_name)) |>
-    tidyr::pivot_longer(everything(), names_to = "var") |>
-    dplyr::filter(!is.na(value)) |>
-    dplyr::left_join(summary_tbl, by = dplyr::join_by("var")) |>
-    dplyr::mutate(outlier_var = dplyr::case_when(
-      value > upper ~ "Outlier (>)",
-      value < lower ~ "Outlier (<)",
+  lgl_names <- summary_tbl["var"][summary_tbl["var_type"] == "lgl"]
+  dbl_names <- summary_tbl["var"][summary_tbl["var_type"] == "dbl"]
 
-      TRUE ~ "No Outlier"
-    ),
-    outlier_var = factor(outlier_var, levels = c("Outlier (<)", "No Outlier", "Outlier (>)")))
+  lgl = length(lgl_names)
+  dbl = length(dbl_names)
+  other = length(vars_name) - lgl - dbl
+
+  dbl_data <-
+    prep_data_many_numeric(attr(object, "old_df"), dbl_names, summary_tbl)
+  lgl_data <-
+    prep_data_many_logical(attr(object, "old_df"), lgl_names, summary_tbl)
+
 
 
   out <- structure(
     list(
       summary_tbl = summary_tbl,
       vars_name = vars_name,
-      dat = dat
+      dat = list(dbl_data = dbl_data,
+                 lgl_data = lgl_data)
     ),
-    one_variable = FALSE
+    "one_variable" = FALSE,
+    "lgl" = lgl,
+    "dbl" = dbl,
+    "other" = other
   )
 
   out
 }
+
+
+
+prep_data_many_logical <- function(data, variable_names, summary_tbl) {
+  if (length(variable_names)<1) {
+    return(NULL)
+  }
+  data <-
+    data |>
+    dplyr::select(all_of(variable_names)) |>
+    tidyr::pivot_longer(everything(), names_to = "var") |>
+    dplyr::filter(!is.na(value)) |>
+    dplyr::left_join(summary_tbl, by = dplyr::join_by("var")) |>
+    dplyr::group_by(var) |>
+    tidyr::nest(datafr = c(everything(), -var)) |>
+    mutate(datafr = purrr::map(datafr, logical_helper_many)) |>
+    tidyr::unnest(datafr) |>
+    dplyr::ungroup()
+  data
+
+
+}
+
+
+
+prep_data_many_numeric <- function(data, variable_names, summary_tbl) {
+  if (length(variable_names)<1) {
+    return(NULL)
+  }
+
+
+  data <-
+    data |>
+    dplyr::select(all_of(variable_names)) |>
+    tidyr::pivot_longer(everything(), names_to = "var") |>
+    dplyr::filter(!is.na(value)) |>
+    dplyr::left_join(summary_tbl, by = dplyr::join_by("var")) |>
+    dplyr::mutate(
+      outlier_var = dplyr::case_when(
+        value > upper ~ "Outlier (>)",
+        value < lower ~ "Outlier (<)",
+        TRUE ~ "No Outlier"
+      ),
+      outlier_var = factor(outlier_var, levels = c("Outlier (<)", "No Outlier", "Outlier (>)"))
+    )
+  data
+}
+
+logical_helper_many <- function(data) {
+
+  data <- data |>
+    dplyr::mutate(outlier_var = purrr::pmap(list(value, upper, lower), out_help))
+
+
+  if (data$mean_var[[1]]  < 0.5) {
+    normal_name = "No Outlier (FALSE)"
+    outlier_name = "Outlier (TRUE)"
+
+    data <- dplyr::mutate(data,
+                          outlier_var = ifelse(outlier_var, outlier_name, normal_name),
+                          outlier_var = factor(outlier_var, levels = c(normal_name, outlier_name)))
+  }
+  else {
+    normal_name = "No Outlier (TRUE)"
+    outlier_name = "Outlier (FALSE)"
+    data <- dplyr::mutate(data,
+                          outlier_var = ifelse(outlier_var, outlier_name, normal_name),
+                          outlier_var = factor(outlier_var, levels = c(outlier_name, normal_name )))
+  }
+
+  data
+}
+
+
+
+
+#?????????????????????
+# prep_logical_data <- function(data, outlier_exist, mean_var) {
+#   if (outlier_exist & mean_var > 0.5) {
+#     # mest True
+#     data <- data |>
+#       dplyr::mutate(
+#         outlier_var = ifelse(outlier_var == "No Outlier", "No Outlier (TRUE)", "Outlier (FALSE)"),
+#         outlier_var = factor(outlier_var, levels = c("Outlier (FALSE)", "No Outlier (TRUE)"))
+#       )
+#   } else if (outlier_exist & mean_var < 0.5) {
+#     ## mest false
+#     data <- data |>
+#       dplyr::mutate(
+#         outlier_var = ifelse(outlier_var == "No Outlier", "No Outlier (FALSE)", "Outlier (TRUE)"),
+#         outlier_var = factor(outlier_var, levels = c("No Outlier (FALSE)", "Outlier (TRUE)"))
+#       )
+#   }
+#   data
+# }
+
