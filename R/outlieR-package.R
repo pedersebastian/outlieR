@@ -32,6 +32,7 @@
 #' @importFrom ggplot2 sec_axis
 #' @importFrom ggplot2 vars
 #' @importFrom glue glue
+#' @importFrom patchwork wrap_plots
 #' @importFrom pillar type_sum
 #' @importFrom purrr map
 #' @importFrom purrr map_lgl
