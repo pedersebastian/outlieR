@@ -7,5 +7,11 @@ utils::globalVariables(c(
   "sd_var",
   "q_75",
   "q_25",
-  "interquartile_deviation"
+  "interquartile_deviation",
+  "lower",
+  "outlier_var",
+  "sum_tbl",
+  "upper",
+  "value",
+  "var"
 ))
