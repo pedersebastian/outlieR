@@ -16,7 +16,7 @@ autoplot.outlier <- function(object, ..., type = "histogram") {
   }
 
   data <- prep_data(object, type)
-  return(data)
+  #return(data)
   p <- plot_maker(data, type, ...)
   p
 }
