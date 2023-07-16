@@ -2,9 +2,12 @@
 
 make_plot <- function(data, type, ...) {
   if (attr(data, "one_variable")) {
-    if (data$summary_tbl$var_type == "lgl" & type == "histogram") {
-      print("HEI")
-      make_hist_logical_singel(data)
+    if (data$summary_tbl$var_type == "lgl") {
+      switch(type,
+        "histogram" = make_hist_logical_singel(data),
+        "count" = make_one_lgl(data$dat),
+        cli::cli_abort("fe")
+      )
     } else {
       switch(type,
         "histogram" = make_single_histogram(data),
@@ -37,7 +40,7 @@ make_single_histogram <- function(data) {
   col_text <- "#264653"
   # https://coolors.co/palette/264653-2a9d8f-e9c46a-f4a261-e76f51
 
-  breaks = round(seq(min(summary_tbl$min_var, summary_tbl$lower), max(summary_tbl$max_var, summary_tbl$upper), length.out = 6))
+  breaks <- round(seq(min(summary_tbl$min_var, summary_tbl$lower), max(summary_tbl$max_var, summary_tbl$upper), length.out = 6))
 
   p <-
     ggplot2::ggplot() +
@@ -49,8 +52,10 @@ make_single_histogram <- function(data) {
     ggplot2::scale_x_continuous(breaks = breaks)
 
 
-  if (!dat$outlier_var |> unique() |> length() == 1) {
-    breaks = round(seq(summary_tbl$min_var, summary_tbl$max_var, length.out = 6))
+  if (!dat$outlier_var |>
+    unique() |>
+    length() == 1) {
+    breaks <- round(seq(summary_tbl$min_var, summary_tbl$max_var, length.out = 6))
     p <-
       p +
       ggplot2::geom_vline(data = summary_tbl, ggplot2::aes(xintercept = .data$lower), lty = 2) +
@@ -144,31 +149,4 @@ make_hist_logical_singel <- function(data) {
     ggplot2::labs(title = glue::glue("Counts of outliers {round(summary_tbl$outlier_pct * 100,2)} % Outliers"), fill = NULL, y = "Percent", x = NULL)
 
   return(p)
-}
-
-
-#' @title Theme for outlier plots
-#' @param ... dots
-#'
-#' @importFrom ggplot2 %+replace%
-#' @export
-theme_outlier <- function(...) {
-  `%+replace%` <- ggplot2::`%+replace%`
-
-  ggplot2::theme_light() %+replace%
-    ggplot2::theme(
-      plot.title = ggplot2::element_text(
-        hjust = 0.5
-      ),
-      strip.text = ggplot2::element_text(
-        hjust = 0.5, size = 12,
-        margin = ggplot2::margin(b = 10)
-      ),
-      strip.background = ggplot2::element_rect(
-        fill = "gray90",
-        color = "black",
-        linewidth = 0.1,
-        linetype = NULL
-      )
-    )
 }

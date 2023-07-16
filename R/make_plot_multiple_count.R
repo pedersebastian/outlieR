@@ -1,26 +1,25 @@
-
 make_multiple_count <- function(data) {
-  if (attr(data,"lgl") == 1) {
+  ## data$dat ??
+  print(data$dat$lgl_data |> glimpse())
+  if (attr(data, "lgl") == 1) {
     p <- lgl_plot <-
-      make_one_lgl(data) + labs(title = glue::glue("Countplot of {data$var[[1]]}!"))
-  }
-  else if (attr(data,"lgl") > 1) {
+      make_one_lgl(data$dat$lgl_data) + labs(title = glue::glue("Countplot of {unique(data$dat$lgl_data$var)}!"))
+  } else if (attr(data, "lgl") > 1) {
     p <- lgl_plot <-
-      make_one_lgl(data) + ggplot2::facet_wrap(ggplot2::vars(var), scales = "free") + ggplot2::guide_legend(reverse = TRUE)
+      make_one_lgl(data$dat$lgl_data)
   }
 
-  if (attr(data,"dbl") == 1) {
+  if (attr(data, "dbl") == 1) {
     p <- dbl_plot <-
-      make_one_lgl(data)
-  }
-  else if (attr(data,"dbl") > 1) {
+      make_one_dbl(data)
+  } else if (attr(data, "dbl") > 1) {
     p <- dbl_plot <-
-      make_more_lgl(data)
+      make_more_dbl(data)
   }
 
 
-  if (attr(data,"lgl") != 0 & attr(data,"dbl") != 0) {
-    p <- patchwork::wrap_plots(lgl_plot,  dbl_plot, ncol = 2)
+  if (attr(data, "lgl") > 0 & attr(data, "dbl") > 0) {
+    p <- patchwork::wrap_plots(lgl_plot, dbl_plot, ncol = 2)
   }
 
   p
@@ -31,28 +30,39 @@ make_one_lgl <- function(data) {
   col_high <- "#e76f51"
   col_mid <- "#e9c46a"
   col_text <- "#264653"
+
   if (length(unique(data$var)) == 1) {
-    if (data$mean_var[[1]]<0.5) {
-      pal = c(col_mid, col_high)
-      print("HEI")
+    if (data$mean_var[[1]] < 0.5) {
+      pal <- c(col_mid, col_high)
+    } else {
+      pal <- c(col_low, col_mid)
     }
-    else {
-      pal = c(col_low, col_mid)
-      print("HADE")
-    }
-  }
-  else {
-    if (nlevels(data$outlier_var)) {
-      pal = c(col_mid, col_high, col_low, col_mid)
+  } else {
+    if (nlevels(data$outlier_var) == 4) {
+      pal <- c(col_mid, col_high, col_low, col_mid)
+    } else {
+      pal <- sample(c(col_mid, col_high, col_low, col_mid), size = nlevels(data$outlier_var))
     }
   }
 
+
+
+  # ggplot(aes(0, pct, fill = V6)) + geom_col(width =  1) +  coord_flip(xlim = c(-1,1)) +
+  #   scale_y_continuous(labels = scales::label_percent(),
+  #                      sec.axis = sec_axis(trans = ~.x*nrow(mtcars), breaks = seq(0,nrow(mtcars), length.out = 5)))
+
+  print(data |> glimpse())
+
+
+  len <- nrow(data) / length(unique(data$var))
 
   p <-
-    ggplot2::ggplot(data, ggplot2::aes(y = 0, fill = outlier_var)) +
-    ggplot2::geom_bar(
-      position = ggplot2::position_fill(reverse = TRUE),
-      just = 2,
+    data |>
+    dplyr::group_by(var) |>
+    dplyr::count(outlier_var) |>
+    dplyr::mutate(pct = n / sum(n)) |>
+    ggplot2::ggplot(ggplot2::aes(y = 0, pct, fill = outlier_var)) +
+    ggplot2::geom_col(
       linewidth = .3,
       color = "black"
     ) +
@@ -61,14 +71,29 @@ make_one_lgl <- function(data) {
       legend.position = "bottom",
       panel.grid = ggplot2::element_blank(),
       axis.text.y = ggplot2::element_blank(),
-      plot.title = ggplot2::element_text(
-        vjust = -20, hjust = 0.5
-      )
+      plot.title = ggplot2::element_text(hjust = 0.5)
     ) +
-    ggplot2::scale_x_continuous(labels = scales::label_percent(), n.breaks = 5) +
+    ggplot2::scale_x_continuous(
+      labels = scales::label_percent(),
+      n.breaks = 5,
+      sec.axis = sec_axis(trans = ~ .x * len, breaks = seq(0, len, length.out = 5))
+    ) +
     ggplot2::scale_fill_manual(values = pal) +
-    ggplot2::labs(fill = NULL, y = NULL, x = "Percent", title = NULL) +
-    ggplot2::coord_cartesian(ylim = c(-1.6, -0.6))
+    ggplot2::coord_flip() +
+    ggplot2::labs(fill = NULL, y = NULL, x = "Percent", title = NULL)
+
+  if (length(unique(data$var)) > 1) {
+    p <- p + ggplot2::geom_col(
+      linewidth = .3,
+      color = "black"
+    ) + facet_wrap(ggplot2::vars(var), scales = "free") + ggplot2::guides(fill = guide_legend(reverse = TRUE))
+  } else {
+    p <- p + ggplot2::geom_col(
+      width = 1,
+      linewidth = .3,
+      color = "black"
+    ) + xlim(c(-1, 1))
+  }
   p
 }
 

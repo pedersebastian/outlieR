@@ -22,7 +22,9 @@ outlier_mean_sd <- function(.data, var, threshold) {
       "outlier_exist" = length(unique(out_help(!!var, upper, lower))) != 1,
       "outlier_pct" = mean(out_help(!!var, upper, lower), na.rm = TRUE),
       "na_count" = sum(is.na(!!var)),
-      "n" = dplyr::n()
+      "n" = dplyr::n(),
+      "upper_outlier" = ifelse(any(!!var > upper, na.rm = TRUE), upper, Inf),
+      "lower_outlier" = ifelse(any(!!var < lower, na.rm = TRUE), lower, -Inf)
     )
   tbl
 }
@@ -45,7 +47,9 @@ outlier_MAD <- function(.data, var, threshold) {
       "outlier_exist" = length(unique(out_help(!!var, upper, lower))) != 1,
       "outlier_pct" = mean(out_help(!!var, upper, lower), na.rm = TRUE),
       "na_count" = sum(is.na(!!var)),
-      "n" = dplyr::n()
+      "n" = dplyr::n(),
+      "upper_outlier" = ifelse(any(!!var > upper, na.rm = TRUE), upper, Inf),
+      "lower_outlier" = ifelse(any(!!var < lower, na.rm = TRUE), lower, -Inf)
     )
 
   tbl
@@ -66,7 +70,9 @@ outlier_IQD <- function(.data, var, threshold) {
       "outlier_exist" = length(unique(out_help(!!var, upper, lower))) != 1,
       "outlier_pct" = mean(out_help(!!var, upper, lower), na.rm = TRUE),
       "na_count" = sum(is.na(!!var)),
-      "n" = dplyr::n()
+      "n" = dplyr::n(),
+      "upper_outlier" = ifelse(any(!!var > upper, na.rm = TRUE), upper, Inf),
+      "lower_outlier" = ifelse(any(!!var < lower, na.rm = TRUE), lower, -Inf)
     )
 
   tbl
@@ -85,7 +91,9 @@ outlier_t_test <- function(.data, var, conf_level) {
       "outlier_exist" = length(unique(out_help(!!var, upper, lower))) != 1,
       "outlier_pct" = mean(out_help(!!var, upper, lower), na.rm = TRUE),
       "na_count" = sum(is.na(!!var)),
-      "n" = dplyr::n()
+      "n" = dplyr::n(),
+      "upper_outlier" = ifelse(any(!!var > upper, na.rm = TRUE), upper, Inf),
+      "lower_outlier" = ifelse(any(!!var < lower, na.rm = TRUE), lower, -Inf)
     )
 
   tbl

@@ -16,6 +16,41 @@ autoplot.outlier <- function(object, ..., type = "histogram") {
   }
 
   data <- prep_data(object, type)
-  p <- make_plot(data, type, ...)
+  return(data)
+  p <- plot_maker(data, type, ...)
   p
 }
+
+col_low <- "#2a9d8f"
+col_high <- "#e76f51"
+col_mid <- "#e9c46a"
+col_text <- "#264653"
+# https://coolors.co/palette/264653-2a9d8f-e9c46a-f4a261-e76f51
+
+#' @title Theme for outlier plots
+#' @param ... dots
+#'
+#' @importFrom ggplot2 %+replace%
+#' @export
+theme_outlier <- function(...) {
+  `%+replace%` <- ggplot2::`%+replace%`
+
+  ggplot2::theme_light(...) %+replace%
+    ggplot2::theme(
+      plot.title = ggplot2::element_text(
+        hjust = 0.5
+      ),
+      strip.text = ggplot2::element_text(
+        hjust = 0.5, size = 12,
+        margin = ggplot2::margin(b = 10)
+      ),
+      strip.background = ggplot2::element_rect(
+        fill = "gray90",
+        color = "black",
+        linewidth = 0.1,
+        linetype = NULL
+      )
+    )
+}
+
+
