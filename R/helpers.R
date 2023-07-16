@@ -109,6 +109,7 @@ out_help <- function(number, upper, lower) {
 }
 
 Freedman_Diaconis_binwidth <- function(x) {
+  #binwidth
   # https://stats.stackexchange.com/questions/798/calculating-optimal-number-of-bins-in-a-histogram
   if (!is.numeric(x) | length(x) < 1) {
     cli::cli_abort(paste0(deparse1(substitute(x)), " must be a numeric vector > 0 "))

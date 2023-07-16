@@ -73,40 +73,8 @@ plot_multiple.outlier_lglFALSE_dblTRUE_otherFALSE_histogram <- function(data, ..
 }
 
 
-plot_multiple.outlier_lglTRUE_dblTRUE_otherFALSE_count <- function(data, ...) {
-  mes = get_errormes(class(data)[[2]])
-  cli::cli_abort(c("x" = mes,
-                   "i" = "Try a single plot"))
-}
-plot_multiple.outlier_lglTRUE_dblFALSE_otherFALSE_count <- function(data, ...) {
-  mes = get_errormes(class(data)[[2]])
-  cli::cli_abort(c("x" = mes,
-                   "i" = "Try a single plot"))
-}
-plot_multiple.outlier_lglFALSE_dblTRUE_otherFALSE_count <- function(data, ...) {
-  mes = get_errormes(class(data)[[2]])
-  cli::cli_abort(c("x" = mes,
-                   "i" = "Try a single plot"))
-}
 
 
 
-
-get_errormes <- function(class) {
-
-  x = grepl("TRUE", strsplit(class, "_")[[1]][2:3]) |> as.logical()
-  if (all(x)) {
-    mes = "Outlierplot for both logical and double variables is not yet supported "
-  }
-  else {
-    if (isTRUE(x[[1]])) {
-      mes = "Outlierplot for multiple logical variables is not yet supported. "
-    }
-    else {
-      mes = "Outlierplot for multiple double variables is not yet supported "
-    }
-  }
-  paste0(mes, "for plottype '", strsplit(class, "_")[[1]][[5]], "'")
-}
 
 
