@@ -102,7 +102,7 @@ outlier_t_test <- function(.data, var, conf_level) {
 
 
 
-
+#################################################################################
 
 out_help <- function(number, upper, lower) {
   return(number > upper | number < lower)
@@ -115,3 +115,23 @@ Freedman_Diaconis_binwidth <- function(x) {
   }
   return(2 * stats::IQR(x, na.rm = TRUE) / (length(x)^(1 / 3)))
 }
+
+
+
+get_errormes <- function(class) {
+
+  x = grepl("TRUE", strsplit(class, "_")[[1]][2:3]) |> as.logical()
+  if (all(x)) {
+    mes = "Outlierplot for both logical and double variables is not yet supported "
+  }
+  else {
+    if (isTRUE(x[[1]])) {
+      mes = "Outlierplot for multiple logical variables is not yet supported. "
+    }
+    else {
+      mes = "Outlierplot for multiple double variables is not yet supported "
+    }
+  }
+  paste0(mes, "for plottype '", strsplit(class, "_")[[1]][[5]], "'")
+}
+
