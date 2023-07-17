@@ -20,7 +20,6 @@ prep_data_one <- function(object, type, ...) {
 
 
   if (summary_tbl$var_type == "lgl") {
-    print("hehjehe")
     # dat <- prep_logical_data(dat, summary_tbl["outlier_exist"], summary_tbl["mean_var"])
     dat <- prep_data_many_logical(data = dat, var_name, summary_tbl)
 

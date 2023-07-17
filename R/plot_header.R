@@ -4,6 +4,7 @@ plot_maker <- function(data, ...) {
   } else {
     p <- plot_multiple(data, ...)
   }
+  ##bytte en gang slik at det kun er én S3 på plot.
   p
 }
 
@@ -11,7 +12,8 @@ plot_single <- function(data, ...) {
   UseMethod("plot_single")
 }
 plot_single.default <- function(data, ...) {
-  rlang::abort(glue::glue("{class(data)[[1]]} is not supported"), .internal = TRUE)
+  rlang::abort(glue::glue("{class(data)[[1]]} is not supported"),
+               .internal = TRUE)
 }
 
 
@@ -19,6 +21,7 @@ plot_single.outlier_lgl_count <- function(data, ...) {
   dat <- data$dat
   summary_tbl <- data$summary_tbl
   var_name <- data$var_name
+
   p <-
     dplyr::count(dat, outlier_var) |>
     dplyr::mutate(

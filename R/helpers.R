@@ -24,7 +24,8 @@ outlier_mean_sd <- function(.data, var, threshold) {
       "na_count" = sum(is.na(!!var)),
       "n" = dplyr::n(),
       "upper_outlier" = ifelse(any(!!var > upper, na.rm = TRUE), upper, Inf),
-      "lower_outlier" = ifelse(any(!!var < lower, na.rm = TRUE), lower, -Inf)
+      "lower_outlier" = ifelse(any(!!var < lower, na.rm = TRUE), lower, -Inf),
+      "mode_val" = mode_vec(!!var)
     )
   tbl
 }
@@ -49,7 +50,8 @@ outlier_MAD <- function(.data, var, threshold) {
       "na_count" = sum(is.na(!!var)),
       "n" = dplyr::n(),
       "upper_outlier" = ifelse(any(!!var > upper, na.rm = TRUE), upper, Inf),
-      "lower_outlier" = ifelse(any(!!var < lower, na.rm = TRUE), lower, -Inf)
+      "lower_outlier" = ifelse(any(!!var < lower, na.rm = TRUE), lower, -Inf),
+      "mode_val" = mode_vec(!!var)
     )
 
   tbl
@@ -72,7 +74,8 @@ outlier_IQD <- function(.data, var, threshold) {
       "na_count" = sum(is.na(!!var)),
       "n" = dplyr::n(),
       "upper_outlier" = ifelse(any(!!var > upper, na.rm = TRUE), upper, Inf),
-      "lower_outlier" = ifelse(any(!!var < lower, na.rm = TRUE), lower, -Inf)
+      "lower_outlier" = ifelse(any(!!var < lower, na.rm = TRUE), lower, -Inf),
+      "mode_val" = mode_vec(!!var)
     )
 
   tbl
@@ -93,7 +96,8 @@ outlier_t_test <- function(.data, var, conf_level) {
       "na_count" = sum(is.na(!!var)),
       "n" = dplyr::n(),
       "upper_outlier" = ifelse(any(!!var > upper, na.rm = TRUE), upper, Inf),
-      "lower_outlier" = ifelse(any(!!var < lower, na.rm = TRUE), lower, -Inf)
+      "lower_outlier" = ifelse(any(!!var < lower, na.rm = TRUE), lower, -Inf),
+      "mode_val" = mode_vec(!!var)
     )
 
   tbl
