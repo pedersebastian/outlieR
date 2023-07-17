@@ -104,8 +104,10 @@ prep_data_many_logical <- function(data, variable_names, summary_tbl) {
     dplyr::left_join(summary_tbl, by = dplyr::join_by("var")) |>
     dplyr::group_by(var) |>
     tidyr::nest(datafr = c(everything(), -var)) |>
-    mutate(datafr = purrr::map(datafr, logical_helper_many),
-           count_var = dplyr::n()) |>
+    mutate(
+      datafr = purrr::map(datafr, logical_helper_many),
+      count_var = dplyr::n()
+    ) |>
     tidyr::unnest(datafr) |>
     dplyr::ungroup()
   data

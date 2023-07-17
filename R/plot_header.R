@@ -24,26 +24,34 @@ plot_single.outlier_lgl_count <- function(data, ...) {
     dplyr::mutate(
       pct = n / sum(n),
       outlier_var = factor(outlier_var,
-                           levels = c("No Outlier (FALSE)", "Outlier (FALSE)", "No Outlier (TRUE)", "Outlier (TRUE)")
+        levels = c("No Outlier (FALSE)", "Outlier (FALSE)", "No Outlier (TRUE)", "Outlier (TRUE)")
       )
     ) |>
     ggplot2::ggplot(aes(0, pct, fill = outlier_var)) +
     ggplot2::geom_col(width = 0.5, position = ggplot2::position_fill(reverse = TRUE)) +
-    ggplot2::scale_y_continuous(labels = scales::label_percent(),
-                                sec.axis = ggplot2::sec_axis(trans = ~ .x * nrow(dat),
-                                                             breaks = seq(0, nrow(data$dat),
-                                                                          length.out = 5),
-                                                             name = "Count")) +
-
+    ggplot2::scale_y_continuous(
+      labels = scales::label_percent(),
+      sec.axis = ggplot2::sec_axis(
+        trans = ~ .x * nrow(dat),
+        breaks = seq(0, nrow(data$dat),
+          length.out = 5
+        ),
+        name = "Count"
+      )
+    ) +
     theme_outlier() +
-    ggplot2::theme(legend.position = "bottom",
-                   axis.text.y = ggplot2::element_blank(),
-                   panel.grid.major.y = ggplot2::element_blank()) +
-    ggplot2::labs(title = glue::glue("{round(summary_tbl$outlier_pct * 100,2)} % Outliers for {var_name}"),
-                  fill = NULL,
-                  y = "Percent",
-                  x = NULL) +
-    ggplot2::scale_x_continuous(limits = c(-1,1)) +
+    ggplot2::theme(
+      legend.position = "bottom",
+      axis.text.y = ggplot2::element_blank(),
+      panel.grid.major.y = ggplot2::element_blank()
+    ) +
+    ggplot2::labs(
+      title = glue::glue("{round(summary_tbl$outlier_pct * 100,2)} % Outliers for {var_name}"),
+      fill = NULL,
+      y = "Percent",
+      x = NULL
+    ) +
+    ggplot2::scale_x_continuous(limits = c(-1, 1)) +
     ggplot2::coord_flip()
 
   if (all(dat$value == TRUE, na.rm = TRUE)) {
@@ -56,8 +64,6 @@ plot_single.outlier_lgl_count <- function(data, ...) {
 
 
   p + ggplot2::scale_fill_manual(values = pal)
-
-
 }
 
 plot_single.outlier_dbl_count <- function(data, ...) {
@@ -72,21 +78,29 @@ plot_single.outlier_dbl_count <- function(data, ...) {
     ) |>
     ggplot2::ggplot(aes(0, pct, fill = outlier_var)) +
     ggplot2::geom_col(width = 0.5, position = ggplot2::position_fill(reverse = TRUE)) +
-    ggplot2::scale_y_continuous(labels = scales::label_percent(),
-                                sec.axis = ggplot2::sec_axis(trans = ~ .x * nrow(dat),
-                                                             breaks = seq(0, nrow(data$dat),
-                                                                          length.out = 5),
-                                                             name = "Count")) +
-
+    ggplot2::scale_y_continuous(
+      labels = scales::label_percent(),
+      sec.axis = ggplot2::sec_axis(
+        trans = ~ .x * nrow(dat),
+        breaks = seq(0, nrow(data$dat),
+          length.out = 5
+        ),
+        name = "Count"
+      )
+    ) +
     theme_outlier() +
-    ggplot2::theme(legend.position = "bottom",
-                   axis.text.y = ggplot2::element_blank(),
-                   panel.grid.major.y = ggplot2::element_blank()) +
-    ggplot2::labs(title = glue::glue("{round(summary_tbl$outlier_pct * 100,2)} % Outliers for {var_name}"),
-                  fill = NULL,
-                  y = "Percent",
-                  x = NULL) +
-    ggplot2::scale_x_continuous(limits = c(-1,1)) +
+    ggplot2::theme(
+      legend.position = "bottom",
+      axis.text.y = ggplot2::element_blank(),
+      panel.grid.major.y = ggplot2::element_blank()
+    ) +
+    ggplot2::labs(
+      title = glue::glue("{round(summary_tbl$outlier_pct * 100,2)} % Outliers for {var_name}"),
+      fill = NULL,
+      y = "Percent",
+      x = NULL
+    ) +
+    ggplot2::scale_x_continuous(limits = c(-1, 1)) +
     ggplot2::coord_flip()
 
   pal <- c(col_mid)
@@ -180,7 +194,6 @@ plot_single.outlier_dbl_histogram <- function(data, ...) {
       pal <- append(pal, col_high)
     }
     if (any(dat[[var_name]] < summary_tbl$lower)) {
-
       p <-
         p +
         ggplot2::geom_vline(data = summary_tbl, ggplot2::aes(xintercept = .data$lower), lty = 2) +

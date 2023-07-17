@@ -15,5 +15,4 @@ utils::globalVariables(c(
   "pct",
   "upper_outlier",
   "lower_outlier"
-
 ))
