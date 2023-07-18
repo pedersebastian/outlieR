@@ -14,5 +14,8 @@ utils::globalVariables(c(
   "var",
   "pct",
   "upper_outlier",
-  "lower_outlier"
+  "lower_outlier",
+  "var_type",
+  "datafr",
+  "var_two"
 ))

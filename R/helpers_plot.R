@@ -67,3 +67,24 @@ fix_levels_outlier_var <- function(levels) {
   #
   return(list("levels" = c(low, "No Outliers", high), pal = pal))
 }
+
+
+complete_helper <- function(data) {
+  if (nrow(data) == 2) {
+    return(data)
+  }
+
+  if (unique(data$outlier_var) == "No Outlier (TRUE)") {
+    data <- dplyr::add_row(data, var = data$var[[1]], outlier_var = "Outlier (FALSE)", n = 0)
+  }
+  else if (unique(data$outlier_var) == "No Outlier (FALSE)") {
+    data <- dplyr::add_row(data, var = data$var[[1]], outlier_var = "Outlier (TRUE)", n = 0)
+  }
+  else {
+    rlang::abort("Noe feil complete factors",
+                 .internal = TRUE)
+  }
+  data
+
+
+}

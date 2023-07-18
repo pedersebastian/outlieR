@@ -14,7 +14,7 @@ plot_multiple.outlier_lglTRUE_dblTRUE_otherFALSE_count <- function(data, ...) {
   new_levels = fix_levels_outlier_var(levels(droplevels(data$outlier_var)))$levels
   pal = fix_levels_outlier_var(levels(droplevels(data$outlier_var)))$pal
 
-p <-   data |> select(outlier_var, var, var_type) |>
+p <-   data |> dplyr::select(outlier_var, var, var_type) |>
     dplyr::mutate(outlier_var = dplyr::case_when(
       outlier_var %in% c("Outlier (TRUE)", "Outlier (>)") ~new_levels[3],
       outlier_var %in% c("Outlier (FALSE)", "Outlier (<)") ~new_levels[1],
@@ -51,7 +51,7 @@ p <-   data |> select(outlier_var, var, var_type) |>
       x = "Percent",
       y = NULL
     ) +
-    scale_fill_manual(values = pal)
+    ggplot2::scale_fill_manual(values = pal)
 
 p
 
@@ -74,9 +74,9 @@ plot_multiple.outlier_lglTRUE_dblFALSE_otherFALSE_count <- function(data, ...) {
 
   data <-
     data |>
-    count(var, outlier_var) |>
-    group_by(var) |>
-    mutate(pct = n/sum(n, na.rm = TRUE),
+    dplyr::count(var, outlier_var) |>
+    dplyr::group_by(var) |>
+    dplyr::mutate(pct = n/sum(n, na.rm = TRUE),
            outlier_var = factor(outlier_var,
                                 levels = c("No Outlier (FALSE)", "Outlier (FALSE)", "No Outlier (TRUE)", "Outlier (TRUE)")
            ))
@@ -84,7 +84,7 @@ plot_multiple.outlier_lglTRUE_dblFALSE_otherFALSE_count <- function(data, ...) {
   pal = c()
 
   for (level in c("No Outlier (FALSE)", "Outlier (FALSE)", "No Outlier (TRUE)", "Outlier (TRUE)")) {
-    if (level %in% levels(droplevels(d$outlier_var))) {
+    if (level %in% levels(droplevels(data$outlier_var))) {
       pal <- switch (level,
                      "No Outlier (FALSE)" = append(pal, col_low),
                      "Outlier (FALSE)" = append(pal, col_text),
@@ -121,7 +121,7 @@ plot_multiple.outlier_lglTRUE_dblFALSE_otherFALSE_count <- function(data, ...) {
       x = "Percent",
       y = NULL
     ) +
-    scale_fill_manual(values = pal)
+    ggplot2::scale_fill_manual(values = pal)
 
   p
 }
@@ -146,7 +146,7 @@ plot_multiple.outlier_lglFALSE_dblTRUE_otherFALSE_count <- function(data, ...) {
     dplyr::count(outlier_var, var) |>
     dplyr::group_by(var) |>
     dplyr::mutate(pct = n/sum(n)) |>
-    ggplot(aes(pct, var, fill = outlier_var)) +
+   ggplot2::ggplot(aes(pct, var, fill = outlier_var)) +
     ggplot2::geom_col(width = 0.5, position = ggplot2::position_fill(reverse = TRUE), color = "black", linewidth = 0.2) +
     ggplot2::scale_x_continuous(
       labels = scales::label_percent(),
