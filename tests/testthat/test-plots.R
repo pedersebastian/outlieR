@@ -6,15 +6,15 @@ set.seed(345)
 mtcars["V3"] <- c(rep(TRUE, 31), FALSE)
 filtred_V3 <-
   mtcars |>
-  outlier_flere(V3)
+  filter_outlier(V3)
 
 filtred_V1_omit <-
   mtcars |>
-  outlier_flere(V1)
+  filter_outlier(V1)
 
 filtred_V_ALL_omit <-
   mtcars |>
-  outlier_flere(V1, V2, V3)
+  filter_outlier(V1, V2, V3)
 
 
 test_that("plots_error", {

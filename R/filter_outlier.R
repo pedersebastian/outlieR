@@ -13,23 +13,23 @@
 #' mtcars["V1"] <- c(rnorm(30), -100, 100)
 #' mtcars["V2"] <- c(-50, 32, rnorm(30))
 #' filtred <-
-#'   mtcars |> outlier_flere(V1, V2)
+#'   mtcars |> filter_outlier(V1, V2)
 #'
 #' paste(nrow(mtcars), "rows before filtered and", nrow(filtred), "rows after")
 #' # "32 rows before filtered and 28 rows after"
-outlier_flere <- function(.data, ..., method = c("mean_sd", "MAD", "IQD", "t_test"), threshold = "default", conf_int = NULL, na_action = c("keep", "omit")) {
+filter_outlier <- function(.data, ..., method = c("mean_sd", "MAD", "IQD", "t_test"), threshold = "default", conf_int = NULL, na_action = c("keep", "omit")) {
   if (missing(.data)) {
     rlang::abort(".data must be supplied")
   }
-  UseMethod("outlier_flere")
+  UseMethod("filter_outlier")
 }
 #' @export
-outlier_flere.default <- function(.data, ...) {
+filter_outlier.default <- function(.data, ...) {
   mes <- paste("filter_outlier does not support data of type", class(.data)[[1]])
   rlang::abort(mes)
 }
 #' @export
-outlier_flere.data.frame <- function(.data, ..., method = c("mean_sd", "MAD", "IQD", "t_test"), threshold = "default", conf_int = NULL, na_action = c("keep", "omit")) {
+filter_outlier.data.frame <- function(.data, ..., method = c("mean_sd", "MAD", "IQD", "t_test"), threshold = "default", conf_int = NULL, na_action = c("keep", "omit")) {
   method <- match.arg(method, c("mean_sd", "MAD", "IQD", "t_test"), several.ok = FALSE)
   na_action <- match.arg(na_action, c("keep", "omit"), several.ok = FALSE)
 
@@ -47,11 +47,11 @@ outlier_flere.data.frame <- function(.data, ..., method = c("mean_sd", "MAD", "I
     rlang::syms() |>
     rlang::as_quosures(env = rlang::current_env())
 
-  outlier_flere.impl(.data, vars, method = method, threshold = threshold, conf_level = conf_level, na_action = na_action)
+  filter_outlier.impl(.data, vars, method = method, threshold = threshold, conf_level = conf_level, na_action = na_action)
 }
 
 
-outlier_flere.impl <- function(.data, vars, method, threshold, conf_level, na_action) {
+filter_outlier.impl <- function(.data, vars, method, threshold, conf_level, na_action) {
   tbls <- purrr::map(vars, ~ get_tbl(.data, .x, method = method, threshold = threshold, conf_level = conf_level))
   vecs <- list()
   for (i in seq_along(vars)) {
