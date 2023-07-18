@@ -164,7 +164,7 @@ plot_multiple.outlier_lglFALSE_dblTRUE_otherFALSE_count <- function(data, ...) {
       )
     ) +
     ggplot2::scale_fill_manual(values = pal) +
-    ggplot2::labs(x = "Percent", y = NULL, fill = NULL, title = "") +
+    ggplot2::labs(x = "Percent", y = NULL, fill = NULL, title = "Counts of continuous variables") +
     theme_outlier() +
     ggplot2::theme(legend.position = "bottom")
   p
