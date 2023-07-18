@@ -112,27 +112,3 @@ out_help <- function(number, upper, lower) {
   return(number > upper | number < lower)
 }
 
-Freedman_Diaconis_binwidth <- function(x) {
-  # binwidth
-  # https://stats.stackexchange.com/questions/798/calculating-optimal-number-of-bins-in-a-histogram
-  if (!is.numeric(x) | length(x) < 1) {
-    cli::cli_abort(paste0(deparse1(substitute(x)), " must be a numeric vector > 0 "))
-  }
-  return(2 * stats::IQR(x, na.rm = TRUE) / (length(x)^(1 / 3)))
-}
-
-
-
-get_errormes <- function(class) {
-  x <- grepl("TRUE", strsplit(class, "_")[[1]][2:3]) |> as.logical()
-  if (all(x)) {
-    mes <- "Outlierplot for both logical and double variables is not yet supported "
-  } else {
-    if (isTRUE(x[[1]])) {
-      mes <- "Outlierplot for multiple logical variables is not yet supported. "
-    } else {
-      mes <- "Outlierplot for multiple double variables is not yet supported "
-    }
-  }
-  paste0(mes, "for plottype '", strsplit(class, "_")[[1]][[5]], "'")
-}

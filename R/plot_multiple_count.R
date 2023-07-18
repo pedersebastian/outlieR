@@ -1,11 +1,62 @@
 plot_multiple.outlier_lglTRUE_dblTRUE_otherFALSE_count <- function(data, ...) {
   #TRUE TRUE
-  mes <- get_errormes(class(data)[[2]])
-  cli::cli_abort(c(
-    "x" = mes,
-    "i" = "Try a single plot"
-  ))
+
+
+  summary_tbl <-
+    data$summary_tbl
+  rows <-
+    max(summary_tbl$n)
+  data <-
+    data$dat |>
+    dplyr::bind_rows()
+
+
+  new_levels = fix_levels_outlier_var(levels(droplevels(data$outlier_var)))$levels
+  pal = fix_levels_outlier_var(levels(droplevels(data$outlier_var)))$pal
+
+p <-   data |> select(outlier_var, var, var_type) |>
+    dplyr::mutate(outlier_var = dplyr::case_when(
+      outlier_var %in% c("Outlier (TRUE)", "Outlier (>)") ~new_levels[3],
+      outlier_var %in% c("Outlier (FALSE)", "Outlier (<)") ~new_levels[1],
+      TRUE ~ new_levels[2]
+    ),
+    outlier_var = factor(outlier_var, levels = new_levels),
+    var = glue::glue("{var} ({var_type})")) |>
+    dplyr::count(var, var_type, outlier_var) |>
+    dplyr::group_by(var) |>
+    dplyr::mutate(pct = n/sum(n)) |>
+    ggplot2::ggplot(aes(pct, var ,fill = outlier_var)) +
+    ggplot2::geom_col(width = 0.5,
+                      position = ggplot2::position_fill(reverse = TRUE),
+                      color = "black",
+                      linewidth = 0.2) +
+    ggplot2::scale_x_continuous(
+      labels = scales::label_percent(),
+      sec.axis = ggplot2::sec_axis(
+        trans = ~ .x * rows,
+        breaks = seq(0, rows,
+                     length.out = 5
+        ),
+        name = "Count"
+      )
+    ) +
+    theme_outlier() +
+    ggplot2::theme(
+      legend.position = "bottom",
+      panel.grid.major.y = ggplot2::element_blank()
+    ) +
+    ggplot2::labs(
+      title = NULL,
+      fill = NULL,
+      x = "Percent",
+      y = NULL
+    ) +
+    scale_fill_manual(values = pal)
+
+p
+
 }
+
 ################################################################################
 #                            #                        #                        #
 ################################################################################
@@ -67,8 +118,8 @@ plot_multiple.outlier_lglTRUE_dblFALSE_otherFALSE_count <- function(data, ...) {
     ggplot2::labs(
       title = NULL,
       fill = NULL,
-      y = "Percent",
-      x = NULL
+      x = "Percent",
+      y = NULL
     ) +
     scale_fill_manual(values = pal)
 
