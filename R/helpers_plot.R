@@ -1,4 +1,3 @@
-
 Freedman_Diaconis_binwidth <- function(x) {
   # binwidth
   # https://stats.stackexchange.com/questions/798/calculating-optimal-number-of-bins-in-a-histogram
@@ -25,44 +24,35 @@ get_errormes <- function(class) {
 }
 
 fix_levels_outlier_var <- function(levels) {
+  pal <- col_mid
 
-  pal = col_mid
-
-  ##LOW
+  ## LOW
   if ("Outlier (<)" %in% levels & "Outlier (FALSE)" %in% levels) {
-    pal = c(col_low, col_mid)
-    low = "Outlier (< or FALSE)"
-
-  }
-  else if ("Outlier (<)" %in% levels) {
-    pal = c(col_low, col_mid)
-    low = "Outlier (<)"
-  }
-  else if ("Outlier (FALSE)" %in% levels) {
-    pal = c(col_low, col_mid)
-    low = "Outlier (FALSE)"
-  }
-  else {
-    low = NA
+    pal <- c(col_low, col_mid)
+    low <- "Outlier (< or FALSE)"
+  } else if ("Outlier (<)" %in% levels) {
+    pal <- c(col_low, col_mid)
+    low <- "Outlier (<)"
+  } else if ("Outlier (FALSE)" %in% levels) {
+    pal <- c(col_low, col_mid)
+    low <- "Outlier (FALSE)"
+  } else {
+    low <- NA
   }
 
 
-  ##HIGH
+  ## HIGH
   if ("Outlier (>)" %in% levels & "Outlier (TRUE)" %in% levels) {
     pal <- append(pal, col_high)
-    high = "Outlier (> or TRUE)"
-
-  }
-  else if ("Outlier (>)" %in% levels) {
+    high <- "Outlier (> or TRUE)"
+  } else if ("Outlier (>)" %in% levels) {
     pal <- append(pal, col_high)
-    high = "Outlier (>)"
-  }
-  else if ("Outlier (TRUE)" %in% levels) {
+    high <- "Outlier (>)"
+  } else if ("Outlier (TRUE)" %in% levels) {
     pal <- append(pal, col_high)
-    high = "Outlier (TRUE)"
-  }
-  else {
-    high = NA
+    high <- "Outlier (TRUE)"
+  } else {
+    high <- NA
   }
   #
   return(list("levels" = c(low, "No Outliers", high), pal = pal))
@@ -76,15 +66,12 @@ complete_helper <- function(data) {
 
   if (unique(data$outlier_var) == "No Outlier (TRUE)") {
     data <- dplyr::add_row(data, var = data$var[[1]], outlier_var = "Outlier (FALSE)", n = 0)
-  }
-  else if (unique(data$outlier_var) == "No Outlier (FALSE)") {
+  } else if (unique(data$outlier_var) == "No Outlier (FALSE)") {
     data <- dplyr::add_row(data, var = data$var[[1]], outlier_var = "Outlier (TRUE)", n = 0)
-  }
-  else {
+  } else {
     rlang::abort("Noe feil complete factors",
-                 .internal = TRUE)
+      .internal = TRUE
+    )
   }
   data
-
-
 }

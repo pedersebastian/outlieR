@@ -3,7 +3,8 @@ plot_multiple <- function(data, ...) {
 }
 plot_multiple.default <- function(data, ...) {
   rlang::abort(glue::glue("{class(data)[[1]]} is not supported"),
-               .internal = TRUE)
+    .internal = TRUE
+  )
 }
 
 ################################################################################
@@ -21,16 +22,16 @@ plot_multiple.outlier_lglTRUE_dblTRUE_otherFALSE_histogram <- function(data, ...
 #                            #                        #                        #
 ################################################################################
 plot_multiple.outlier_lglTRUE_dblFALSE_otherFALSE_histogram <- function(data, ...) {
-  #kun lgl
+  # kun lgl
 
 
-summary_tbl <-
-  data$summary_tbl
+  summary_tbl <-
+    data$summary_tbl
 
-data <-
-  data$dat$lgl_data
+  data <-
+    data$dat$lgl_data
 
-rows = max(summary_tbl$n, na.rm = TRUE)
+  rows <- max(summary_tbl$n, na.rm = TRUE)
 
 
   data <-
@@ -44,38 +45,39 @@ rows = max(summary_tbl$n, na.rm = TRUE)
     dplyr::mutate(
       pct = n / sum(n),
       outlier_var = factor(outlier_var,
-                           levels = c("No Outlier (FALSE)", "Outlier (FALSE)", "No Outlier (TRUE)", "Outlier (TRUE)")
+        levels = c("No Outlier (FALSE)", "Outlier (FALSE)", "No Outlier (TRUE)", "Outlier (TRUE)")
       )
     )
 
 
-  pal = c()
+  pal <- c()
 
   for (level in c("No Outlier (FALSE)", "Outlier (FALSE)", "No Outlier (TRUE)", "Outlier (TRUE)")) {
     if (level %in% levels(droplevels(data$outlier_var))) {
-      pal <- switch (level,
-                     "No Outlier (FALSE)" = append(pal, col_low),
-                     "Outlier (FALSE)" = append(pal, col_low),
-                     "No Outlier (TRUE)" = append(pal, col_high),
-                     "Outlier (TRUE)" = append(pal, col_high)
+      pal <- switch(level,
+        "No Outlier (FALSE)" = append(pal, col_low),
+        "Outlier (FALSE)" = append(pal, col_low),
+        "No Outlier (TRUE)" = append(pal, col_high),
+        "Outlier (TRUE)" = append(pal, col_high)
       )
-
     }
   }
 
 
   p <- data |>
     ggplot(aes(outlier_var, pct, fill = outlier_var)) +
-    ggplot2::geom_col(width = 0.5,
-                      color = "black",
-                      linewidth = if (any(data$n==0, na.rm = TRUE)) 0 else 0.2,
-                      na.rm = TRUE) +
+    ggplot2::geom_col(
+      width = 0.5,
+      color = "black",
+      linewidth = if (any(data$n == 0, na.rm = TRUE)) 0 else 0.2,
+      na.rm = TRUE
+    ) +
     ggplot2::scale_y_continuous(
       labels = scales::label_percent(),
       sec.axis = ggplot2::sec_axis(
         trans = ~ .x * rows,
         breaks = seq(0, rows,
-                     length.out = 5
+          length.out = 5
         ),
         name = "Count"
       )
@@ -93,10 +95,8 @@ rows = max(summary_tbl$n, na.rm = TRUE)
       y = NULL
     ) +
     ggplot2::scale_fill_manual(values = pal) +
-
     ggplot2::facet_wrap(vars(var), scales = "free_x")
   p
-
 }
 ################################################################################
 #                            #                        #                        #

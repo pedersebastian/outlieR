@@ -4,7 +4,7 @@ plot_maker <- function(data, ...) {
   } else {
     p <- plot_multiple(data, ...)
   }
-  ##bytte en gang slik at det kun er én S3 på plot.
+  ## bytte en gang slik at det kun er én S3 på plot.
   p
 }
 
@@ -13,7 +13,8 @@ plot_single <- function(data, ...) {
 }
 plot_single.default <- function(data, ...) {
   rlang::abort(glue::glue("{class(data)[[1]]} is not supported"),
-               .internal = TRUE)
+    .internal = TRUE
+  )
 }
 
 

@@ -111,4 +111,3 @@ outlier_t_test <- function(.data, var, conf_level) {
 out_help <- function(number, upper, lower) {
   return(number > upper | number < lower)
 }
-

@@ -3,11 +3,11 @@ mode_vec <- function(x) {
 }
 
 mode_vec.default <- function(x) {
-  sort(table(x), decreasing = TRUE)[1]  |> names()
+  sort(table(x), decreasing = TRUE)[1] |> names()
 }
 
 mode_vec.character <- function(x) {
-  sort(table(x), decreasing = TRUE)[1]  |> names()
+  sort(table(x), decreasing = TRUE)[1] |> names()
 }
 
 
@@ -18,6 +18,3 @@ mode_vec.logical <- function(x) {
 mode_vec.numeric <- function(x) {
   stats::median(x, na.rm = TRUE)
 }
-
-
-
