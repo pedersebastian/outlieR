@@ -126,6 +126,12 @@ outlier_t_test <- function(.data, var, conf_int) {
                        "uniques" = length(unique(!!var))
       )
   }
+  if (tbl$uniques <4) {
+    cli::cli_abort(c(
+      "x" = "Using t-test with less than 4 unique variables are not allowed",
+      "i" = "use another method"
+    ))
+  }
 
   tbl
 }

@@ -42,5 +42,5 @@ res <-
 
 
 test_that("plots_plot", {
-  expect_equal(res, 958)
+  expect_equal(res, 884)
 })
