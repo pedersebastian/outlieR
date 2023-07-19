@@ -5,6 +5,7 @@
 #' @importFrom cli cli_abort
 #' @importFrom cli cli_inform
 #' @importFrom dplyr add_row
+#' @importFrom dplyr as_tibble
 #' @importFrom dplyr bind_rows
 #' @importFrom dplyr case_when
 #' @importFrom dplyr filter

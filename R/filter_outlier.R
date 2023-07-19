@@ -78,9 +78,28 @@ filter_outlier.impl <- function(.data, vars, method, threshold, conf_int, na_act
     res[row] <- y[row, ] |> sum() == 0
   }
 
+  names(vecs) = map(vars, quo_name)
+  filter_res <- res
   res <- subset(.data, res)
+  # out <-
+  #   structure(
+  #     res,
+  #     class = c("outlier", class(res)),
+  #     old_df = .data,
+  #     tbls = tbls,
+  #     vecs = vecs
+  # )
+  # attributes(out) <- c(attributes(res), attributes(out))
+
+
+
+
   class(res) <- c("outlier", class(res))
-  attributes(res) <- c(attributes(res), list(old_df = .data, tbls = tbls))
+  attributes(res) <- c(attributes(res), list(old_df = .data,
+                                             tbls = tbls,
+                                             vecs = vecs,
+                                             filter_res = filter_res,
+                                             na_action = na_action))
 
   return(res)
 }

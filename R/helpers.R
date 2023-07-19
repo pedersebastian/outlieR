@@ -42,9 +42,9 @@ outlier_MAD <- function(.data, var, threshold) {
       median_var = stats::median(!!var, na.rm = TRUE),
       min_var = min(!!var, na.rm = TRUE),
       max_var = max(!!var, na.rm = TRUE),
-      resid_median = median(abs(!!var) - median_var, na.rm = TRUE),
-      upper = median_var + resid_median * threshold,
-      lower = median_var - resid_median * threshold,
+      resid_median = median(abs(!!var - median_var), na.rm = TRUE),
+      upper = median_var + (resid_median * threshold),
+      lower = median_var - (resid_median * threshold),
       "var_type" = pillar::type_sum(!!var),
       "outlier_exist" = length(unique(out_help(!!var, upper, lower))) != 1,
       "outlier_pct" = mean(out_help(!!var, upper, lower), na.rm = TRUE),
@@ -53,7 +53,8 @@ outlier_MAD <- function(.data, var, threshold) {
       "upper_outlier" = ifelse(any(!!var > upper, na.rm = TRUE), upper, Inf),
       "lower_outlier" = ifelse(any(!!var < lower, na.rm = TRUE), lower, -Inf),
       "mode_val" = mode_vec(!!var),
-      "uniques" = length(unique(!!var))
+      "uniques" = length(unique(!!var)),
+       threshold = threshold
     )
 
   tbl
@@ -126,9 +127,11 @@ outlier_t_test <- function(.data, var, conf_int) {
                        "uniques" = length(unique(!!var))
       )
   }
+  variable_name = tbl$var
   if (tbl$uniques <4) {
     cli::cli_abort(c(
-      "x" = "Using t-test with less than 4 unique variables are not allowed",
+    #  "x" = glue::glue("Using t-test with less than 4 unique variables are not allowed"),
+      "x" = "The Variable {variable_name} have less than 4 unique values, witch is not allowed. ",
       "i" = "use another method"
     ))
   }

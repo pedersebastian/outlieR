@@ -17,5 +17,7 @@ utils::globalVariables(c(
   "lower_outlier",
   "var_type",
   "datafr",
-  "var_two"
+  "var_two",
+  "name",
+  "idxx"
 ))

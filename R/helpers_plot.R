@@ -54,7 +54,6 @@ fix_levels_outlier_var <- function(levels) {
   } else {
     high <- NA
   }
-  #
   return(list("levels" = c(low, "No Outliers", high), pal = pal))
 }
 
