@@ -1,9 +1,9 @@
-get_tbl <- function(.data, var, method, threshold, conf_level) {
+get_tbl <- function(.data, var, method, threshold, conf_int) {
   tbl <- switch(method,
     "mean_sd" = outlier_mean_sd(.data, var, threshold),
     "MAD" = outlier_MAD(.data, var, threshold),
     "IQD" = outlier_IQD(.data, var, threshold),
-    "t_test" = outlier_t_test(.data, var, conf_level)
+    "t_test" = outlier_t_test(.data, var, conf_int)
   )
   tbl
 }
@@ -84,25 +84,48 @@ outlier_IQD <- function(.data, var, threshold) {
   tbl
 }
 
-outlier_t_test <- function(.data, var, conf_level) {
-  tbl <-
-    dplyr::summarise(.data,
-      var = rlang::quo_name(var),
-      mean_var = mean(!!var, na.rm = TRUE),
-      min_var = min(!!var, na.rm = TRUE),
-      max_var = max(!!var, na.rm = TRUE),
-      upper = purrr::pluck(t.test(!!var, mu = mean_var, conf.level = conf_level), "conf.int", 2),
-      lower = purrr::pluck(t.test(!!var, mu = mean_var, conf.level = conf_level), "conf.int", 1),
-      "var_type" = pillar::type_sum(!!var),
-      "outlier_exist" = length(unique(out_help(!!var, upper, lower))) != 1,
-      "outlier_pct" = mean(out_help(!!var, upper, lower), na.rm = TRUE),
-      "na_count" = sum(is.na(!!var)),
-      "n" = dplyr::n(),
-      "upper_outlier" = ifelse(any(!!var > upper, na.rm = TRUE), upper, Inf),
-      "lower_outlier" = ifelse(any(!!var < lower, na.rm = TRUE), lower, -Inf),
-      "mode_val" = mode_vec(!!var),
-      "uniques" = length(unique(!!var))
-    )
+outlier_t_test <- function(.data, var, conf_int) {
+  if (dplyr::summarise(.data, "sd" = sd(!!var, na.rm = TRUE))[["sd"]] ==0) {
+    ## using sd to avoid confusions with variable,
+    tbl <-
+      dplyr::summarise(.data,
+                       var = rlang::quo_name(var),
+                       mean_var = mean(!!var, na.rm = TRUE),
+                       min_var = min(!!var, na.rm = TRUE),
+                       max_var = max(!!var, na.rm = TRUE),
+                       upper = NA_integer_,
+                       lower = NA_integer_,
+                       "var_type" = pillar::type_sum(!!var),
+                       "outlier_exist" = FALSE,
+                       "outlier_pct" = 0,
+                       "na_count" = sum(is.na(!!var)),
+                       "n" = dplyr::n(),
+                       "upper_outlier" = Inf,
+                       "lower_outlier" = -Inf,
+                       "mode_val" = mode_vec(!!var),
+                       "uniques" = 1)
+
+  }
+  else {
+    tbl <-
+      dplyr::summarise(.data,
+                       var = rlang::quo_name(var),
+                       mean_var = mean(!!var, na.rm = TRUE),
+                       min_var = min(!!var, na.rm = TRUE),
+                       max_var = max(!!var, na.rm = TRUE),
+                       upper = purrr::pluck(t.test(!!var, mu = mean_var, conf.level = conf_int), "conf.int", 2),
+                       lower = purrr::pluck(t.test(!!var, mu = mean_var, conf.level = conf_int), "conf.int", 1),
+                       "var_type" = pillar::type_sum(!!var),
+                       "outlier_exist" = length(unique(out_help(!!var, upper, lower))) != 1,
+                       "outlier_pct" = mean(out_help(!!var, upper, lower), na.rm = TRUE),
+                       "na_count" = sum(is.na(!!var)),
+                       "n" = dplyr::n(),
+                       "upper_outlier" = ifelse(any(!!var > upper, na.rm = TRUE), upper, Inf),
+                       "lower_outlier" = ifelse(any(!!var < lower, na.rm = TRUE), lower, -Inf),
+                       "mode_val" = mode_vec(!!var),
+                       "uniques" = length(unique(!!var))
+      )
+  }
 
   tbl
 }

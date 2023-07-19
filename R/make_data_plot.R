@@ -1,7 +1,4 @@
 ## .  DATA PREP
-
-
-
 prep_data <- function(object, type, ...) {
   if (length(attr(object, "tbls")) > 1) {
     data <- prep_data_many(object, type, ...)
@@ -83,7 +80,6 @@ prep_data_many <- function(object, type, ...) {
     "total_count" = length(vars_name),
     class = class_var
   )
-  print(class_var)
   out
 }
 

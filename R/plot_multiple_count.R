@@ -28,8 +28,9 @@ plot_multiple.outlier_lglTRUE_dblTRUE_otherFALSE_count <- function(data, ...) {
     dplyr::group_by(var) |>
     dplyr::mutate(pct = n / sum(n)) |>
     ggplot2::ggplot(aes(pct,
-                        var,
-                        fill = outlier_var)) +
+      var,
+      fill = outlier_var
+    )) +
     ggplot2::geom_col(
       width = 0.5,
       position = ggplot2::position_fill(reverse = TRUE),
@@ -99,12 +100,15 @@ plot_multiple.outlier_lglTRUE_dblFALSE_otherFALSE_count <- function(data, ...) {
 
   p <- data |>
     ggplot(aes(pct,
-               var,
-               fill = outlier_var)) +
-    ggplot2::geom_col(width = 0.5,
-                      position = ggplot2::position_fill(reverse = TRUE),
-                      color = "black",
-                      linewidth = 0.2) +
+      var,
+      fill = outlier_var
+    )) +
+    ggplot2::geom_col(
+      width = 0.5,
+      position = ggplot2::position_fill(reverse = TRUE),
+      color = "black",
+      linewidth = 0.2
+    ) +
     ggplot2::scale_x_continuous(
       labels = scales::label_percent(),
       sec.axis = ggplot2::sec_axis(
@@ -153,12 +157,15 @@ plot_multiple.outlier_lglFALSE_dblTRUE_otherFALSE_count <- function(data, ...) {
     dplyr::group_by(var) |>
     dplyr::mutate(pct = n / sum(n)) |>
     ggplot2::ggplot(aes(pct,
-                        var,
-                        fill = outlier_var)) +
-    ggplot2::geom_col(width = 0.5,
-                      position = ggplot2::position_fill(reverse = TRUE),
-                      color = "black",
-                      linewidth = 0.2) +
+      var,
+      fill = outlier_var
+    )) +
+    ggplot2::geom_col(
+      width = 0.5,
+      position = ggplot2::position_fill(reverse = TRUE),
+      color = "black",
+      linewidth = 0.2
+    ) +
     ggplot2::scale_x_continuous(
       labels = scales::label_percent(),
       sec.axis = ggplot2::sec_axis(
@@ -170,10 +177,12 @@ plot_multiple.outlier_lglFALSE_dblTRUE_otherFALSE_count <- function(data, ...) {
       )
     ) +
     ggplot2::scale_fill_manual(values = pal) +
-    ggplot2::labs(x = "Percent",
-                  y = NULL,
-                  fill = NULL,
-                  title = "Counts of continuous variables") +
+    ggplot2::labs(
+      x = "Percent",
+      y = NULL,
+      fill = NULL,
+      title = "Counts of continuous variables"
+    ) +
     theme_outlier() +
     ggplot2::theme(legend.position = "bottom")
   p

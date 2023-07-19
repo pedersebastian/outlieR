@@ -65,13 +65,12 @@ complete_helper <- function(data) {
   }
 
   if (unique(data$outlier_var) == "No Outlier (TRUE)") {
-    #data <- tibble::add_row(data, var = data$var[[1]], outlier_var = "Outlier (FALSE)", n = 0)
+    # data <- tibble::add_row(data, var = data$var[[1]], outlier_var = "Outlier (FALSE)", n = 0)
 
-    data[2, ] = data.frame( var = data$var[[1]], outlier_var = "Outlier (FALSE)", n = 0)
-
+    data[2, ] <- data.frame(var = data$var[[1]], outlier_var = "Outlier (FALSE)", n = 0)
   } else if (unique(data$outlier_var) == "No Outlier (FALSE)") {
-    data[2, ] = data.frame( var = data$var[[1]], outlier_var = "Outlier (TRUE)", n = 0)
-    #data <- tibble::add_row(data, var = data$var[[1]], outlier_var = "Outlier (TRUE)", n = 0)
+    data[2, ] <- data.frame(var = data$var[[1]], outlier_var = "Outlier (TRUE)", n = 0)
+    # data <- tibble::add_row(data, var = data$var[[1]], outlier_var = "Outlier (TRUE)", n = 0)
   } else {
     rlang::abort("Noe feil complete factors",
       .internal = TRUE

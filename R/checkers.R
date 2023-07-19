@@ -48,7 +48,7 @@ validate_cols <- function(.data, ...) {
 
 
 outlier_threshold <- function(method, threshold) {
-  if (threshold == "default") {
+  if (is.null(threshold)) {
     threshold <- switch(method,
       "mean_sd" = 3,
       "MAD" = 3,

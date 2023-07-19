@@ -16,11 +16,11 @@ filter_outlier(
 \arguments{
 \item{.data}{data.frame or tibble}
 
-\item{...}{variables to filter outlier}
+\item{...}{variable(s) to filter outlier}
 
 \item{method}{method of filter outlier.}
 
-\item{threshold}{threshold for the other methods than t-test. Default is 3 for mean and sd method and MAD method, IQD uses 2.2.}
+\item{threshold}{'NULL' for the other methods than t-test. Default is 3 for mean and sd method and MAD method, IQD uses 2.2.}
 
 \item{conf_int}{confidence interval if method is t-test}
 

@@ -1,9 +1,9 @@
 #' Outlier filter
 #'
 #' @param .data  data.frame or tibble
-#' @param ...  variables to filter outlier
+#' @param ...  variable(s) to filter outlier
 #' @param method method of filter outlier.
-#' @param threshold threshold for the other methods than t-test. Default is 3 for mean and sd method and MAD method, IQD uses 2.2.
+#' @param threshold 'NULL' for the other methods than t-test. Default is 3 for mean and sd method and MAD method, IQD uses 2.2.
 #' @param conf_int confidence interval if method is t-test
 #' @param na_action to also filter NA´s for the spesific variable(s)
 #' @export
@@ -29,30 +29,36 @@ filter_outlier.default <- function(.data, ...) {
   rlang::abort(mes)
 }
 #' @export
-filter_outlier.data.frame <- function(.data, ..., method = "mean_sd", threshold = "default", conf_int = NULL, na_action = "keep") {
+filter_outlier.data.frame <- function(.data, ..., method = "mean_sd", threshold = NULL, conf_int = NULL, na_action = "keep") {
   method <- match.arg(method, c("mean_sd", "MAD", "IQD", "t_test"), several.ok = FALSE)
   na_action <- match.arg(na_action, c("keep", "omit"), several.ok = FALSE)
 
   if (!method %in% c("t_test")) {
     threshold <-
       outlier_threshold(method, threshold)
-  } else if (method == "t_test" & is.null(conf_level)) {
-    conf_level <- 0.95
+  } else if (method == "t_test" & !is.numeric(conf_int)) {
+    conf_int <- 0.95
+  }
+  else if (method == "t_test" & !is.numeric(conf_int)) {
+    conf_int <- 0.95
   }
 
 
   check_outlier(.data, ..., method = method, threshold = threshold, conf_int = conf_int)
+  if (is.null(conf_int)) {
+    conf_int <- 0.95
+  }
 
   vars <- rlang::names2(select_loc(..., .data = .data)) |>
     rlang::syms() |>
     rlang::as_quosures(env = rlang::current_env())
 
-  filter_outlier.impl(.data, vars, method = method, threshold = threshold, conf_level = conf_level, na_action = na_action)
+  filter_outlier.impl(.data, vars, method = method, threshold = threshold, conf_int = conf_int, na_action = na_action)
 }
 
 
-filter_outlier.impl <- function(.data, vars, method, threshold, conf_level, na_action) {
-  tbls <- purrr::map(vars, ~ get_tbl(.data, .x, method = method, threshold = threshold, conf_level = conf_level))
+filter_outlier.impl <- function(.data, vars, method, threshold, conf_int, na_action) {
+  tbls <- purrr::map(vars, ~ get_tbl(.data, .x, method = method, threshold = threshold, conf_int = conf_int))
   vecs <- list()
   for (i in seq_along(vars)) {
     vec <- purrr::map_lgl(.data[[tbls[[i]]$var]], ~ out_help(.x, tbls[[i]]$upper, tbls[[i]]$lower))

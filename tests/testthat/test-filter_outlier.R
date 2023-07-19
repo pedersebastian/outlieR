@@ -2,9 +2,14 @@ set.seed(123)
 mtcars["V1"] <- c(rnorm(29), -100, 100, NA)
 set.seed(234)
 mtcars["V2"] <- c(-50, 32, rnorm(30))
-set.seed(345)
 mtcars["V3"] <- c(rep(TRUE, 31), FALSE)
-
+mtcars["V4"] = c(rep(2, 31), 100)
+mtcars["V5"] = c(rep(TRUE, 16), rep(FALSE, 16))
+mtcars["V6"] = c(rep(FALSE, 31), TRUE)
+mtcars["V7"] = c(rep(2, 31), -100)
+mtcars["V8"]  = rep(FALSE, 32)
+mtcars["V9"]  = c(rep(FALSE, 15), rep(NA, 16),TRUE)
+mtcars["V10"]  = rep(TRUE, 32)
 
 
 filtred_V1 <-
@@ -33,6 +38,8 @@ filtred_everything <-
 date_tbl <-
   mtcars |>
   dplyr::mutate(date_var = as.Date(19551:19582, origin = "1970-01-01"))
+
+
 
 
 test_that("equals", {
