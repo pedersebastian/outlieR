@@ -1,7 +1,6 @@
 plot_multiple.outlier_lglTRUE_dblTRUE_otherFALSE_count <- function(data, ...) {
   # TRUE TRUE
 
-
   summary_tbl <-
     data$summary_tbl
   rows <-
@@ -28,7 +27,9 @@ plot_multiple.outlier_lglTRUE_dblTRUE_otherFALSE_count <- function(data, ...) {
     dplyr::count(var, var_type, outlier_var) |>
     dplyr::group_by(var) |>
     dplyr::mutate(pct = n / sum(n)) |>
-    ggplot2::ggplot(aes(pct, var, fill = outlier_var)) +
+    ggplot2::ggplot(aes(pct,
+                        var,
+                        fill = outlier_var)) +
     ggplot2::geom_col(
       width = 0.5,
       position = ggplot2::position_fill(reverse = TRUE),
@@ -51,7 +52,7 @@ plot_multiple.outlier_lglTRUE_dblTRUE_otherFALSE_count <- function(data, ...) {
       panel.grid.major.y = ggplot2::element_blank()
     ) +
     ggplot2::labs(
-      title = NULL,
+      title = "Counts for outliers logical and numeric variables ",
       fill = NULL,
       x = "Percent",
       y = NULL
@@ -67,14 +68,9 @@ plot_multiple.outlier_lglTRUE_dblTRUE_otherFALSE_count <- function(data, ...) {
 plot_multiple.outlier_lglTRUE_dblFALSE_otherFALSE_count <- function(data, ...) {
   # KUN LGL
 
-
   summary_tbl <- dplyr::filter(data$summary_tbl, var_type == "lgl")
   rows <- max(summary_tbl$n)
   data <- data$dat$lgl_data
-
-  # outlier_lglFALSE_dblTRUE_otherFALSE_count
-
-
 
   data <-
     data |>
@@ -102,8 +98,13 @@ plot_multiple.outlier_lglTRUE_dblFALSE_otherFALSE_count <- function(data, ...) {
 
 
   p <- data |>
-    ggplot(aes(pct, var, fill = outlier_var)) +
-    ggplot2::geom_col(width = 0.5, position = ggplot2::position_fill(reverse = TRUE), color = "black", linewidth = 0.2) +
+    ggplot(aes(pct,
+               var,
+               fill = outlier_var)) +
+    ggplot2::geom_col(width = 0.5,
+                      position = ggplot2::position_fill(reverse = TRUE),
+                      color = "black",
+                      linewidth = 0.2) +
     ggplot2::scale_x_continuous(
       labels = scales::label_percent(),
       sec.axis = ggplot2::sec_axis(
@@ -121,7 +122,7 @@ plot_multiple.outlier_lglTRUE_dblFALSE_otherFALSE_count <- function(data, ...) {
       panel.grid.major.y = ggplot2::element_blank()
     ) +
     ggplot2::labs(
-      title = NULL,
+      title = "Count for outliers logical variables",
       fill = NULL,
       x = "Percent",
       y = NULL
@@ -151,8 +152,13 @@ plot_multiple.outlier_lglFALSE_dblTRUE_otherFALSE_count <- function(data, ...) {
     dplyr::count(outlier_var, var) |>
     dplyr::group_by(var) |>
     dplyr::mutate(pct = n / sum(n)) |>
-    ggplot2::ggplot(aes(pct, var, fill = outlier_var)) +
-    ggplot2::geom_col(width = 0.5, position = ggplot2::position_fill(reverse = TRUE), color = "black", linewidth = 0.2) +
+    ggplot2::ggplot(aes(pct,
+                        var,
+                        fill = outlier_var)) +
+    ggplot2::geom_col(width = 0.5,
+                      position = ggplot2::position_fill(reverse = TRUE),
+                      color = "black",
+                      linewidth = 0.2) +
     ggplot2::scale_x_continuous(
       labels = scales::label_percent(),
       sec.axis = ggplot2::sec_axis(
@@ -164,7 +170,10 @@ plot_multiple.outlier_lglFALSE_dblTRUE_otherFALSE_count <- function(data, ...) {
       )
     ) +
     ggplot2::scale_fill_manual(values = pal) +
-    ggplot2::labs(x = "Percent", y = NULL, fill = NULL, title = "Counts of continuous variables") +
+    ggplot2::labs(x = "Percent",
+                  y = NULL,
+                  fill = NULL,
+                  title = "Counts of continuous variables") +
     theme_outlier() +
     ggplot2::theme(legend.position = "bottom")
   p

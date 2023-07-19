@@ -25,7 +25,8 @@ outlier_mean_sd <- function(.data, var, threshold) {
       "n" = dplyr::n(),
       "upper_outlier" = ifelse(any(!!var > upper, na.rm = TRUE), upper, Inf),
       "lower_outlier" = ifelse(any(!!var < lower, na.rm = TRUE), lower, -Inf),
-      "mode_val" = mode_vec(!!var)
+      "mode_val" = mode_vec(!!var),
+      "uniques" = length(unique(!!var))
     )
   tbl
 }
@@ -51,7 +52,8 @@ outlier_MAD <- function(.data, var, threshold) {
       "n" = dplyr::n(),
       "upper_outlier" = ifelse(any(!!var > upper, na.rm = TRUE), upper, Inf),
       "lower_outlier" = ifelse(any(!!var < lower, na.rm = TRUE), lower, -Inf),
-      "mode_val" = mode_vec(!!var)
+      "mode_val" = mode_vec(!!var),
+      "uniques" = length(unique(!!var))
     )
 
   tbl
@@ -75,7 +77,8 @@ outlier_IQD <- function(.data, var, threshold) {
       "n" = dplyr::n(),
       "upper_outlier" = ifelse(any(!!var > upper, na.rm = TRUE), upper, Inf),
       "lower_outlier" = ifelse(any(!!var < lower, na.rm = TRUE), lower, -Inf),
-      "mode_val" = mode_vec(!!var)
+      "mode_val" = mode_vec(!!var),
+      "uniques" = length(unique(!!var))
     )
 
   tbl
@@ -97,7 +100,8 @@ outlier_t_test <- function(.data, var, conf_level) {
       "n" = dplyr::n(),
       "upper_outlier" = ifelse(any(!!var > upper, na.rm = TRUE), upper, Inf),
       "lower_outlier" = ifelse(any(!!var < lower, na.rm = TRUE), lower, -Inf),
-      "mode_val" = mode_vec(!!var)
+      "mode_val" = mode_vec(!!var),
+      "uniques" = length(unique(!!var))
     )
 
   tbl

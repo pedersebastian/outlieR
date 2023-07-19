@@ -5,7 +5,7 @@
 #' @param method method of filter outlier.
 #' @param threshold threshold for the other methods than t-test. Default is 3 for mean and sd method and MAD method, IQD uses 2.2.
 #' @param conf_int confidence interval if method is t-test
-#' @param na_action to also filter NA´s ?
+#' @param na_action to also filter NA´s for the spesific variable(s)
 #' @export
 #' @return data.frame or tibble
 #' @examples
@@ -17,7 +17,7 @@
 #'
 #' paste(nrow(mtcars), "rows before filtered and", nrow(filtred), "rows after")
 #' # "32 rows before filtered and 28 rows after"
-filter_outlier <- function(.data, ..., method = c("mean_sd", "MAD", "IQD", "t_test"), threshold = "default", conf_int = NULL, na_action = c("keep", "omit")) {
+filter_outlier <- function(.data, ..., method = "mean_sd", threshold = "default", conf_int = NULL, na_action = "keep") {
   if (missing(.data)) {
     rlang::abort(".data must be supplied")
   }
@@ -29,7 +29,7 @@ filter_outlier.default <- function(.data, ...) {
   rlang::abort(mes)
 }
 #' @export
-filter_outlier.data.frame <- function(.data, ..., method = c("mean_sd", "MAD", "IQD", "t_test"), threshold = "default", conf_int = NULL, na_action = c("keep", "omit")) {
+filter_outlier.data.frame <- function(.data, ..., method = "mean_sd", threshold = "default", conf_int = NULL, na_action = "keep") {
   method <- match.arg(method, c("mean_sd", "MAD", "IQD", "t_test"), several.ok = FALSE)
   na_action <- match.arg(na_action, c("keep", "omit"), several.ok = FALSE)
 

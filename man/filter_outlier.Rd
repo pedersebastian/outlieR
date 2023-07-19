@@ -7,10 +7,10 @@
 filter_outlier(
   .data,
   ...,
-  method = c("mean_sd", "MAD", "IQD", "t_test"),
+  method = "mean_sd",
   threshold = "default",
   conf_int = NULL,
-  na_action = c("keep", "omit")
+  na_action = "keep"
 )
 }
 \arguments{
@@ -24,7 +24,7 @@ filter_outlier(
 
 \item{conf_int}{confidence interval if method is t-test}
 
-\item{na_action}{to also filter NA´s ?}
+\item{na_action}{to also filter NA´s for the spesific variable(s)}
 }
 \value{
 data.frame or tibble

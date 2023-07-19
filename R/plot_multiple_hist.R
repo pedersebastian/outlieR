@@ -12,11 +12,18 @@ plot_multiple.default <- function(data, ...) {
 ################################################################################
 plot_multiple.outlier_lglTRUE_dblTRUE_otherFALSE_histogram <- function(data, ...) {
   # begge
-  mes <- get_errormes(class(data)[[2]])
-  cli::cli_abort(c(
-    "x" = mes,
-    "i" = "Try a single plot"
-  ))
+  if (attr(data,"total_count") > 8) {
+    rlang::warn("May be ugly due to many plots")
+  }
+
+
+  p1 <- plot_multiple.outlier_lglTRUE_dblFALSE_otherFALSE_histogram(data)
+  p2 <- plot_multiple.outlier_lglFALSE_dblTRUE_otherFALSE_histogram(data)
+
+ p <- patchwork::wrap_plots(
+   p1, p2, nrow = 2
+ )
+ p
 }
 ################################################################################
 #                            #                        #                        #
@@ -24,13 +31,10 @@ plot_multiple.outlier_lglTRUE_dblTRUE_otherFALSE_histogram <- function(data, ...
 plot_multiple.outlier_lglTRUE_dblFALSE_otherFALSE_histogram <- function(data, ...) {
   # kun lgl
 
-
   summary_tbl <-
     data$summary_tbl
-
   data <-
     data$dat$lgl_data
-
   rows <- max(summary_tbl$n, na.rm = TRUE)
 
 
@@ -65,7 +69,9 @@ plot_multiple.outlier_lglTRUE_dblFALSE_otherFALSE_histogram <- function(data, ..
 
 
   p <- data |>
-    ggplot(aes(outlier_var, pct, fill = outlier_var)) +
+    ggplot2::ggplot(ggplot2::aes(outlier_var,
+               pct,
+               fill = outlier_var)) +
     ggplot2::geom_col(
       width = 0.5,
       color = "black",
@@ -86,7 +92,7 @@ plot_multiple.outlier_lglTRUE_dblFALSE_otherFALSE_histogram <- function(data, ..
     ggplot2::theme(
       legend.position = "bottom",
       panel.grid.major.y = ggplot2::element_blank(),
-      axis.text.x = element_text(size = structure(0.8, class = "rel"))
+      axis.text.x = ggplot2::element_text(size = structure(0.8, class = "rel"))
     ) +
     ggplot2::labs(
       title = NULL,
@@ -95,20 +101,24 @@ plot_multiple.outlier_lglTRUE_dblFALSE_otherFALSE_histogram <- function(data, ..
       y = NULL
     ) +
     ggplot2::scale_fill_manual(values = pal) +
-    ggplot2::facet_wrap(vars(var), scales = "free_x")
+    ggplot2::facet_wrap(ggplot2::vars(var), scales = "free_x")
   p
 }
 ################################################################################
 #                            #                        #                        #
 ################################################################################
 plot_multiple.outlier_lglFALSE_dblTRUE_otherFALSE_histogram <- function(data, ...) {
+
+
+
   rows <- attr(data, "dbl")
   summary_tbl <- dplyr::filter(data$summary_tbl, var_type == "dbl")
   data <- data$dat$dbl_data
 
   p <- ggplot2::ggplot(data = data) +
-    ggplot2::geom_histogram(ggplot2::aes(value, fill = outlier_var),
-      binwidth = 2,
+    ggplot2::geom_histogram(ggplot2::aes(value,
+                                         fill = outlier_var),
+      binwidth = if(min(summary_tbl$uniques, na.rm = TRUE)<4) 0.9 else 2,
       boundary = 0,
       na.rm = TRUE,
       color = "black",
@@ -116,9 +126,12 @@ plot_multiple.outlier_lglFALSE_dblTRUE_otherFALSE_histogram <- function(data, ..
     ) +
     ggplot2::facet_wrap(ggplot2::vars(var),
       scales = "free",
-      nrow = rows
+      nrow = if (rows <4) rows else NULL
     ) +
-    ggplot2::labs(x = NULL, y = NULL, fill = NULL, title = glue::glue("Histogram")) +
+    ggplot2::labs(x = NULL,
+                  y = NULL,
+                  fill = NULL,
+                  title = glue::glue("Histogram of continuous outliers")) +
     theme_outlier() +
     ggplot2::theme(legend.position = "bottom") +
     ggplot2::geom_rect(
@@ -132,8 +145,12 @@ plot_multiple.outlier_lglFALSE_dblTRUE_otherFALSE_histogram <- function(data, ..
       alpha = 0.5,
       fill = col_high
     ) +
-    ggplot2::geom_vline(data = summary_tbl, ggplot2::aes(xintercept = .data$lower_outlier), lty = 2) +
-    ggplot2::geom_vline(data = summary_tbl, ggplot2::aes(xintercept = .data$upper_outlier), lty = 2) +
+    ggplot2::geom_vline(data = summary_tbl,
+                        ggplot2::aes(xintercept = .data$lower_outlier),
+                        lty = 2) +
+    ggplot2::geom_vline(data = summary_tbl,
+                        ggplot2::aes(xintercept = .data$upper_outlier),
+                        lty = 2) +
     ggplot2::geom_rect(
       data = summary_tbl,
       ggplot2::aes(

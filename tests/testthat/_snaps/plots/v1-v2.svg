@@ -571,6 +571,6 @@
 <text x='294.07' y='559.43' style='font-size: 8.80px; font-family: sans;' textLength='39.37px' lengthAdjust='spacingAndGlyphs'>Outlier (&lt;)</text>
 <text x='361.67' y='559.43' style='font-size: 8.80px; font-family: sans;' textLength='39.62px' lengthAdjust='spacingAndGlyphs'>No Outlier</text>
 <text x='429.53' y='559.43' style='font-size: 8.80px; font-family: sans;' textLength='39.37px' lengthAdjust='spacingAndGlyphs'>Outlier (&gt;)</text>
-<text x='367.36' y='12.69' text-anchor='middle' style='font-size: 15.00px; font-family: sans;' textLength='68.36px' lengthAdjust='spacingAndGlyphs'>Histogram</text>
+<text x='367.36' y='12.69' text-anchor='middle' style='font-size: 15.00px; font-family: sans;' textLength='214.30px' lengthAdjust='spacingAndGlyphs'>Histogram of continuous outliers</text>
 </g>
 </svg>
