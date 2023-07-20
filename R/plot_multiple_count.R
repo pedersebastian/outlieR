@@ -141,7 +141,7 @@ plot_multiple.outlier_lglTRUE_dblFALSE_otherFALSE_count <- function(data, ...) {
 plot_multiple.outlier_lglFALSE_dblTRUE_otherFALSE_count <- function(data, ...) {
   # Kun dbl
 
-  summary_tbl <- dplyr::filter(data$summary_tbl, var_type == "dbl")
+  summary_tbl <- dplyr::filter(data$summary_tbl, var_type %in% c("dbl", "int"))
   rows <- max(summary_tbl$n)
   data <- data$dat$dbl_data
 
