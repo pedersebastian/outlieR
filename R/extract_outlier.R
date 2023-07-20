@@ -40,7 +40,7 @@ extract_outlier_logical.impl <- function(x) {
 
   out <-
     structure(
-    attr(x, "filter_res"),
+    !attr(x, "filter_res"),
     class = c("logical", "extract.logical"),
     outlier_data = attributes(x),
     filtred_data = x)

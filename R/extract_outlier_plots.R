@@ -6,7 +6,7 @@ autoplot.extract.logical <- function(object, ...) {
 
   new_vec <-
     atri$vecs |>
-    purrr::map(~tidyr::replace_na(.x, if(atri$na_action == "keep") FALSE else TRUE))
+    purrr::map(~tidyr::replace_na(.x, if(atri$na_action == "keep") TRUE else FALSE))
 
 
   data <-

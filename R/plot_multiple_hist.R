@@ -111,7 +111,7 @@ plot_multiple.outlier_lglTRUE_dblFALSE_otherFALSE_histogram <- function(data, ..
 ################################################################################
 plot_multiple.outlier_lglFALSE_dblTRUE_otherFALSE_histogram <- function(data, ...) {
   rows <- attr(data, "dbl")
-  summary_tbl <- dplyr::filter(data$summary_tbl, var_type == "dbl")
+  summary_tbl <- dplyr::filter(data$summary_tbl, var_type %in% c("dbl", "int"))
   data <- data$dat$dbl_data
 
   p <- ggplot2::ggplot(data = data) +
@@ -119,7 +119,8 @@ plot_multiple.outlier_lglFALSE_dblTRUE_otherFALSE_histogram <- function(data, ..
       ggplot2::aes(value,
         fill = outlier_var
       ),
-      binwidth = if (min(summary_tbl$uniques, na.rm = TRUE) < 4) 0.9 else 2,
+      bins = 50,
+      #binwidth = if (min(summary_tbl$uniques, na.rm = TRUE) < 4) 0.9 else 2,
       boundary = 0,
       na.rm = TRUE,
       color = "black",
@@ -173,9 +174,8 @@ plot_multiple.outlier_lglFALSE_dblTRUE_otherFALSE_histogram <- function(data, ..
 
 
   pal <- c(col_mid)
-  if (any(is.finite(summary_tbl$lower_outlier))) pal <- append(pal, col_high)
-  if (any(is.finite(summary_tbl$upper_outlier))) pal <- append(pal, col_low, after = 0)
-
+  if (any(is.finite(summary_tbl$upper_outlier))) pal <- append(pal, col_high)
+  if (any(is.finite(summary_tbl$lower_outlier))) pal <- append(pal, col_low, after = 0)
   p <- p + ggplot2::scale_fill_manual(values = pal)
   p
 }

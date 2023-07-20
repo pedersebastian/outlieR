@@ -1,10 +1,18 @@
 get_tbl <- function(.data, var, method, threshold, conf_int) {
-  tbl <- switch(method,
-    "mean_sd" = outlier_mean_sd(.data, var, threshold),
-    "MAD" = outlier_MAD(.data, var, threshold),
-    "IQD" = outlier_IQD(.data, var, threshold),
-    "t_test" = outlier_t_test(.data, var, conf_int)
-  )
+  var_type = pillar::type_sum(.data[[rlang::quo_name(var)]])
+  if (var_type %in% c("lgl", "dbl", "int")) {
+    tbl <- switch(method,
+                  "mean_sd" = outlier_mean_sd(.data, var, threshold),
+                  "MAD" = outlier_MAD(.data, var, threshold),
+                  "IQD" = outlier_IQD(.data, var, threshold),
+                  "t_test" = outlier_t_test(.data, var, conf_int)
+    )
+  }
+  else if (var_type == "fct") {
+    rlang::abort("not")
+  }
+
+
   tbl
 }
 
@@ -59,6 +67,19 @@ outlier_MAD <- function(.data, var, threshold) {
 
   tbl
 }
+#
+# Interquartile range method
+#
+# Sort your data from low to high
+# Identify the first quartile (Q1), the median, and the third quartile (Q3).
+# Calculate your IQR = Q3 – Q1
+# Calculate your upper fence = Q3 + (1.5 * IQR)
+# Calculate your lower fence = Q1 – (1.5 * IQR)
+# Use your fences to highlight any outliers, all values that fall outside your fences.
+
+#ENDRE threshold til threshold/2???
+
+
 outlier_IQD <- function(.data, var, threshold) {
   tbl <-
     dplyr::summarise(.data,
