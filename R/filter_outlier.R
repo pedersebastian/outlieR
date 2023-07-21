@@ -54,7 +54,7 @@ filter_outlier.data.frame <- function(.data, ..., control = control_filter_outli
 
 
   filter_outlier.impl(.data,
-    vars,
+    vars = vars,
     num_method = num_method,
     discrete_method = discrete_method,
     threshold = threshold,
@@ -71,12 +71,15 @@ filter_outlier.data.frame <- function(.data, ..., control = control_filter_outli
 
 filter_outlier.impl <- function(.data, vars, num_method, discrete_method, threshold, conf_int, na_action, prop, n, freq, ties_method, min_times) {
   tbls <- purrr::map(vars, ~ get_tbl(.data, .x, num_method = num_method, discrete_method = discrete_method, threshold = threshold, conf_int = conf_int, prop = prop, n = n, freq = freq, ties_method = ties_method, min_times = min_times))
+  print(tbls)
+
+
   vecs <- list()
   for (i in seq_along(vars)) {
     if (tbls[[i]]$var_type %in% c("lgl", "dbl", "int")) {
       vec <- purrr::map_lgl(.data[[tbls[[i]]$var]], ~ out_help(.x, tbls[[i]]$upper, tbls[[i]]$lower))
     } else if (tbls[[i]]$var_type %in% c("fct", "chr")) {
-      vec <- tbls[[i]]$outlier_test[[1]]
+      vec <- !tbls[[i]]$outlier_vec[[1]]
     }
 
     vecs[[i]] <- vec

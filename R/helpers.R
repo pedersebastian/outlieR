@@ -8,7 +8,7 @@ get_tbl <- function(.data, var, num_method, discrete_method,  threshold, conf_in
       "t_test" = outlier_t_test(.data, var, conf_int)
     )
   } else if (var_type %in% c("fct", "chr")) {
-    tbl <- factor_methods(.data, var, discrete_method, prop, n, freq, ties_method)
+    tbl <- factor_methods(.data, var = var, discrete_method = discrete_method, prop = prop, n = n, freq = freq, ties_method = ties_method)
   }
 
   tbl
