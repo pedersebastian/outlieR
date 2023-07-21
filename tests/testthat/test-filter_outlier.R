@@ -31,11 +31,11 @@ filtred_V1_omit <-
 
 filtred_V_ALL_omit <-
   mtcars |>
-  filter_outlier(V1, V2, V3,  control = control_filter_outlier(numeric_method = "mean_sd", na_action = "omit"))
+  filter_outlier(V1, V2, V3, control = control_filter_outlier(numeric_method = "mean_sd", na_action = "omit"))
 
 filtred_everything <-
   mtcars |>
-  filter_outlier(everything(),  control = control_filter_outlier(na_action = "keep"))
+  filter_outlier(everything(), control = control_filter_outlier(na_action = "keep"))
 
 date_tbl <-
   mtcars |>
@@ -61,10 +61,10 @@ test_that("warnings and errors", {
   expect_error(filter_outlier(mtcars, "hei"))
   expect_error(filter_outlier())
   expect_error(filter_outlier(mtcars, fakevar))
-  expect_warning(filter_outlier(mtcars, V1, V2, V3,  control = control_filter_outlier(threshold = 10000)))
-  expect_error(filter_outlier(mtcars, V1, V2, V3,  control = control_filter_outlier(numeric_method = "mean_sd", na_action = "djsa")))
+  expect_warning(filter_outlier(mtcars, V1, V2, V3, control = control_filter_outlier(threshold = 10000)))
+  expect_error(filter_outlier(mtcars, V1, V2, V3, control = control_filter_outlier(numeric_method = "mean_sd", na_action = "djsa")))
   expect_error(filter_outlier(mtcars, V1, V2, V3, control = control_filter_outlier(numeric_method = "t_test", conf_int = 8, na_action = "omit")))
   ## Ikke implementert faktorer
-  #expect_error(dplyr::mutate(mtcars, am = factor(am)) |> filter_outlier(am))
+  # expect_error(dplyr::mutate(mtcars, am = factor(am)) |> filter_outlier(am))
   expect_error(filter_outlier(date_tbl, date_var))
 })

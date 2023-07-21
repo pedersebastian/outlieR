@@ -6,9 +6,7 @@ check_outlier <- function(.data, ..., discrete_method, prop, n, freq, min_times)
 
   validate_cols(.data, ...)
 
-  ##LAGE NOE SOM SJEKKER OM n/freq er ok mtp på data (ikke prop)
-
-
+  ## LAGE NOE SOM SJEKKER OM n/freq er ok mtp på data (ikke prop)
 }
 
 

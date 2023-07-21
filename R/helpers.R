@@ -1,4 +1,4 @@
-get_tbl <- function(.data, var, num_method, threshold, conf_int, prop, n, freq,  ties_method, min_times) {
+get_tbl <- function(.data, var, num_method, threshold, conf_int, prop, n, freq, ties_method, min_times) {
   var_type <- pillar::type_sum(.data[[rlang::quo_name(var)]])
   if (var_type %in% c("lgl", "dbl", "int")) {
     tbl <- switch(num_method,
@@ -8,7 +8,7 @@ get_tbl <- function(.data, var, num_method, threshold, conf_int, prop, n, freq, 
       "t_test" = outlier_t_test(.data, var, conf_int)
     )
   } else if (var_type %in% c("fct", "chr")) {
-    tbl <- factor_methods(.data, var,discrete_method,  prop, n, freq, ties_methodr)
+    tbl <- factor_methods(.data, var, discrete_method, prop, n, freq, ties_methodr)
   }
 
   tbl
@@ -148,7 +148,6 @@ outlier_t_test <- function(.data, var, conf_int) {
   variable_name <- tbl$var
   if (tbl$uniques < 4) {
     cli::cli_abort(c(
-      #  "x" = glue::glue("Using t-test with less than 4 unique variables are not allowed"),
       "x" = "The Variable {variable_name} have less than 4 unique values, witch is not allowed. ",
       "i" = "use another method"
     ))
@@ -167,6 +166,6 @@ out_help <- function(number, upper, lower) {
 }
 
 
-factor_helper <- function(x, outlier_vars) {
-  unlist(map(x, ~ .x %in% outlier_vars))
-}
+# factor_helper <- function(x, outlier_vars) {
+#   unlist(map(x, ~ .x %in% outlier_vars))
+# }

@@ -22,9 +22,7 @@ control_filter_outlier <- function(numeric_method = "mean_sd",
                                    freq = NULL,
                                    min_times = NULL,
                                    ties_method = "min",
-                                   na_action = "keep"
-                                   ) {
-
+                                   na_action = "keep") {
   ## fix args
   if (is.null(numeric_method)) {
     numeric_method <- "mean_sd"
@@ -35,7 +33,7 @@ control_filter_outlier <- function(numeric_method = "mean_sd",
   if (is.null(ties_method)) {
     ties_method <- "min"
   }
-  if (is.null(na_action)){
+  if (is.null(na_action)) {
     na_action <- "keep"
   }
 
@@ -44,10 +42,12 @@ control_filter_outlier <- function(numeric_method = "mean_sd",
   na_action <- match.arg(na_action, c("keep", "omit"), several.ok = FALSE)
   discrete_method <- match.arg(discrete_method, c("prop", "n", "low_freq", "min_times"))
 
-  ties_method = match.arg(ties_method, c("min",
-                  "average", "first", "last", "random", "max"))
+  ties_method <- match.arg(ties_method, c(
+    "min",
+    "average", "first", "last", "random", "max"
+  ))
 
-  ####NUM
+  #### NUM
   numeric_or_null(threshold)
   numeric_or_null(conf_int)
   numeric_or_null(prop)
@@ -73,10 +73,9 @@ control_filter_outlier <- function(numeric_method = "mean_sd",
   if (is.null(prop)) prop <- 0.05
   if (is.null(conf_int)) conf_int <- 0.95
 
-  if (prop<=0 | prop > 1) {
-    cli::cli_abort(c("x"= "prop for factors must be betweeen 0 and 1"))
-  }
-  else if (prop > 0.5) {
+  if (prop <= 0 | prop > 1) {
+    cli::cli_abort(c("x" = "prop for factors must be betweeen 0 and 1"))
+  } else if (prop > 0.5) {
     rlang::warn(glue::glue("{prop} is filtering over 50 % of data.. you sure?"))
   }
 

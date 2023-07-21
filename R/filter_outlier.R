@@ -30,25 +30,23 @@ filter_outlier.default <- function(.data, ...) {
 }
 #' @export
 filter_outlier.data.frame <- function(.data, ..., control = control_filter_outlier()) {
-
   if (!inherits(control, "control_filter_outlier")) {
     cli::cli_abort()
-  }
-  else {
-    num_method = control$numeric_method
-    discrete_method = control$discrete_method
-    threshold = control$threshold
-    conf_int = control$conf_int
-    prop = control$prop
-    n = control$n
-    freq = control$freq
-    ties_method = control$ties_method
-    na_action = control$na_action
-    min_times = control$min_times
+  } else {
+    num_method <- control$numeric_method
+    discrete_method <- control$discrete_method
+    threshold <- control$threshold
+    conf_int <- control$conf_int
+    prop <- control$prop
+    n <- control$n
+    freq <- control$freq
+    ties_method <- control$ties_method
+    na_action <- control$na_action
+    min_times <- control$min_times
   }
 
 
-  #fortsatt med 'alle' fordi skal sjekke med om det er greit å bruke 'n' og 'sånn'
+  # fortsatt med 'alle' fordi skal sjekke med om det er greit å bruke 'n' og 'sånn'
   check_outlier(.data, ..., discrete_method = discrete_method, prop = prop, n = n, freq = freq, min_times = min_times)
 
 
@@ -58,16 +56,17 @@ filter_outlier.data.frame <- function(.data, ..., control = control_filter_outli
 
 
   filter_outlier.impl(.data,
-                      vars,
-                      num_method = num_method,
-                      threshold = threshold,
-                      conf_int = conf_int,
-                      na_action = na_action,
-                      prop = prop,
-                      n = n,
-                      freq = freq,
-                      ties_method = ties_method,
-                      min_times = min_times)
+    vars,
+    num_method = num_method,
+    threshold = threshold,
+    conf_int = conf_int,
+    na_action = na_action,
+    prop = prop,
+    n = n,
+    freq = freq,
+    ties_method = ties_method,
+    min_times = min_times
+  )
 }
 
 
@@ -77,9 +76,8 @@ filter_outlier.impl <- function(.data, vars, num_method, threshold, conf_int, na
   for (i in seq_along(vars)) {
     if (tbls[[i]]$var_type %in% c("lgl", "dbl", "int")) {
       vec <- purrr::map_lgl(.data[[tbls[[i]]$var]], ~ out_help(.x, tbls[[i]]$upper, tbls[[i]]$lower))
-    }
-    else if (tbls[[i]]$var_type %in% c("fct", "chr")) {
-      vec = tbls[[i]]$outlier_test[[1]]
+    } else if (tbls[[i]]$var_type %in% c("fct", "chr")) {
+      vec <- tbls[[i]]$outlier_test[[1]]
     }
 
     vecs[[i]] <- vec
