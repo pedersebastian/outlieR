@@ -2,11 +2,14 @@
 #'
 #' @param numeric_method dd
 #' @param discrete_method m
-#' @param threshold for some numeric methods
+#' @param threshold 'NULL' for the other methods than t-test. Default is 3 for mean and sd method and MAD method, IQD uses 2.2.
 #' @param conf_int conf int for t-test
-#' @param prop propotion of factors/char (0 - 1)
+#' @param prop proportion of factors/char (0 - 1)
 #' @param ties_method factors
 #' @param na_action "keep" NA is the default
+#' @param n n if
+#' @param freq f
+#' @param min_times  m
 #'
 #' @return control_object
 #' @export
@@ -38,6 +41,7 @@ control_filter_outlier <- function(numeric_method = "mean_sd",
   }
 
 
+
   num_method <- match.arg(numeric_method, c("mean_sd", "MAD", "IQD", "t_test"), several.ok = FALSE)
   na_action <- match.arg(na_action, c("keep", "omit"), several.ok = FALSE)
   discrete_method <- match.arg(discrete_method, c("prop", "n", "low_freq", "min_times"))
@@ -46,6 +50,8 @@ control_filter_outlier <- function(numeric_method = "mean_sd",
     "min",
     "average", "first", "last", "random", "max"
   ))
+
+
 
   #### NUM
   numeric_or_null(threshold)

@@ -19,5 +19,10 @@ utils::globalVariables(c(
   "datafr",
   "var_two",
   "name",
-  "idxx"
+  "idxx",
+  "non_outlier_vars" ,
+  "outlier_pct",
+  "outlier_vars",
+  "outlier_vec",
+  "unique_vars"
 ))

@@ -2,10 +2,8 @@
 #'
 #' @param .data  data.frame or tibble
 #' @param ...  variable(s) to filter outlier
-#' @param num_method num_method of filter outlier.
-#' @param threshold 'NULL' for the other methods than t-test. Default is 3 for mean and sd method and MAD method, IQD uses 2.2.
-#' @param conf_int confidence interval if method is t-test
-#' @param na_action to also filter NA´s for the spesific variable(s)
+#' @param control control_obj
+
 #' @export
 #' @return data.frame or tibble
 #' @examples
@@ -58,6 +56,7 @@ filter_outlier.data.frame <- function(.data, ..., control = control_filter_outli
   filter_outlier.impl(.data,
     vars,
     num_method = num_method,
+    discrete_method = discrete_method,
     threshold = threshold,
     conf_int = conf_int,
     na_action = na_action,
@@ -70,8 +69,8 @@ filter_outlier.data.frame <- function(.data, ..., control = control_filter_outli
 }
 
 
-filter_outlier.impl <- function(.data, vars, num_method, threshold, conf_int, na_action, prop, n, freq, ties_method, min_times) {
-  tbls <- purrr::map(vars, ~ get_tbl(.data, .x, num_method = num_method, threshold = threshold, conf_int = conf_int, prop = prop, n = n, freq = freq, ties_method = ties_method, min_times = min_times))
+filter_outlier.impl <- function(.data, vars, num_method, discrete_method, threshold, conf_int, na_action, prop, n, freq, ties_method, min_times) {
+  tbls <- purrr::map(vars, ~ get_tbl(.data, .x, num_method = num_method, discrete_method = discrete_method, threshold = threshold, conf_int = conf_int, prop = prop, n = n, freq = freq, ties_method = ties_method, min_times = min_times))
   vecs <- list()
   for (i in seq_along(vars)) {
     if (tbls[[i]]$var_type %in% c("lgl", "dbl", "int")) {

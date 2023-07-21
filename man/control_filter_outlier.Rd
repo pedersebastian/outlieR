@@ -22,11 +22,17 @@ control_filter_outlier(
 
 \item{discrete_method}{m}
 
-\item{threshold}{for some numeric methods}
+\item{threshold}{'NULL' for the other methods than t-test. Default is 3 for mean and sd method and MAD method, IQD uses 2.2.}
 
 \item{conf_int}{conf int for t-test}
 
-\item{prop}{propotion of factors/char (0 - 1)}
+\item{prop}{proportion of factors/char (0 - 1)}
+
+\item{n}{n if}
+
+\item{freq}{f}
+
+\item{min_times}{m}
 
 \item{ties_method}{factors}
 

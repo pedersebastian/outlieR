@@ -11,13 +11,7 @@ filter_outlier(.data, ..., control = control_filter_outlier())
 
 \item{...}{variable(s) to filter outlier}
 
-\item{num_method}{num_method of filter outlier.}
-
-\item{threshold}{'NULL' for the other methods than t-test. Default is 3 for mean and sd method and MAD method, IQD uses 2.2.}
-
-\item{conf_int}{confidence interval if method is t-test}
-
-\item{na_action}{to also filter NA´s for the spesific variable(s)}
+\item{control}{control_obj}
 }
 \value{
 data.frame or tibble
