@@ -13,6 +13,7 @@ RoxygenNote: 7.2.3
 Imports: 
     cli,
     dplyr,
+    forcats,
     ggplot2,
     glue,
     patchwork,

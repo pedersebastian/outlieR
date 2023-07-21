@@ -49,15 +49,15 @@ prep_data_many <- function(object, type, ...) {
 
   lgl_names <- summary_tbl["var"][summary_tbl["var_type"] == "lgl"]
   dbl_names <- summary_tbl["var"][summary_tbl["var_type"] == "dbl"]
-  int_names <-summary_tbl["var"][summary_tbl["var_type"] == "int"]
+  int_names <- summary_tbl["var"][summary_tbl["var_type"] == "int"]
 
   dbl_names <- c(dbl_names, int_names)
 
   lgl <- length(lgl_names)
   dbl <- length(dbl_names)
   other <- 0
-  #Not implemented så
-  #other <- length(vars_name) - lgl - dbl
+  # Not implemented så
+  # other <- length(vars_name) - lgl - dbl
 
 
 

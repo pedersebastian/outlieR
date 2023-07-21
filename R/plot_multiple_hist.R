@@ -120,7 +120,7 @@ plot_multiple.outlier_lglFALSE_dblTRUE_otherFALSE_histogram <- function(data, ..
         fill = outlier_var
       ),
       bins = 50,
-      #binwidth = if (min(summary_tbl$uniques, na.rm = TRUE) < 4) 0.9 else 2,
+      # binwidth = if (min(summary_tbl$uniques, na.rm = TRUE) < 4) 0.9 else 2,
       boundary = 0,
       na.rm = TRUE,
       color = "black",

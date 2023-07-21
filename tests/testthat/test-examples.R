@@ -8,6 +8,5 @@ res <-
 
 
 test_that("examples_filter_outlier", {
-expect_equal(res, "32 rows before filtered and 28 rows after" )
-
+  expect_equal(res, "32 rows before filtered and 28 rows after")
 })

@@ -170,9 +170,9 @@ plot_multiple.outlier_lglFALSE_dblTRUE_otherFALSE_count <- function(data, ...) {
       labels = scales::label_percent(),
       sec.axis = ggplot2::sec_axis(
         trans = ~ .x * rows,
-        breaks = seq(0, rows,
+        breaks = round(seq(0, rows,
           length.out = 5
-        ),
+        )),
         name = "Count"
       )
     ) +

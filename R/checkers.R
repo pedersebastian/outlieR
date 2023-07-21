@@ -1,4 +1,4 @@
-check_outlier <- function(.data, ..., method, threshold, conf_int) {
+check_outlier <- function(.data, ..., discrete_method, prop, n, freq, min_times) {
   dots_n <- function(...) nargs()
   if (dots_n(...) == 0) {
     cli::cli_abort("Variables to be filtred must be ")
@@ -6,9 +6,9 @@ check_outlier <- function(.data, ..., method, threshold, conf_int) {
 
   validate_cols(.data, ...)
 
-  if (method == "t_test") {
-    conf_int_check(conf_int)
-  }
+  ##LAGE NOE SOM SJEKKER OM n/freq er ok mtp på data (ikke prop)
+
+
 }
 
 
@@ -29,7 +29,7 @@ conf_int_check <- function(conf_int) {
 
 
 validate_cols <- function(.data, ...) {
-  ok_types <- c("dbl", "int", "lgl")
+  ok_types <- c("dbl", "int", "lgl", "fct", "chr")
   var_names <- rlang::names2(select_loc(..., .data = .data))
   r <- purrr::map(var_names, ~ pillar::type_sum(.data[[.x]]))
   names(r) <- var_names
@@ -47,14 +47,14 @@ validate_cols <- function(.data, ...) {
 }
 
 
-outlier_threshold <- function(method, threshold) {
+outlier_threshold <- function(num_method, threshold) {
   if (is.null(threshold)) {
-    threshold <- switch(method,
+    threshold <- switch(num_method,
       "mean_sd" = 3,
       "MAD" = 3,
       "IQD" = 2.2,
       "t_test" = NULL,
-      rlang::abort(paste(method, "is not valid method"))
+      rlang::abort(paste(num_method, "is not valid method"))
     )
   } else if (!is.numeric(threshold)) {
     rlang::abort("if threshold is not default it must be numeric", )

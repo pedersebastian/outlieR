@@ -4,21 +4,14 @@
 \alias{filter_outlier}
 \title{Outlier filter}
 \usage{
-filter_outlier(
-  .data,
-  ...,
-  method = "mean_sd",
-  threshold = "default",
-  conf_int = NULL,
-  na_action = "keep"
-)
+filter_outlier(.data, ..., control = control_filter_outlier())
 }
 \arguments{
 \item{.data}{data.frame or tibble}
 
 \item{...}{variable(s) to filter outlier}
 
-\item{method}{method of filter outlier.}
+\item{num_method}{num_method of filter outlier.}
 
 \item{threshold}{'NULL' for the other methods than t-test. Default is 3 for mean and sd method and MAD method, IQD uses 2.2.}
 

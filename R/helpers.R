@@ -1,17 +1,15 @@
-get_tbl <- function(.data, var, method, threshold, conf_int) {
-  var_type = pillar::type_sum(.data[[rlang::quo_name(var)]])
+get_tbl <- function(.data, var, num_method, threshold, conf_int, prop, n, freq,  ties_method, min_times) {
+  var_type <- pillar::type_sum(.data[[rlang::quo_name(var)]])
   if (var_type %in% c("lgl", "dbl", "int")) {
-    tbl <- switch(method,
-                  "mean_sd" = outlier_mean_sd(.data, var, threshold),
-                  "MAD" = outlier_MAD(.data, var, threshold),
-                  "IQD" = outlier_IQD(.data, var, threshold),
-                  "t_test" = outlier_t_test(.data, var, conf_int)
+    tbl <- switch(num_method,
+      "mean_sd" = outlier_mean_sd(.data, var, threshold),
+      "MAD" = outlier_MAD(.data, var, threshold),
+      "IQD" = outlier_IQD(.data, var, threshold),
+      "t_test" = outlier_t_test(.data, var, conf_int)
     )
+  } else if (var_type %in% c("fct", "chr")) {
+    tbl <- factor_methods(.data, var,discrete_method,  prop, n, freq, ties_methodr)
   }
-  else if (var_type == "fct") {
-    rlang::abort("not")
-  }
-
 
   tbl
 }
@@ -62,7 +60,7 @@ outlier_MAD <- function(.data, var, threshold) {
       "lower_outlier" = ifelse(any(!!var < lower, na.rm = TRUE), lower, -Inf),
       "mode_val" = mode_vec(!!var),
       "uniques" = length(unique(!!var)),
-       threshold = threshold
+      threshold = threshold
     )
 
   tbl
@@ -77,7 +75,7 @@ outlier_MAD <- function(.data, var, threshold) {
 # Calculate your lower fence = Q1 – (1.5 * IQR)
 # Use your fences to highlight any outliers, all values that fall outside your fences.
 
-#ENDRE threshold til threshold/2???
+# ENDRE threshold til threshold/2???
 
 
 outlier_IQD <- function(.data, var, threshold) {
@@ -107,51 +105,50 @@ outlier_IQD <- function(.data, var, threshold) {
 }
 
 outlier_t_test <- function(.data, var, conf_int) {
-  if (dplyr::summarise(.data, "sd" = sd(!!var, na.rm = TRUE))[["sd"]] ==0) {
+  if (dplyr::summarise(.data, "sd" = sd(!!var, na.rm = TRUE))[["sd"]] == 0) {
     ## using sd to avoid confusions with variable,
     tbl <-
       dplyr::summarise(.data,
-                       var = rlang::quo_name(var),
-                       mean_var = mean(!!var, na.rm = TRUE),
-                       min_var = min(!!var, na.rm = TRUE),
-                       max_var = max(!!var, na.rm = TRUE),
-                       upper = NA_integer_,
-                       lower = NA_integer_,
-                       "var_type" = pillar::type_sum(!!var),
-                       "outlier_exist" = FALSE,
-                       "outlier_pct" = 0,
-                       "na_count" = sum(is.na(!!var)),
-                       "n" = dplyr::n(),
-                       "upper_outlier" = Inf,
-                       "lower_outlier" = -Inf,
-                       "mode_val" = mode_vec(!!var),
-                       "uniques" = 1)
-
-  }
-  else {
+        var = rlang::quo_name(var),
+        mean_var = mean(!!var, na.rm = TRUE),
+        min_var = min(!!var, na.rm = TRUE),
+        max_var = max(!!var, na.rm = TRUE),
+        upper = NA_integer_,
+        lower = NA_integer_,
+        "var_type" = pillar::type_sum(!!var),
+        "outlier_exist" = FALSE,
+        "outlier_pct" = 0,
+        "na_count" = sum(is.na(!!var)),
+        "n" = dplyr::n(),
+        "upper_outlier" = Inf,
+        "lower_outlier" = -Inf,
+        "mode_val" = mode_vec(!!var),
+        "uniques" = 1
+      )
+  } else {
     tbl <-
       dplyr::summarise(.data,
-                       var = rlang::quo_name(var),
-                       mean_var = mean(!!var, na.rm = TRUE),
-                       min_var = min(!!var, na.rm = TRUE),
-                       max_var = max(!!var, na.rm = TRUE),
-                       upper = purrr::pluck(t.test(!!var, mu = mean_var, conf.level = conf_int), "conf.int", 2),
-                       lower = purrr::pluck(t.test(!!var, mu = mean_var, conf.level = conf_int), "conf.int", 1),
-                       "var_type" = pillar::type_sum(!!var),
-                       "outlier_exist" = length(unique(out_help(!!var, upper, lower))) != 1,
-                       "outlier_pct" = mean(out_help(!!var, upper, lower), na.rm = TRUE),
-                       "na_count" = sum(is.na(!!var)),
-                       "n" = dplyr::n(),
-                       "upper_outlier" = ifelse(any(!!var > upper, na.rm = TRUE), upper, Inf),
-                       "lower_outlier" = ifelse(any(!!var < lower, na.rm = TRUE), lower, -Inf),
-                       "mode_val" = mode_vec(!!var),
-                       "uniques" = length(unique(!!var))
+        var = rlang::quo_name(var),
+        mean_var = mean(!!var, na.rm = TRUE),
+        min_var = min(!!var, na.rm = TRUE),
+        max_var = max(!!var, na.rm = TRUE),
+        upper = purrr::pluck(t.test(!!var, mu = mean_var, conf.level = conf_int), "conf.int", 2),
+        lower = purrr::pluck(t.test(!!var, mu = mean_var, conf.level = conf_int), "conf.int", 1),
+        "var_type" = pillar::type_sum(!!var),
+        "outlier_exist" = length(unique(out_help(!!var, upper, lower))) != 1,
+        "outlier_pct" = mean(out_help(!!var, upper, lower), na.rm = TRUE),
+        "na_count" = sum(is.na(!!var)),
+        "n" = dplyr::n(),
+        "upper_outlier" = ifelse(any(!!var > upper, na.rm = TRUE), upper, Inf),
+        "lower_outlier" = ifelse(any(!!var < lower, na.rm = TRUE), lower, -Inf),
+        "mode_val" = mode_vec(!!var),
+        "uniques" = length(unique(!!var))
       )
   }
-  variable_name = tbl$var
-  if (tbl$uniques <4) {
+  variable_name <- tbl$var
+  if (tbl$uniques < 4) {
     cli::cli_abort(c(
-    #  "x" = glue::glue("Using t-test with less than 4 unique variables are not allowed"),
+      #  "x" = glue::glue("Using t-test with less than 4 unique variables are not allowed"),
       "x" = "The Variable {variable_name} have less than 4 unique values, witch is not allowed. ",
       "i" = "use another method"
     ))
@@ -167,4 +164,9 @@ outlier_t_test <- function(.data, var, conf_int) {
 
 out_help <- function(number, upper, lower) {
   return(number > upper | number < lower)
+}
+
+
+factor_helper <- function(x, outlier_vars) {
+  unlist(map(x, ~ .x %in% outlier_vars))
 }
