@@ -36,7 +36,7 @@ filter_outlier.data.frame <- function(.data, ..., control = control_filter_outli
     threshold <- control$threshold
     conf_int <- control$conf_int
     prop <- control$prop
-    n <- control$n
+    n_vars <- control$n_vars
     freq <- control$freq
     ties_method <- control$ties_method
     na_action <- control$na_action
@@ -45,7 +45,7 @@ filter_outlier.data.frame <- function(.data, ..., control = control_filter_outli
 
 
   # fortsatt med 'alle' fordi skal sjekke med om det er greit å bruke 'n' og 'sånn'
-  check_outlier(.data, ..., discrete_method = discrete_method, prop = prop, n = n, freq = freq, min_times = min_times)
+  check_outlier(.data, ..., discrete_method = discrete_method, prop = prop, n_vars = n_vars, freq = freq, min_times = min_times)
 
 
   vars <- rlang::names2(select_loc(..., .data = .data)) |>
@@ -61,7 +61,7 @@ filter_outlier.data.frame <- function(.data, ..., control = control_filter_outli
     conf_int = conf_int,
     na_action = na_action,
     prop = prop,
-    n = n,
+    n_vars = n_vars,
     freq = freq,
     ties_method = ties_method,
     min_times = min_times
@@ -69,11 +69,20 @@ filter_outlier.data.frame <- function(.data, ..., control = control_filter_outli
 }
 
 
-filter_outlier.impl <- function(.data, vars, num_method, discrete_method, threshold, conf_int, na_action, prop, n, freq, ties_method, min_times) {
-  tbls <- purrr::map(vars, ~ get_tbl(.data, .x, num_method = num_method, discrete_method = discrete_method, threshold = threshold, conf_int = conf_int, prop = prop, n = n, freq = freq, ties_method = ties_method, min_times = min_times))
-  print(tbls)
+filter_outlier.impl <- function(.data, vars, num_method, discrete_method, threshold, conf_int, na_action, prop, n_vars, freq, ties_method, min_times) {
 
-
+   tbls <- purrr::map(vars, ~ get_tbl(.data,
+                                     .x,
+                                     num_method = num_method,
+                                     discrete_method = discrete_method,
+                                     threshold = threshold,
+                                     conf_int = conf_int,
+                                     prop = prop,
+                                     n_vars = n_vars,
+                                     freq = freq,
+                                     ties_method = ties_method,
+                                     min_times = min_times)
+                     )
   vecs <- list()
   for (i in seq_along(vars)) {
     if (tbls[[i]]$var_type %in% c("lgl", "dbl", "int")) {

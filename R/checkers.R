@@ -1,4 +1,4 @@
-check_outlier <- function(.data, ..., discrete_method, prop, n, freq, min_times) {
+check_outlier <- function(.data, ..., discrete_method, prop, n_vars, freq, min_times) {
   dots_n <- function(...) nargs()
   if (dots_n(...) == 0) {
     cli::cli_abort("Variables to be filtred must be ")

@@ -10,7 +10,7 @@ control_filter_outlier(
   threshold = NULL,
   conf_int = NULL,
   prop = NULL,
-  n = NULL,
+  n_vars = NULL,
   freq = NULL,
   min_times = NULL,
   ties_method = "min",
@@ -28,7 +28,7 @@ control_filter_outlier(
 
 \item{prop}{proportion of factors/char (0 - 1)}
 
-\item{n}{n if}
+\item{n_vars}{n_vars if}
 
 \item{freq}{f}
 

@@ -7,7 +7,7 @@
 #' @param prop proportion of factors/char (0 - 1)
 #' @param ties_method factors
 #' @param na_action "keep" NA is the default
-#' @param n n if
+#' @param n_vars n_vars if
 #' @param freq f
 #' @param min_times  m
 #'
@@ -21,7 +21,7 @@ control_filter_outlier <- function(numeric_method = "mean_sd",
                                    threshold = NULL,
                                    conf_int = NULL,
                                    prop = NULL,
-                                   n = NULL,
+                                   n_vars = NULL,
                                    freq = NULL,
                                    min_times = NULL,
                                    ties_method = "min",
@@ -40,15 +40,17 @@ control_filter_outlier <- function(numeric_method = "mean_sd",
     na_action <- "keep"
   }
 
-
-
   num_method <- match.arg(numeric_method, c("mean_sd", "MAD", "IQD", "t_test"), several.ok = FALSE)
   na_action <- match.arg(na_action, c("keep", "omit"), several.ok = FALSE)
   discrete_method <- match.arg(discrete_method, c("prop", "n", "low_freq", "min_times"))
 
   ties_method <- match.arg(ties_method, c(
     "min",
-    "average", "first", "last", "random", "max"
+    "average",
+    "first",
+    "last",
+    "random",
+    "max"
   ))
 
 
@@ -57,7 +59,7 @@ control_filter_outlier <- function(numeric_method = "mean_sd",
   numeric_or_null(threshold)
   numeric_or_null(conf_int)
   numeric_or_null(prop)
-  numeric_or_null(n)
+  numeric_or_null(n_vars)
   numeric_or_null(freq)
   ######
 
@@ -86,11 +88,11 @@ control_filter_outlier <- function(numeric_method = "mean_sd",
   }
 
 
-  if (is.null(n) & discrete_method == "n") {
+  if (is.null(n_vars) & discrete_method == "n_vars") {
     cli::cli_abort(c("!" = "{.arg n} must be specified when {.arg discrete_method} is 'n'. "))
   }
-  if (is.null(freq) & discrete_method == "freq") {
-    cli::cli_abort(c("!" = "{.arg freq} must be specified when {.arg discrete_method} is 'freq'. "))
+  if (is.null(min_times) & discrete_method == "min_times") {
+    cli::cli_abort(c("!" = "{.arg min_times} must be specified when {.arg discrete_method} is 'min_times'. "))
   }
 
 
@@ -101,10 +103,11 @@ control_filter_outlier <- function(numeric_method = "mean_sd",
       threshold = threshold,
       conf_int = conf_int,
       prop = prop,
-      n = n,
+      n_vars = n_vars,
       freq = freq,
       ties_method = ties_method,
-      na_action = na_action
+      na_action = na_action,
+      min_times = min_times
     ),
     class = c("control_filter_outlier", "list")
   )

@@ -1,4 +1,4 @@
-get_tbl <- function(.data, var, num_method, discrete_method,  threshold, conf_int, prop, n, freq, ties_method, min_times) {
+get_tbl <- function(.data, var, num_method, discrete_method,  threshold, conf_int, prop, n_vars, freq, ties_method, min_times) {
   var_type <- pillar::type_sum(.data[[rlang::quo_name(var)]])
   if (var_type %in% c("lgl", "dbl", "int")) {
     tbl <- switch(num_method,
@@ -8,11 +8,21 @@ get_tbl <- function(.data, var, num_method, discrete_method,  threshold, conf_in
       "t_test" = outlier_t_test(.data, var, conf_int)
     )
   } else if (var_type %in% c("fct", "chr")) {
-    tbl <- factor_methods(.data, var = var, discrete_method = discrete_method, prop = prop, n = n, freq = freq, ties_method = ties_method)
+
+    tbl <- factor_methods(.data,
+                          var = var,
+                          discrete_method = discrete_method,
+                          prop = prop,
+                          n_vars = n_vars,
+                          min_times = min_times,
+                          freq = freq,
+                          ties_method = ties_method)
   }
 
   tbl
 }
+
+
 
 outlier_mean_sd <- function(.data, var, threshold) {
   tbl <-
