@@ -14,7 +14,8 @@ control_filter_outlier(
   freq = NULL,
   min_times = NULL,
   ties_method = "min",
-  na_action = "keep"
+  na_action = "keep",
+  ...
 )
 }
 \arguments{
@@ -37,6 +38,8 @@ control_filter_outlier(
 \item{ties_method}{factors}
 
 \item{na_action}{"keep" NA is the default}
+
+\item{...}{not currently used}
 }
 \value{
 control_object

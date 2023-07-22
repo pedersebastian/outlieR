@@ -10,6 +10,7 @@
 #' @param n_vars n_vars if
 #' @param freq f
 #' @param min_times  m
+#' @param ... not currently used
 #'
 #' @return control_object
 #' @export
@@ -25,7 +26,18 @@ control_filter_outlier <- function(numeric_method = "mean_sd",
                                    freq = NULL,
                                    min_times = NULL,
                                    ties_method = "min",
-                                   na_action = "keep") {
+                                   na_action = "keep",
+                                   ...) {
+
+  dots_n <- function(...) nargs()
+  dots_count <- dots_n(...)
+  print(dots_count)
+  dots_names <- names(rlang::list2(...))
+
+  if (dots_count > 0) {
+    cli::cli_abort(c("i" = "{dots_names} {?is/are} {dots_count} the name{?s} of the wrongly spelled element{?s} in {.fun control_filter_outlier}."))
+  }
+
   ## fix args
   if (is.null(numeric_method)) {
     numeric_method <- "mean_sd"

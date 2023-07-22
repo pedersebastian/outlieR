@@ -1,7 +1,7 @@
 check_outlier <- function(.data, ..., discrete_method, prop, n_vars, freq, min_times) {
   dots_n <- function(...) nargs()
   if (dots_n(...) == 0) {
-    cli::cli_abort("Variables to be filtred must be ")
+    cli::cli_abort(c("!" = "Supply at least one variable to filter by. "))
   }
 
   validate_cols(.data, ...)
