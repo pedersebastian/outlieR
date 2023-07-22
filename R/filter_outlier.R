@@ -102,12 +102,18 @@ filter_outlier.impl <- function(.data,
     ties_method = ties_method,
     min_times = min_times
   ))
+
+  factor_variables <- vector("character")
+
   vecs <- list()
   for (i in seq_along(vars)) {
     if (tbls[[i]]$var_type %in% c("lgl", "dbl", "int")) {
       vec <- purrr::map_lgl(.data[[tbls[[i]]$var]], ~ out_help(.x, tbls[[i]]$upper, tbls[[i]]$lower))
     } else if (tbls[[i]]$var_type %in% c("fct", "chr")) {
       vec <- !tbls[[i]]$outlier_vec[[1]]
+      if (tbls[[i]]$var_type == "fct") {
+        factor_variables <- append(factor_variables,tbls[[i]]$var)
+      }
     }
 
     vecs[[i]] <- vec
@@ -130,6 +136,11 @@ filter_outlier.impl <- function(.data,
   names(vecs) <- map(vars, quo_name)
   filter_res <- res
   res <- subset(.data, res)
+print(factor_variables)
+  if (length(factor_variables) > 0) {
+    res <- res |>
+      dplyr::mutate(dplyr::across(all_of(factor_variables), forcats::fct_drop))
+  }
 
 
   class(res) <- c("outlier", class(res))
