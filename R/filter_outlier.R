@@ -136,7 +136,7 @@ filter_outlier.impl <- function(.data,
   names(vecs) <- map(vars, quo_name)
   filter_res <- res
   res <- subset(.data, res)
-print(factor_variables)
+
   if (length(factor_variables) > 0) {
     res <- res |>
       dplyr::mutate(dplyr::across(all_of(factor_variables), forcats::fct_drop))

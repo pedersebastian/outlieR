@@ -31,7 +31,6 @@ control_filter_outlier <- function(numeric_method = "mean_sd",
 
   dots_n <- function(...) nargs()
   dots_count <- dots_n(...)
-  print(dots_count)
   dots_names <- names(rlang::list2(...))
 
   if (dots_count > 0) {
