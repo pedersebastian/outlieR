@@ -20,7 +20,7 @@ utils::globalVariables(c(
   "var_two",
   "name",
   "idxx",
-  "non_outlier_vars" ,
+  "non_outlier_vars",
   "outlier_pct",
   "outlier_vars",
   "outlier_vec",
