@@ -29,9 +29,10 @@ filter_outlier.default <- function(.data, ...) {
 #' @export
 filter_outlier.data.frame <- function(.data, ..., control = control_filter_outlier()) {
   if (!inherits(control, "control_filter_outlier")) {
-    cli::cli_abort(c("x" = "{.arg control} is of class {.cls {class(control)[[1]]}}.",
-                   "!" = "Use {.fun control_filter_outlier} to create a control_object.")
-    )
+    cli::cli_abort(c(
+      "x" = "{.arg control} is of class {.cls {class(control)[[1]]}}.",
+      "!" = "Use {.fun control_filter_outlier} to create a control_object."
+    ))
   } else {
     num_method <- control$numeric_method
     discrete_method <- control$discrete_method
@@ -112,7 +113,7 @@ filter_outlier.impl <- function(.data,
     } else if (tbls[[i]]$var_type %in% c("fct", "chr")) {
       vec <- !tbls[[i]]$outlier_vec[[1]]
       if (tbls[[i]]$var_type == "fct") {
-        factor_variables <- append(factor_variables,tbls[[i]]$var)
+        factor_variables <- append(factor_variables, tbls[[i]]$var)
       }
     }
 

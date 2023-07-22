@@ -28,7 +28,6 @@ control_filter_outlier <- function(numeric_method = "mean_sd",
                                    ties_method = "min",
                                    na_action = "keep",
                                    ...) {
-
   dots_n <- function(...) nargs()
   dots_count <- dots_n(...)
   dots_names <- names(rlang::list2(...))

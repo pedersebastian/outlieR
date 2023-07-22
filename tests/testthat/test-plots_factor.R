@@ -1,8 +1,8 @@
 library(outlieR)
-mtcars["V12"] = factor(rep(LETTERS[1:5], times = c( 10, 5, 15, 1, 1)))
-mtcars["V13"] = rep(LETTERS[1:5], times = c( 13, 12, 1, 5, 1))
+mtcars["V12"] <- factor(rep(LETTERS[1:5], times = c(10, 5, 15, 1, 1)))
+mtcars["V13"] <- rep(LETTERS[1:5], times = c(13, 12, 1, 5, 1))
 set.seed(123)
-mtcars["V14"] = rep(c(LETTERS[1:4], NA_character_), times = c(13,1,1,5,12)) |> sample()
+mtcars["V14"] <- rep(c(LETTERS[1:4], NA_character_), times = c(13, 1, 1, 5, 12)) |> sample()
 
 
 c("prop", "n", "low_freq", "min_times")
@@ -44,7 +44,9 @@ E <- filter_outlier(tibble::as_tibble(mtcars), V13, control = control_filter_out
 ))
 
 EF <- fct_lump_prop(mtcars$V13, prop = 0.1)
-EF <- EF[EF != "Other"] |> droplevels() |> as.character()
+EF <- EF[EF != "Other"] |>
+  droplevels() |>
+  as.character()
 ###
 
 
@@ -55,7 +57,7 @@ xxxx <- filter_outlier(tibble::as_tibble(mtcars), V12, V13, control = control_fi
   discrete_method = "n",
   n_vars = 2
 ))
-xxxx <- filter_outlier(tibble::as_tibble(mtcars), V12, V13,  control = control_filter_outlier(
+xxxx <- filter_outlier(tibble::as_tibble(mtcars), V12, V13, control = control_filter_outlier(
   discrete_method = "prop",
   min_times = 0.1
 ))
@@ -65,14 +67,15 @@ xxxx <- filter_outlier(tibble::as_tibble(mtcars), V12, V13,  control = control_f
 
 K <- filter_outlier(tibble::as_tibble(mtcars), V14, control = control_filter_outlier(
   discrete_method = "prop",
-  min_times = 0.1, na_action = "keep"))
+  min_times = 0.1, na_action = "keep"
+))
 
 
 
 
 
 test_that("factor_works_single_without_NAs", {
-  #A
+  # A
   expect_equal(nrow(A), 30)
   expect_equal(levels(A$V12), c("A", "B", "C"))
   expect_true(is.factor(A$V12))
@@ -81,7 +84,7 @@ test_that("factor_works_single_without_NAs", {
   expect_equal(length(levels(A$V12)), length(levels(AF)))
   expect_equal(ncol(A), ncol(mtcars))
 
-  #B
+  # B
   expect_equal(nrow(B), 30)
   expect_equal(levels(B$V12), c("A", "B", "C"))
   expect_true(is.factor(B$V12))
@@ -90,7 +93,7 @@ test_that("factor_works_single_without_NAs", {
   expect_equal(length(levels(B$V12)), length(levels(BF)))
   expect_equal(ncol(B), ncol(mtcars))
 
-  #C
+  # C
   expect_equal(nrow(C), 25)
   expect_equal(levels(C$V12), c("A", "C"))
   expect_true(is.factor(C$V12))
@@ -99,7 +102,7 @@ test_that("factor_works_single_without_NAs", {
   expect_equal(length(levels(C$V12)), length(levels(CF)))
   expect_equal(ncol(C), ncol(mtcars))
 
-  #D
+  # D
   expect_equal(nrow(D), 25)
   expect_equal(levels(D$V12), c("A", "C"))
   expect_true(is.factor(D$V12))
@@ -109,20 +112,16 @@ test_that("factor_works_single_without_NAs", {
   expect_equal(length(levels(D$V12)), length(levels(DF)))
   expect_equal(ncol(D), ncol(mtcars))
 
-  #E 13
+  # E 13
 
   expect_equal(nrow(E), 30)
-  expect_equal(unique(E$V13), c("A","B", "D"))
+  expect_equal(unique(E$V13), c("A", "B", "D"))
   expect_false(is.factor(E$V13))
 
   expect_equal(E$V13, EF)
   expect_equal(unique(E$V13), unique(EF))
   expect_equal(length(unique(E$V13)), length(unique(EF)))
   expect_equal(ncol(E), ncol(mtcars))
-
-
-
-
 })
 
 test_that("factor_works_multiple", {})
