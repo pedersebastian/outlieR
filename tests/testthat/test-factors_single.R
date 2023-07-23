@@ -6,7 +6,7 @@ mtcars["V14"] <- rep(c(LETTERS[1:4], NA_character_), times = c(13, 1, 1, 5, 12))
 set.seed(312)
 mtcars["V15"] <- factor(rep(c(LETTERS[9:12], NA_character_), times = c(13, 1, 1, 5, 12)) |> sample())
 
-c("prop", "n", "low_freq", "min_times")
+
 
 A <- filter_outlier(tibble::as_tibble(mtcars), V12, control = control_filter_outlier(
   discrete_method = "min_times",
@@ -49,20 +49,6 @@ EF <- EF[EF != "Other"] |>
   droplevels() |>
   as.character()
 ###
-
-
-
-###########
-
-# xxxx <- filter_outlier(tibble::as_tibble(mtcars), V12, V13, control = control_filter_outlier(
-#   discrete_method = "n",
-#   n_vars = 2
-# ))
-# xxxx <- filter_outlier(tibble::as_tibble(mtcars), V12, V13, control = control_filter_outlier(
-#   discrete_method = "prop",
-#   min_times = 0.1
-# ))
-
 
 ### NA
 #G Char
@@ -197,8 +183,6 @@ test_that("factor_works_single_NA", {
   expect_equal(ncol(I), ncol(mtcars))
   expect_equal(IF_na_length, I_na_len)
 
-
-
   #J
   expect_equal(nrow(J), 30)
   expect_equal(unique(J$V15) |> as.character(), c("I", NA, "L"))
@@ -208,14 +192,5 @@ test_that("factor_works_single_NA", {
   expect_equal(length(unique(J$V15)), length(unique(JF)))
   expect_equal(ncol(J), ncol(mtcars))
   expect_equal(JF_na_length, J_na_len)
-
-})
-
-
-
-test_that("factor_works_multiple", {})
-
-
-test_that("factor_fails", {
 
 })
