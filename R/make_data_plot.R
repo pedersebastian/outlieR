@@ -50,11 +50,17 @@ prep_data_many <- function(object, type, ...) {
   lgl_names <- summary_tbl["var"][summary_tbl["var_type"] == "lgl"]
   dbl_names <- summary_tbl["var"][summary_tbl["var_type"] == "dbl"]
   int_names <- summary_tbl["var"][summary_tbl["var_type"] == "int"]
+  fct_names <- summary_tbl["var"][summary_tbl["var_type"] == "fct"]
+  chr_names <- summary_tbl["var"][summary_tbl["var_type"] == "chr"]
 
+  dis_name <- c(fct_names, chr_names)
   dbl_names <- c(dbl_names, int_names)
 
+  print(dis_name)
   lgl <- length(lgl_names)
   dbl <- length(dbl_names)
+  dis <- length(dis_name)
+  print(dis)
   other <- 0
   # Not implemented så
   # other <- length(vars_name) - lgl - dbl
@@ -67,7 +73,12 @@ prep_data_many <- function(object, type, ...) {
   lgl_data <-
     prep_data_many_logical(attr(object, "old_df"), lgl_names, summary_tbl)
 
-  class_var <- c("outlier_data", glue::glue("outlier_lgl{lgl>0}_dbl{dbl>0}_other{other>1}_{type}"), "list")
+  dis_data <-
+    prep_data_many_discrete(attr(object, "old_df"), dis_name, summary_tbl)
+
+
+
+  class_var <- c("outlier_data", glue::glue("outlier_lgl{lgl>0}_dbl{dbl>0}_dis{dis>0}_other{other>1}_{type}"), "list")
 
   out <- structure(
     list(
@@ -75,17 +86,25 @@ prep_data_many <- function(object, type, ...) {
       vars_name = vars_name,
       dat = list(
         dbl_data = dbl_data,
-        lgl_data = lgl_data
+        lgl_data = lgl_data,
+        dis_data = dis_data
       )
     ),
     "one_variable" = FALSE,
     "lgl" = lgl,
     "dbl" = dbl,
+    "dis" = dis,
     "other" = other,
     "total_count" = length(vars_name),
     class = class_var
   )
   out
+}
+
+
+prep_data_many_discrete <- function(.data, dis_name, summary_tbl) {
+  # rlang::abort("Not implemented")
+  NULL
 }
 
 

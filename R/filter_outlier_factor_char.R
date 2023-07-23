@@ -20,7 +20,7 @@ factor_methods <- function(.data,
       "n" = n_discrete(.data, var, n_vars, ties_method),
       "low_freq" = low_freq_discrete(.data, var),
       "min_times" = min_times_discrete(.data, var, min_times),
-      cli::cli_abort(c("!" = "{discrete_method} is not a valid input"))
+      rlang::abort(c("!" = "{discrete_method} is not a valid input"), .internal = TRUE)
     )
   validate_factor_tbl(
     .data,
@@ -42,12 +42,10 @@ factor_methods <- function(.data,
 
 
 factor_na <- function(.data, tbl) {
-
   vec <-
-    purrr::map2_lgl(.data[[tbl$var]], tbl$outlier_vec[[1]], ~is.na(.x) + .y)
+    purrr::map2_lgl(.data[[tbl$var]], tbl$outlier_vec[[1]], ~ is.na(.x) + .y)
   tbl$outlier_vec <- list(vec)
   tbl
-
 }
 
 validate_factor_tbl <- function(.data,
@@ -94,7 +92,7 @@ prop_discrete <- function(.data,
       prop = prop,
       "na_count" = sum(is.na(!!var)),
       "n" = dplyr::n(),
-      "mode_val" = mode_vec(!!var),
+      "mode_val_dis" = mode_vec(!!var),
       "uniques" = length(unique(!!var)),
       "unique_vars" = list(unique(!!var)),
       "outlier_vec" = list(discrete_helper(!!var, "fct_lump_prop", list(prop, NULL, "Otherxxx"))),
@@ -121,7 +119,7 @@ n_discrete <- function(.data,
       ties_method = ties_method,
       "na_count" = sum(is.na(!!var)),
       "n" = dplyr::n(),
-      "mode_val" = mode_vec(!!var),
+      "mode_val_dis" = mode_vec(!!var),
       "uniques" = length(unique(!!var)),
       "unique_vars" = list(unique(!!var)),
       "outlier_vec" = list(discrete_helper(!!var, "fct_lump_n", list(n_vars, NULL, "Otherxxx", ties_method))),
@@ -143,7 +141,7 @@ low_freq_discrete <- function(.data,
       "var" = rlang::quo_name(var),
       "na_count" = sum(is.na(!!var)),
       "n" = dplyr::n(),
-      "mode_val" = mode_vec(!!var),
+      "mode_val_dis" = mode_vec(!!var),
       "uniques" = length(unique(!!var)),
       "unique_vars" = list(unique(!!var)),
       "outlier_vec" = list(discrete_helper(!!var, "fct_lump_lowfreq", list(NULL, "Otherxxx"))),
@@ -167,7 +165,7 @@ min_times_discrete <- function(.data,
       min_times = min_times,
       "na_count" = sum(is.na(!!var)),
       "n" = dplyr::n(),
-      "mode_val" = mode_vec(!!var),
+      "mode_val_dis" = mode_vec(!!var),
       "uniques" = length(unique(!!var)),
       "unique_vars" = list(unique(!!var)),
       "outlier_vec" = list(discrete_helper(!!var, "fct_lump_min", list(min_times, NULL, "Otherxxx"))),

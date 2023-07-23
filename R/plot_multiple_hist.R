@@ -10,15 +10,15 @@ plot_multiple.default <- function(data, ...) {
 ################################################################################
 #                            #                        #                        #
 ################################################################################
-plot_multiple.outlier_lglTRUE_dblTRUE_otherFALSE_histogram <- function(data, ...) {
+plot_multiple.outlier_lglTRUE_dblTRUE_disFALSE_otherFALSE_histogram <- function(data, ...) {
   # begge
   if (attr(data, "total_count") > 8) {
     rlang::warn("May be ugly due to many plots")
   }
 
 
-  p1 <- plot_multiple.outlier_lglTRUE_dblFALSE_otherFALSE_histogram(data)
-  p2 <- plot_multiple.outlier_lglFALSE_dblTRUE_otherFALSE_histogram(data)
+  p1 <- plot_multiple.outlier_lglTRUE_dblFALSE_disFALSE_otherFALSE_histogram(data)
+  p2 <- plot_multiple.outlier_lglFALSE_dblTRUE_disFALSE_otherFALSE_histogram(data)
 
   p <- patchwork::wrap_plots(
     p1, p2,
@@ -29,7 +29,7 @@ plot_multiple.outlier_lglTRUE_dblTRUE_otherFALSE_histogram <- function(data, ...
 ################################################################################
 #                            #                        #                        #
 ################################################################################
-plot_multiple.outlier_lglTRUE_dblFALSE_otherFALSE_histogram <- function(data, ...) {
+plot_multiple.outlier_lglTRUE_dblFALSE_disFALSE_otherFALSE_histogram <- function(data, ...) {
   # kun lgl
 
   summary_tbl <-
@@ -109,7 +109,7 @@ plot_multiple.outlier_lglTRUE_dblFALSE_otherFALSE_histogram <- function(data, ..
 ################################################################################
 #                            #                        #                        #
 ################################################################################
-plot_multiple.outlier_lglFALSE_dblTRUE_otherFALSE_histogram <- function(data, ...) {
+plot_multiple.outlier_lglFALSE_dblTRUE_disFALSE_otherFALSE_histogram <- function(data, ...) {
   rows <- attr(data, "dbl")
   summary_tbl <- dplyr::filter(data$summary_tbl, var_type %in% c("dbl", "int"))
   data <- data$dat$dbl_data

@@ -98,27 +98,43 @@ control_filter_outlier <- function(numeric_method = "mean_sd",
   }
 
 
-  if (is.null(n_vars) & discrete_method == "n_vars") {
+  if (is.null(n_vars) & discrete_method == "n") {
     cli::cli_abort(c("!" = "{.arg n} must be specified when {.arg discrete_method} is 'n'. "))
   }
   if (is.null(min_times) & discrete_method == "min_times") {
     cli::cli_abort(c("!" = "{.arg min_times} must be specified when {.arg discrete_method} is 'min_times'. "))
   }
+  if (!is.null(n_vars)) {
+    if (n_vars < 1 & discrete_method == "n") {
+      cli::cli_abort(c("!" = "{.arg n_vars} must be greater than 0 when {.arg discrete_method} is 'n'. "))
+    }
+  }
+
+  if (!is.null(min_times)) {
+    if (min_times < 1 & discrete_method == "min_times") {
+      cli::cli_abort(c("!" = "{.arg min_times} must be greater than 0 when {.arg discrete_method} is 'min_times'. "))
+    }
+  }
+
+
+
+
+  res <- list(
+    numeric_method = numeric_method,
+    discrete_method = discrete_method,
+    threshold = threshold,
+    conf_int = conf_int,
+    prop = prop,
+    n_vars = n_vars,
+    freq = freq,
+    ties_method = ties_method,
+    na_action = na_action,
+    min_times = min_times
+  )
 
 
   out <- structure(
-    list(
-      numeric_method = numeric_method,
-      discrete_method = discrete_method,
-      threshold = threshold,
-      conf_int = conf_int,
-      prop = prop,
-      n_vars = n_vars,
-      freq = freq,
-      ties_method = ties_method,
-      na_action = na_action,
-      min_times = min_times
-    ),
+    res,
     class = c("control_filter_outlier", "list")
   )
   out

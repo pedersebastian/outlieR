@@ -51,7 +51,7 @@ EF <- EF[EF != "Other"] |>
 ###
 
 ### NA
-#G Char
+# G Char
 G <- filter_outlier(tibble::as_tibble(mtcars), V14, control = control_filter_outlier(
   discrete_method = "prop",
   min_times = 0.1, na_action = "omit"
@@ -60,7 +60,7 @@ GF <- fct_lump_prop(mtcars$V14, prop = 0.1)
 GF <- GF[GF != "Other"] |> as.character()
 GF <- GF[!is.na(GF)]
 
-#H CHAR
+# H CHAR
 H <- filter_outlier(tibble::as_tibble(mtcars), V14, control = control_filter_outlier(
   discrete_method = "prop",
   min_times = 0.1, na_action = "keep"
@@ -68,9 +68,9 @@ H <- filter_outlier(tibble::as_tibble(mtcars), V14, control = control_filter_out
 HF <- fct_lump_prop(mtcars$V14, prop = 0.1)
 HF <- HF[HF != "Other"] |> as.character()
 HF_na_length <- HF[is.na(HF)] |> length()
-H_na_len <-  H$V14[is.na(H$V14)] |> length()
+H_na_len <- H$V14[is.na(H$V14)] |> length()
 
-###I. FCT
+### I. FCT
 
 I <-
   filter_outlier(tibble::as_tibble(mtcars), V15, control = control_filter_outlier(
@@ -83,21 +83,21 @@ IF <- fct_lump_n(mtcars$V15, n = 2)
 IF <- IF[IF != "Other"] |> droplevels()
 IF <- IF[!is.na(IF)]
 IF_na_length <- IF[is.na(IF)] |> length()
-I_na_len <-  sum(is.na(I$V15))
+I_na_len <- sum(is.na(I$V15))
 
 
 
-###J. FCT
+### J. FCT
 J <-
   filter_outlier(tibble::as_tibble(mtcars), V15, control = control_filter_outlier(
-  discrete_method = "prop",
-  min_times = 0.1, na_action = "keep"
-))
+    discrete_method = "prop",
+    min_times = 0.1, na_action = "keep"
+  ))
 
 JF <- fct_lump_prop(mtcars$V15, prop = 0.1)
 JF <- JF[JF != "Other"] |> droplevels()
 JF_na_length <- JF[is.na(JF)] |> length()
-J_na_len <-  J$V15[is.na(J$V15)] |> length()
+J_na_len <- J$V15[is.na(J$V15)] |> length()
 
 
 
@@ -154,16 +154,16 @@ test_that("factor_works_single_without_NAs", {
 
 
 test_that("factor_works_single_NA", {
-  #G
+  # G
   expect_equal(nrow(G), 18)
-  expect_equal(unique(G$V14), c( "D", "A"))
+  expect_equal(unique(G$V14), c("D", "A"))
   expect_false(is.factor(G$V14))
   expect_equal(G$V14, GF)
   expect_equal(unique(G$V14), unique(GF))
   expect_equal(length(unique(G$V14)), length(unique(GF)))
   expect_equal(ncol(G), ncol(mtcars))
 
-  #H
+  # H
   expect_equal(nrow(H), 30)
   expect_equal(unique(H$V14), c(NA, "D", "A"))
   expect_false(is.factor(H$V14))
@@ -173,7 +173,7 @@ test_that("factor_works_single_NA", {
   expect_equal(ncol(H), ncol(mtcars))
   expect_equal(HF_na_length, H_na_len)
 
-  #I
+  # I
   expect_equal(nrow(I), 18)
   expect_equal(unique(I$V15) |> as.character(), c("I", "L"))
   expect_true(is.factor(I$V15))
@@ -183,7 +183,7 @@ test_that("factor_works_single_NA", {
   expect_equal(ncol(I), ncol(mtcars))
   expect_equal(IF_na_length, I_na_len)
 
-  #J
+  # J
   expect_equal(nrow(J), 30)
   expect_equal(unique(J$V15) |> as.character(), c("I", NA, "L"))
   expect_true(is.factor(J$V15))
@@ -192,5 +192,4 @@ test_that("factor_works_single_NA", {
   expect_equal(length(unique(J$V15)), length(unique(JF)))
   expect_equal(ncol(J), ncol(mtcars))
   expect_equal(JF_na_length, J_na_len)
-
 })
