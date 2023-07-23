@@ -101,7 +101,8 @@ filter_outlier.impl <- function(.data,
     n_vars = n_vars,
     freq = freq,
     ties_method = ties_method,
-    min_times = min_times
+    min_times = min_times,
+    na_action = na_action
   ))
 
   factor_variables <- vector("character")

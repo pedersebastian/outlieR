@@ -45,6 +45,7 @@
 #' @importFrom pillar type_sum
 #' @importFrom purrr map
 #' @importFrom purrr map_lgl
+#' @importFrom purrr map2_lgl
 #' @importFrom purrr pluck
 #' @importFrom purrr pmap
 #' @importFrom rlang .data

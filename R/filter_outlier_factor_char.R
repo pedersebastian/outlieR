@@ -12,7 +12,8 @@ factor_methods <- function(.data,
                            n_vars,
                            min_times,
                            freq,
-                           ties_method) {
+                           ties_method,
+                           na_action) {
   tbl <-
     switch(discrete_method,
       "prop" = prop_discrete(.data, var, prop),
@@ -32,8 +33,21 @@ factor_methods <- function(.data,
     ties_method,
     tbl
   )
-
+  if (na_action == "keep") {
+    tbl <-
+      factor_na(.data, tbl)
+  }
   tbl
+}
+
+
+factor_na <- function(.data, tbl) {
+
+  vec <-
+    purrr::map2_lgl(.data[[tbl$var]], tbl$outlier_vec[[1]], ~is.na(.x) + .y)
+  tbl$outlier_vec <- list(vec)
+  tbl
+
 }
 
 validate_factor_tbl <- function(.data,

@@ -8,7 +8,8 @@ get_tbl <- function(.data,
                     n_vars,
                     freq,
                     ties_method,
-                    min_times) {
+                    min_times,
+                    na_action) {
   var_type <- pillar::type_sum(.data[[rlang::quo_name(var)]])
   if (var_type %in% c("lgl", "dbl", "int")) {
     tbl <- switch(num_method,
@@ -25,7 +26,8 @@ get_tbl <- function(.data,
       n_vars = n_vars,
       min_times = min_times,
       freq = freq,
-      ties_method = ties_method
+      ties_method = ties_method,
+      na_action = na_action
     )
   }
 
