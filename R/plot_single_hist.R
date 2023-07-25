@@ -1,5 +1,3 @@
-
-
 plot_single.outlier_lgl_histogram <- function(data, ...) {
   dat <- data$dat
   summary_tbl <- data$summary_tbl
@@ -99,4 +97,55 @@ plot_single.outlier_dbl_histogram <- function(data, ...) {
     }
   }
   p + ggplot2::scale_fill_manual(values = pal)
+}
+
+
+
+plot_single.outlier_fct_histogram <- function(data, ...) {
+  summary_tbl <- data$summary_tbl
+  var_name <- data$var_name
+  data <- data$dat
+
+
+  new_data <- data |>
+    dplyr::count(var, value, outlier_vec) |>
+    dplyr::mutate(value = glue::glue("{value} \n({n})"), value = fct_reorder(value, n),
+                  pct = n/sum(n),
+                  outlier_vec = ifelse(outlier_vec, "Outlier", "No Outlier"))
+
+  title <- glue::glue("Outliers for {var_name} \nwith {round(summary_tbl$outlier_pct*100)} % Outliers")
+
+
+  p <-
+    new_data |>
+    ggplot(aes(n, value, fill = outlier_vec)) +
+    geom_col(width = 0.8, alpha = 0.9, color = "#16161D", linewidth = 0.2)+
+    ggplot2::scale_x_continuous(
+      sec.axis = ggplot2::sec_axis(
+        trans = ~ (.x / nrow(data)),
+        labels = scales::label_percent(),
+        name = "Percent"),
+      n.breaks = 5
+    ) +
+    theme_outlier()  +
+    ggplot2::guides("fill" = ggplot2::guide_legend(reverse = TRUE, nrow = 1)) +
+    ggplot2::scale_fill_manual(values = c(col_mid, col_high)) +
+    ggplot2::labs(title = title, y = NULL, x = "Count", fill = NULL)
+
+  p
+  if (outlier_exist) {
+    p <- p + ggplot2::theme(
+      legend.position = "bottom",
+      panel.grid.major.y = ggplot2::element_blank()
+    )
+  }
+  else {
+    p <- p + ggplot2::theme(
+      legend.position = "none",
+      panel.grid.major.y = ggplot2::element_blank()
+    )
+  }
+  p
+
+
 }

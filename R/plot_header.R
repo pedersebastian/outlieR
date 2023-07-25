@@ -57,8 +57,6 @@ plot_single.outlier_fct_count <- function(data, ...) {
     }
   }
 
-  print(new_data)
-
 
   p <-
     new_data |>
@@ -102,19 +100,10 @@ plot_single.outlier_fct_count <- function(data, ...) {
   }
 
 
-  p + ggplot2::geom_col(width = 0.5)
+  p + ggplot2::geom_col(width = 0.5, alpha = 0.9, color = "#16161D", linewidth = 0.2)
 
 
 }
-
-
-
-
-
-
-
-
-
 
 plot_single.outlier_lgl_count <- function(data, ...) {
   dat <- data$dat
