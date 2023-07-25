@@ -42,7 +42,7 @@ date_tbl <-
   dplyr::mutate(date_var = as.Date(19551:19582, origin = "1970-01-01"))
 
 
-atr_ignore <- c("tbls", "old_df", "vecs", "na_action", "filter_res")
+atr_ignore <- c("tbls", "old_df", "vecs", "na_action", "filter_res", "control")
 
 test_that("equals", {
   expect_equal(nrow(filtred_V1), 30)

@@ -1,5 +1,5 @@
 library(outlieR)
-atr_ignore <- c("tbls", "old_df", "vecs", "na_action", "filter_res", "class")
+atr_ignore <- c("tbls", "old_df", "vecs", "na_action", "filter_res", "class", "control")
 
 mtcars["V12"] <- factor(rep(LETTERS[1:5], times = c(10, 5, 15, 1, 1)))
 mtcars["V13"] <- rep(LETTERS[1:5], times = c(13, 12, 1, 5, 1))

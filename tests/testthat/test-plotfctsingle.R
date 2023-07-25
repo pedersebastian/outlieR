@@ -68,16 +68,12 @@ test_that("plots_plot", {
         vdiffr::expect_doppelganger("let", autoplot(res4))
         vdiffr::expect_doppelganger("letH", autoplot(res4, type = "hist"))
 
-
         vdiffr::expect_doppelganger("let5", autoplot(res5))
         vdiffr::expect_doppelganger("letH6", autoplot(res6, type = "hist"))
         vdiffr::expect_doppelganger("let7", autoplot(res7))
         vdiffr::expect_doppelganger("letH5", autoplot(res5, type = "hist"))
         vdiffr::expect_doppelganger("let6", autoplot(res6))
         vdiffr::expect_doppelganger("letH7", autoplot(res7, type = "hist"))
-
-
-
 
 }
 )

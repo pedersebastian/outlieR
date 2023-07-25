@@ -74,7 +74,8 @@ filter_outlier.data.frame <- function(.data, ..., control = control_filter_outli
     n_vars = n_vars,
     freq = freq,
     ties_method = ties_method,
-    min_times = min_times
+    min_times = min_times,
+    control = control
   )
 }
 
@@ -90,7 +91,8 @@ filter_outlier.impl <- function(.data,
                                 n_vars,
                                 freq,
                                 ties_method,
-                                min_times) {
+                                min_times,
+                                control) {
   tbls <- purrr::map(vars, ~ get_tbl(.data,
     .x,
     num_method = num_method,
@@ -151,7 +153,8 @@ filter_outlier.impl <- function(.data,
     tbls = tbls,
     vecs = vecs,
     filter_res = filter_res,
-    na_action = na_action
+    na_action = na_action,
+    control = control
   ))
 
   return(res)
