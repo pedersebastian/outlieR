@@ -118,8 +118,8 @@ plot_single.outlier_fct_histogram <- function(data, ...) {
 
   p <-
     new_data |>
-    ggplot(aes(n, value, fill = outlier_vec)) +
-    geom_col(width = 0.8, alpha = 0.9, color = "#16161D", linewidth = 0.2)+
+    ggplot2::ggplot(aes(n, value, fill = outlier_vec)) +
+    ggplot2::geom_col(width = 0.8, alpha = 0.9, color = "#16161D", linewidth = 0.2)+
     ggplot2::scale_x_continuous(
       sec.axis = ggplot2::sec_axis(
         trans = ~ (.x / nrow(data)),
@@ -128,12 +128,16 @@ plot_single.outlier_fct_histogram <- function(data, ...) {
       n.breaks = 5
     ) +
     theme_outlier()  +
-    ggplot2::guides("fill" = ggplot2::guide_legend(reverse = TRUE, nrow = 1)) +
+    ggplot2::guides("fill" = ggplot2::guide_legend(reverse = TRUE,
+                                                   nrow = 1)) +
     ggplot2::scale_fill_manual(values = c(col_mid, col_high)) +
-    ggplot2::labs(title = title, y = NULL, x = "Count", fill = NULL)
+    ggplot2::labs(title = title,
+                  y = NULL,
+                  x = "Count",
+                  fill = NULL)
 
   p
-  if (outlier_exist) {
+  if (summary_tbl$outlier_exist) {
     p <- p + ggplot2::theme(
       legend.position = "bottom",
       panel.grid.major.y = ggplot2::element_blank()
