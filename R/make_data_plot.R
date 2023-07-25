@@ -15,6 +15,7 @@ prep_data_one <- function(object, type, ...) {
   var_name <- summary_tbl$var
   dat <- attr(object, "old_df")
 
+  na_action = attr(object, "na_action")
 
   if (summary_tbl$var_type == "lgl") {
     dat <- prep_data_many_logical(data = dat, var_name, summary_tbl)
@@ -28,7 +29,7 @@ prep_data_one <- function(object, type, ...) {
       dplyr::filter(!is.na(outlier_var))
     class <- "dbl"
   } else if (summary_tbl$var_type %in% c("fct", "chr")) {
-    dat <- prep_data_many_discrete(dat, var_name, summary_tbl)
+    dat <- prep_data_many_discrete(dat, var_name, summary_tbl, na_action)
     class <- "fct"
   }
   class_var <- c("outlier_data", glue::glue("outlier_{class}_{type}"), "list")
@@ -79,8 +80,7 @@ prep_data_many <- function(object, type, ...) {
 
   dis_data <-
     prep_data_many_discrete(attr(object, "old_df"), dis_name, summary_tbl)
-
-
+#############################################################################
 
   class_var <- c("outlier_data", glue::glue("outlier_lgl{lgl>0}_dbl{dbl>0}_dis{dis>0}_other{other>1}_{type}"), "list")
 

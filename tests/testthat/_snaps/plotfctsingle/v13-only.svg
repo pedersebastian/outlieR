@@ -46,9 +46,9 @@
 <polyline points='57.35,40.74 57.35,38.00 ' style='stroke-width: 0.53; stroke: #B3B3B3; stroke-linecap: butt;' />
 <polyline points='292.98,40.74 292.98,38.00 ' style='stroke-width: 0.53; stroke: #B3B3B3; stroke-linecap: butt;' />
 <polyline points='528.60,40.74 528.60,38.00 ' style='stroke-width: 0.53; stroke: #B3B3B3; stroke-linecap: butt;' />
-<text x='21.13' y='405.83' text-anchor='end' style='font-size: 8.80px; fill: #4D4D4D; font-family: sans;' textLength='8.32px' lengthAdjust='spacingAndGlyphs'>A </text>
+<text x='21.13' y='405.83' text-anchor='end' style='font-size: 8.80px; fill: #4D4D4D; font-family: sans;' textLength='7.34px' lengthAdjust='spacingAndGlyphs'>1 </text>
 <text x='21.13' y='415.34' text-anchor='end' style='font-size: 8.80px; fill: #4D4D4D; font-family: sans;' textLength='15.65px' lengthAdjust='spacingAndGlyphs'>(15)</text>
-<text x='21.13' y='176.57' text-anchor='end' style='font-size: 8.80px; fill: #4D4D4D; font-family: sans;' textLength='8.32px' lengthAdjust='spacingAndGlyphs'>B </text>
+<text x='21.13' y='176.57' text-anchor='end' style='font-size: 8.80px; fill: #4D4D4D; font-family: sans;' textLength='7.34px' lengthAdjust='spacingAndGlyphs'>2 </text>
 <text x='21.13' y='186.08' text-anchor='end' style='font-size: 8.80px; fill: #4D4D4D; font-family: sans;' textLength='15.65px' lengthAdjust='spacingAndGlyphs'>(17)</text>
 <polyline points='23.32,407.56 26.06,407.56 ' style='stroke-width: 0.53; stroke: #B3B3B3; stroke-linecap: butt;' />
 <polyline points='23.32,178.30 26.06,178.30 ' style='stroke-width: 0.53; stroke: #B3B3B3; stroke-linecap: butt;' />
@@ -62,6 +62,6 @@
 <text x='609.59' y='556.10' text-anchor='middle' style='font-size: 8.80px; fill: #4D4D4D; font-family: sans;' textLength='9.79px' lengthAdjust='spacingAndGlyphs'>15</text>
 <text x='370.29' y='25.19' text-anchor='middle' style='font-size: 11.00px; font-family: sans;' textLength='37.92px' lengthAdjust='spacingAndGlyphs'>Percent</text>
 <text x='370.29' y='568.24' text-anchor='middle' style='font-size: 11.00px; font-family: sans;' textLength='29.36px' lengthAdjust='spacingAndGlyphs'>Count</text>
-<text x='370.29' y='14.19' text-anchor='middle' style='font-size: 11.00px; font-family: sans;' textLength='149.83px' lengthAdjust='spacingAndGlyphs'>V13 doesn’t have any Outliers.</text>
+<text x='370.29' y='14.19' text-anchor='middle' style='font-size: 11.00px; font-family: sans;' textLength='156.57px' lengthAdjust='spacingAndGlyphs'>V13 does not have any Outliers.</text>
 </g>
 </svg>

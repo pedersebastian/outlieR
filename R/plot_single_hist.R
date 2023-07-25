@@ -189,7 +189,7 @@ plot_single.outlier_fct_histogram <- function(data, ...) {
       legend.position = "none",
       panel.grid.major.y = ggplot2::element_blank()
     )
-    title <- glue::glue("{var_name} doesn’t have any Outliers.")
+    title <- glue::glue("{var_name} does not have any Outliers.")
   }
   p +
     ggplot2::labs(

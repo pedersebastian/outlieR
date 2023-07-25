@@ -1,28 +1,44 @@
-prep_data_many_discrete <- function(data, dis_name, summary_tbl) {
+prep_data_many_discrete <- function(data, dis_name, summary_tbl, na_action) {
   if (length(dis_name) < 1) {
     return(NULL)
   }
+  fakevar <- sample(c(LETTERS, letters, 1:10, c("!", "?", "&", "$", "#")), size = 20) |> paste0( collapse = "")
   out <-
     data |>
     dplyr::select(all_of(dis_name)) |>
     tidyr::pivot_longer(everything(),
       names_to = "var"
-    ) |>
+    )
+  if (na_action == "keep") {
+    ## NA becomes its own factor level
+    out <- dplyr::mutate(out, value = ifelse(is.na(value), "NA", value))
+  }
+  else {
+    out <-
+      dplyr::mutate(out, value = ifelse(is.na(value), fakevar, value))
+  }
+
+
+    out <-
+      out |>
     tidyr::nest(data = -var) |>
-    dplyr::left_join(summary_tbl, dplyr::join_by(var)) |>
-    dplyr::select(var, data, outlier_vec) |>
+    dplyr::left_join(summary_tbl, dplyr::join_by(var))|>
+    dplyr::select(var, data, outlier_vec)|>
     tidyr::unnest(c(data, outlier_vec)) |>
+    filter(value != fakevar)|>
     dplyr::mutate(outlier_vec = !outlier_vec)
+
+
+  if (inherits(out$value, "factor")) {
+    out <- dplyr::mutate(out, value = droplevels(value))
+  }
 
   out
 }
+#######
 
 
-
-
-
-
-
+########################################################################
 prep_data_many_logical <- function(data, variable_names, summary_tbl) {
   if (length(variable_names) < 1) {
     return(NULL)
@@ -52,7 +68,6 @@ prep_data_many_numeric <- function(data, variable_names, summary_tbl) {
     return(NULL)
   }
 
-
   data <-
     data |>
     dplyr::select(all_of(variable_names)) |>
@@ -74,7 +89,6 @@ prep_data_many_numeric <- function(data, variable_names, summary_tbl) {
 logical_helper_many <- function(data) {
   data <- data |>
     dplyr::mutate(outlier_var = purrr::pmap(list(value, upper, lower), out_help))
-
 
 
   if (!data$outlier_exist[[1]]) {
