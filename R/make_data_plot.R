@@ -61,11 +61,10 @@ prep_data_many <- function(object, type, ...) {
   dis_name <- c(fct_names, chr_names)
   dbl_names <- c(dbl_names, int_names)
 
-  print(dis_name)
+
   lgl <- length(lgl_names)
   dbl <- length(dbl_names)
   dis <- length(dis_name)
-  print(dis)
   other <- 0
   # Not implemented så
   # other <- length(vars_name) - lgl - dbl
