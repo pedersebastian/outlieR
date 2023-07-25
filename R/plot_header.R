@@ -19,7 +19,6 @@ plot_single.default <- function(data, ...) {
 
 
 plot_single.outlier_fct_count <- function(data, ...) {
-
   summary_tbl <- data$summary_tbl
   var_name <- data$var_name
   data <- data$dat
@@ -27,8 +26,10 @@ plot_single.outlier_fct_count <- function(data, ...) {
 
   new_data <- data |>
     dplyr::count(var, value, outlier_vec) |>
-    dplyr::mutate(value = fct_reorder(value, n),
-           pct = n/sum(n))
+    dplyr::mutate(
+      value = fct_reorder(value, n),
+      pct = n / sum(n)
+    )
 
   line <- 1 - summary_tbl$outlier_pct
 
@@ -51,7 +52,7 @@ plot_single.outlier_fct_count <- function(data, ...) {
   outlier_exist <- summary_tbl$outlier_exist
 
   if (outlier_exist) {
-    if (outlier_count > 0 ) {
+    if (outlier_count > 0) {
       palette <- c(palette, grDevices::colorRampPalette(outlier_col)(outlier_count))
       palette <- rev(palette)
     }
@@ -61,13 +62,12 @@ plot_single.outlier_fct_count <- function(data, ...) {
   p <-
     new_data |>
     ggplot2::ggplot(ggplot2::aes(pct, var, fill = value)) +
-
     ggplot2::scale_x_continuous(
       labels = scales::label_percent(),
       sec.axis = ggplot2::sec_axis(
         trans = ~ .x * nrow(data),
         breaks = seq(0, nrow(data),
-                     length.out = 5
+          length.out = 5
         ),
         name = "Count"
       )
@@ -101,8 +101,6 @@ plot_single.outlier_fct_count <- function(data, ...) {
 
 
   p + ggplot2::geom_col(width = 0.5, alpha = 0.9, color = "#16161D", linewidth = 0.2)
-
-
 }
 
 plot_single.outlier_lgl_count <- function(data, ...) {
@@ -201,5 +199,3 @@ plot_single.outlier_dbl_count <- function(data, ...) {
 
   p + ggplot2::scale_fill_manual(values = pal)
 }
-
-

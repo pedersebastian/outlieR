@@ -27,10 +27,9 @@ prep_data_one <- function(object, type, ...) {
       dplyr::mutate(outlier_var = factor(outlier_var, levels = c("Outlier (<)", "No Outlier", "Outlier (>)"))) |>
       dplyr::filter(!is.na(outlier_var))
     class <- "dbl"
-  }
-  else if (summary_tbl$var_type %in% c("fct", "chr")) {
-      dat <- prep_data_many_discrete(dat, var_name, summary_tbl)
-      class <- "fct"
+  } else if (summary_tbl$var_type %in% c("fct", "chr")) {
+    dat <- prep_data_many_discrete(dat, var_name, summary_tbl)
+    class <- "fct"
   }
   class_var <- c("outlier_data", glue::glue("outlier_{class}_{type}"), "list")
 
@@ -106,4 +105,3 @@ prep_data_many <- function(object, type, ...) {
   )
   out
 }
-

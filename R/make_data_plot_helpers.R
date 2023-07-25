@@ -1,5 +1,3 @@
-
-
 prep_data_many_discrete <- function(data, dis_name, summary_tbl) {
   if (length(dis_name) < 1) {
     return(NULL)
@@ -9,12 +7,13 @@ prep_data_many_discrete <- function(data, dis_name, summary_tbl) {
     data |>
     dplyr::select(all_of(dis_name)) |>
     tidyr::pivot_longer(everything(),
-                        names_to = "var") |>
-    tidyr::nest(data = - var) |>
+      names_to = "var"
+    ) |>
+    tidyr::nest(data = -var) |>
     dplyr::left_join(summary_tbl, dplyr::join_by(var)) |>
     dplyr::select(var, data, outlier_vec) |>
     tidyr::unnest(c(data, outlier_vec)) |>
-    dplyr:: mutate(outlier_vec = !outlier_vec)
+    dplyr::mutate(outlier_vec = !outlier_vec)
 
   out
 }
@@ -81,23 +80,23 @@ logical_helper_many <- function(data) {
 
   if (!data$outlier_exist[[1]]) {
     data <- dplyr::mutate(data,
-                          outlier_var = ifelse(value, "No Outlier (TRUE)", "No Outlier (FALSE)"),
-                          outlier_var = factor(outlier_var, levels = c("No Outlier (FALSE)", "No Outlier (TRUE)"))
+      outlier_var = ifelse(value, "No Outlier (TRUE)", "No Outlier (FALSE)"),
+      outlier_var = factor(outlier_var, levels = c("No Outlier (FALSE)", "No Outlier (TRUE)"))
     )
   } else if (data$mean_var[[1]] < 0.5) {
     normal_name <- "No Outlier (FALSE)"
     outlier_name <- "Outlier (TRUE)"
 
     data <- dplyr::mutate(data,
-                          outlier_var = ifelse(outlier_var, outlier_name, normal_name),
-                          outlier_var = factor(outlier_var, levels = c(normal_name, outlier_name))
+      outlier_var = ifelse(outlier_var, outlier_name, normal_name),
+      outlier_var = factor(outlier_var, levels = c(normal_name, outlier_name))
     )
   } else {
     normal_name <- "No Outlier (TRUE)"
     outlier_name <- "Outlier (FALSE)"
     data <- dplyr::mutate(data,
-                          outlier_var = ifelse(outlier_var, outlier_name, normal_name),
-                          outlier_var = factor(outlier_var, levels = c(outlier_name, normal_name))
+      outlier_var = ifelse(outlier_var, outlier_name, normal_name),
+      outlier_var = factor(outlier_var, levels = c(outlier_name, normal_name))
     )
   }
   data
