@@ -2,7 +2,6 @@ prep_data_many_discrete <- function(data, dis_name, summary_tbl) {
   if (length(dis_name) < 1) {
     return(NULL)
   }
-  print(dis_name)
   out <-
     data |>
     dplyr::select(all_of(dis_name)) |>

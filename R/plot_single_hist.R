@@ -3,7 +3,8 @@ plot_single.outlier_lgl_histogram <- function(data, ...) {
   summary_tbl <- data$summary_tbl
   var_name <- data$var_name
   p <-
-    dplyr::count(dat, outlier_var) |>
+    dplyr::count(dat,
+                 outlier_var) |>
     dplyr::mutate(
       pct = n / sum(n),
       outlier_var = factor(outlier_var,
@@ -146,9 +147,6 @@ plot_single.outlier_fct_histogram <- function(data, ...) {
       outlier_vec = ifelse(outlier_vec, "Outlier", "No Outlier")
     )
 
-
-
-
   p <-
     new_data |>
     ggplot2::ggplot(aes(n,
@@ -191,7 +189,7 @@ plot_single.outlier_fct_histogram <- function(data, ...) {
       legend.position = "none",
       panel.grid.major.y = ggplot2::element_blank()
     )
-    title <- glue::glue("Outliers for {var_name} \nwith 0 Outliers")
+    title <- glue::glue("{var_name} doesn’t have any Outliers.")
   }
   p +
     ggplot2::labs(
