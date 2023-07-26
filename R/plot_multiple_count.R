@@ -1,5 +1,5 @@
 plot_multiple.outlier_lglFALSE_dblFALSE_disTRUE_otherFALSE_count <- function(data, ...) {
-  summary_tbl<-
+  summary_tbl <-
     data$summary_tbl
   #
   # for (variable  in data$summary_tbl$var) {
@@ -14,14 +14,20 @@ plot_multiple.outlier_lglFALSE_dblFALSE_disTRUE_otherFALSE_count <- function(dat
     data$dat$dis_data |>
     dplyr::count(var, value, outlier_vec) |>
     dplyr::group_by(var) |>
-    dplyr::mutate(value = forcats::fct_na_value_to_level(value),
-           pct = n/sum(n)) |>
+    dplyr::mutate(
+      value = forcats::fct_na_value_to_level(value),
+      pct = n / sum(n)
+    ) |>
     dplyr::ungroup() |>
-    dplyr::mutate(value = forcats::fct_reorder(value, pct, .na_rm = TRUE),
-           variable = var) |>
-    tidyr::nest(data = - var) |>
-    dplyr::mutate(summary_tbl = list(summary_tbl),
-           summary_tbl = purrr::map2(summary_tbl, var, ~filter(.x, var == .y))) |>
+    dplyr::mutate(
+      value = forcats::fct_reorder(value, pct, .na_rm = TRUE),
+      variable = var
+    ) |>
+    tidyr::nest(data = -var) |>
+    dplyr::mutate(
+      summary_tbl = list(summary_tbl),
+      summary_tbl = purrr::map2(summary_tbl, var, ~ filter(.x, var == .y))
+    ) |>
     dplyr::mutate(plot = purrr::pmap(list(data, var, summary_tbl), plot_single_discrete_counts))
 
 

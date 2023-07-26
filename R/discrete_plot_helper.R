@@ -1,5 +1,4 @@
 plot_single_discrete_counts <- function(data, var_name, summary_tbl, title = NULL, y_text = TRUE) {
-
   line <- 1 - summary_tbl$outlier_pct
   non_outlier_col <- c("#BC8F1C", "#EFD593")
   outlier_col <- c("#9C3015", "#EC8D75")
@@ -35,9 +34,10 @@ plot_single_discrete_counts <- function(data, var_name, summary_tbl, title = NUL
         trans = ~ .x * rows_count,
         breaks = round(
           seq(0, rows_count,
-                     length.out = 5
+            length.out = 5
+          ),
+          digits = 0
         ),
-        digits = 0),
         name = "Counts"
       )
     ) +
