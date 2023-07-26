@@ -24,5 +24,6 @@ utils::globalVariables(c(
   "outlier_pct",
   "outlier_vars",
   "outlier_vec",
-  "unique_vars"
+  "unique_vars",
+  "variable"
 ))

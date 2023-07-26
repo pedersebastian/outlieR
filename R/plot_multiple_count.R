@@ -1,3 +1,40 @@
+plot_multiple.outlier_lglFALSE_dblFALSE_disTRUE_otherFALSE_count <- function(data, ...) {
+  summary_tbl<-
+    data$summary_tbl
+  #
+  # for (variable  in data$summary_tbl$var) {
+  #   na_count <- data$summary_tbl[data$summary_tbl$var == variable, ]$na_count
+  #   if (na_count > 0 ) {
+  #     test_data <-  add_row(test_data, var = variable, value = NA, outlier_vec = TRUE, n = na_count)
+  #   }
+  # }
+
+
+  res_data <-
+    data$dat$dis_data |>
+    dplyr::count(var, value, outlier_vec) |>
+    dplyr::group_by(var) |>
+    dplyr::mutate(value = forcats::fct_na_value_to_level(value),
+           pct = n/sum(n)) |>
+    dplyr::ungroup() |>
+    dplyr::mutate(value = forcats::fct_reorder(value, pct, .na_rm = TRUE),
+           variable = var) |>
+    tidyr::nest(data = - var) |>
+    dplyr::mutate(summary_tbl = list(summary_tbl),
+           summary_tbl = purrr::map2(summary_tbl, var, ~filter(.x, var == .y))) |>
+    dplyr::mutate(plot = purrr::pmap(list(data, var, summary_tbl), plot_single_discrete_counts))
+
+
+
+  p <-
+    res_data$plot |>
+    patchwork::wrap_plots(ncol = 1)
+  p
+}
+
+
+
+
 plot_multiple.outlier_lglTRUE_dblTRUE_disFALSE_otherFALSE_count <- function(data, ...) {
   # TRUE TRUE
 

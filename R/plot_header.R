@@ -30,77 +30,10 @@ plot_single.outlier_fct_count <- function(data, ...) {
       value = fct_reorder(value, n),
       pct = n / sum(n)
     )
-
-  line <- 1 - summary_tbl$outlier_pct
-
   title <- glue::glue("Outliers for {var_name} \nwith {round(summary_tbl$outlier_pct*100)} % Outliers")
 
-  non_outlier_col <- c("#BC8F1C", "#EFD593")
-  outlier_col <- c("#9C3015", "#EC8D75")
-
-
-  n_dis <- nrow(new_data)
-  counts <- dplyr::count(new_data, outlier_vec)
-
-
-  normal_count <-
-    counts$n[counts$outlier_vec == FALSE]
-  outlier_count <-
-    counts$n[counts$outlier_vec == TRUE]
-
-  palette <- grDevices::colorRampPalette(non_outlier_col)(normal_count)
-  outlier_exist <- summary_tbl$outlier_exist
-
-  if (outlier_exist) {
-    if (outlier_count > 0) {
-      palette <- c(palette, grDevices::colorRampPalette(outlier_col)(outlier_count))
-      palette <- rev(palette)
-    }
-  }
-
-
-  p <-
-    new_data |>
-    ggplot2::ggplot(ggplot2::aes(pct, var, fill = value)) +
-    ggplot2::scale_x_continuous(
-      labels = scales::label_percent(),
-      sec.axis = ggplot2::sec_axis(
-        trans = ~ .x * nrow(data),
-        breaks = seq(0, nrow(data),
-          length.out = 5
-        ),
-        name = "Count"
-      )
-    ) +
-    theme_outlier() +
-    ggplot2::theme(
-      legend.position = "bottom",
-      axis.text.y = ggplot2::element_blank(),
-      panel.grid.major.y = ggplot2::element_blank()
-    ) +
-    ggplot2::guides("fill" = ggplot2::guide_legend(reverse = TRUE, nrow = 1)) +
-    ggplot2::scale_fill_manual(values = palette) +
-    ggplot2::labs(title = title, y = NULL, x = "Percent", fill = NULL)
-
-  if (outlier_exist) {
-    p <- p +
-      ggplot2::geom_vline(xintercept = line, lty = 2, linewidth = 0.5) +
-      ggplot2::geom_rect(
-        data = summary_tbl,
-        ggplot2::aes(
-          xmin = 1,
-          xmax = 1 - outlier_pct,
-          ymin = -Inf,
-          ymax = Inf
-        ),
-        alpha = 0.2,
-        fill = "#9C3015",
-        inherit.aes = FALSE
-      )
-  }
-
-
-  p + ggplot2::geom_col(width = 0.5, alpha = 0.9, color = "#16161D", linewidth = 0.2)
+  p <- plot_single_discrete_counts(data = new_data, var_name = var_name, summary_tbl = summary_tbl, title = title, y_text = FALSE)
+  p
 }
 
 plot_single.outlier_lgl_count <- function(data, ...) {

@@ -53,6 +53,8 @@ prep_data_many <- function(object, type, ...) {
   summary_tbl <- attr(object, "tbls") |> dplyr::bind_rows()
   vars_name <- summary_tbl$var
 
+  na_action <- attr(object, "na_action")
+
   lgl_names <- summary_tbl["var"][summary_tbl["var_type"] == "lgl"]
   dbl_names <- summary_tbl["var"][summary_tbl["var_type"] == "dbl"]
   int_names <- summary_tbl["var"][summary_tbl["var_type"] == "int"]
@@ -79,7 +81,7 @@ prep_data_many <- function(object, type, ...) {
     prep_data_many_logical(attr(object, "old_df"), lgl_names, summary_tbl)
 
   dis_data <-
-    prep_data_many_discrete(attr(object, "old_df"), dis_name, summary_tbl)
+    prep_data_many_discrete(attr(object, "old_df"), dis_name, summary_tbl, na_action)
   #############################################################################
 
   class_var <- c("outlier_data", glue::glue("outlier_lgl{lgl>0}_dbl{dbl>0}_dis{dis>0}_other{other>1}_{type}"), "list")
