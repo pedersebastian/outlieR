@@ -3,8 +3,10 @@ plot_single.outlier_lgl_histogram <- function(data, ...) {
   summary_tbl <- data$summary_tbl
   var_name <- data$var_name
   p <-
-    dplyr::count(dat,
-                 outlier_var) |>
+    dplyr::count(
+      dat,
+      outlier_var
+    ) |>
     dplyr::mutate(
       pct = n / sum(n),
       outlier_var = factor(outlier_var,
@@ -28,10 +30,12 @@ plot_single.outlier_lgl_histogram <- function(data, ...) {
     ) +
     theme_outlier() +
     ggplot2::theme(legend.position = "bottom") +
-    ggplot2::labs(title = glue::glue("{round(summary_tbl$outlier_pct * 100,2)} % Outliers for {var_name}"),
-                  fill = NULL,
-                  y = "Percent",
-                  x = NULL)
+    ggplot2::labs(
+      title = glue::glue("{round(summary_tbl$outlier_pct * 100,2)} % Outliers for {var_name}"),
+      fill = NULL,
+      y = "Percent",
+      x = NULL
+    )
 
   if (all(dat$value == TRUE, na.rm = TRUE)) {
     pal <- c(col_high)
@@ -183,7 +187,6 @@ plot_single.outlier_fct_histogram <- function(data, ...) {
 
 
     title <- glue::glue("Outliers for {var_name} \nwith {round(summary_tbl$outlier_pct*100)} % Outliers")
-
   } else {
     p <- p + ggplot2::theme(
       legend.position = "none",
