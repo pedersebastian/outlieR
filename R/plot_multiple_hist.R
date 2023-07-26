@@ -7,6 +7,42 @@ plot_multiple.default <- function(data, ...) {
   )
 }
 
+
+plot_multiple.outlier_lglFALSE_dblFALSE_disTRUE_otherFALSE_histogram <- function(data, ...) {
+
+
+  test_data <-
+    data$dat$dis_data |>
+    dplyr::count(var, value, outlier_vec)
+
+  palette <- col_mid
+  if (sum(test_data$outlier_vec, na.rm = TRUE) >0) {
+    palette <- c(col_high, palette)
+  }
+
+
+ p <-
+   test_data |>
+    dplyr::mutate(value = forcats::fct_reorder(value, n),
+           outlier_vec = ifelse(outlier_vec, "Outlier", "No outlier"),
+           outlier_vec = factor(outlier_vec, levels = c("Outlier", "No outlier"))) |>
+   ggplot2::ggplot(ggplot2::aes(n, value, fill = outlier_vec)) +
+   ggplot2::geom_col() +
+   ggplot2::facet_wrap(ggplot2::vars(var), scales = "free_y", ncol = 1)+
+    theme_outlier() +
+    ggplot2::theme(
+      legend.position = "bottom",
+      panel.grid.major.y = ggplot2::element_blank()
+    ) +
+    ggplot2::guides("fill" = ggplot2::guide_legend(reverse = FALSE, nrow = 1)) +
+    ggplot2::scale_fill_manual(values = palette) +
+    ggplot2::labs(title = NULL, y = NULL, x = "Counts", fill = NULL) +
+   ggplot2::scale_x_continuous(breaks  = seq(0,max(test_data$n, na.rm = TRUE)))
+  p
+}
+
+
+
 ################################################################################
 #                            #                        #                        #
 ################################################################################
