@@ -5,3 +5,4 @@
 ^README\.Rmd$
 ^old_files$
 ^cran-comments\.md$
+.lintr

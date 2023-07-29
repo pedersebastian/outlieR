@@ -15,7 +15,9 @@
 #'
 #' paste(nrow(mtcars), "rows before filtered and", nrow(filtred), "rows after")
 #' # "32 rows before filtered and 28 rows after"
-filter_outlier <- function(.data, ..., control = control_filter_outlier()) {
+filter_outlier <- function(.data,
+                           ...,
+                           control = control_filter_outlier()) {
   if (missing(.data)) {
     rlang::abort(".data must be supplied")
   }
@@ -23,11 +25,13 @@ filter_outlier <- function(.data, ..., control = control_filter_outlier()) {
 }
 #' @export
 filter_outlier.default <- function(.data, ...) {
-  mes <- paste("filter_outlier does not support data of type", class(.data)[[1]])
+  mes <- paste("filter_outlier does not support data of type",
+               class(.data)[[1]])
   rlang::abort(mes)
 }
 #' @export
-filter_outlier.data.frame <- function(.data, ..., control = control_filter_outlier()) {
+filter_outlier.data.frame <- function(.data, ...,
+                                      control = control_filter_outlier()) {
   if (!inherits(control, "control_filter_outlier")) {
     cli::cli_abort(c(
       "x" = "{.arg control} is of class {.cls {class(control)[[1]]}}.",
@@ -58,7 +62,8 @@ filter_outlier.data.frame <- function(.data, ..., control = control_filter_outli
   )
 
 
-  vars <- rlang::names2(select_loc(..., .data = .data)) |>
+  vars <- rlang::names2(select_loc(...,
+                                   .data = .data)) |>
     rlang::syms() |>
     rlang::as_quosures(env = rlang::current_env())
 
@@ -112,7 +117,9 @@ filter_outlier.impl <- function(.data,
   vecs <- list()
   for (i in seq_along(vars)) {
     if (tbls[[i]]$var_type %in% c("lgl", "dbl", "int")) {
-      vec <- purrr::map_lgl(.data[[tbls[[i]]$var]], ~ out_help(.x, tbls[[i]]$upper, tbls[[i]]$lower))
+      vec <- purrr::map_lgl(.data[[tbls[[i]]$var]],
+                            ~ out_help(.x, tbls[[i]]$upper,
+                                       tbls[[i]]$lower))
     } else if (tbls[[i]]$var_type %in% c("fct", "chr")) {
       vec <- !tbls[[i]]$outlier_vec[[1]]
       if (tbls[[i]]$var_type == "fct") {
@@ -133,11 +140,11 @@ filter_outlier.impl <- function(.data,
 
 
   res <- vector()
-  for (row in seq(nrow(y))) {
-    res[row] <- y[row, ] |> sum() == 0
+  for (row in seq_len(nrow(y))) {
+    res[row] <- sum(y[row, ]) == 0
   }
 
-  names(vecs) <- map(vars, quo_name)
+  names(vecs) <- purrr::map(vars, quo_name)
   filter_res <- res
   res <- subset(.data, res)
 

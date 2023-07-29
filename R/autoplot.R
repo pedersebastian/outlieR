@@ -7,7 +7,11 @@ ggplot2::autoplot
 #' @param ... Not Currently used
 #' @param type histogram or count
 #' @export
-autoplot.outlier <- function(object, ..., type = "histogram", return_data = FALSE) {
+autoplot.outlier <- function(object,
+                             ...,
+                             type = "histogram",
+                             return_data = FALSE) {
+
   if (type == "hist") type <- "histogram"
   type <-
     match.arg(type, c("histogram", "count"))

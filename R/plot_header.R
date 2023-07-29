@@ -30,9 +30,14 @@ plot_single.outlier_fct_count <- function(data, ...) {
       value = fct_reorder(value, n),
       pct = n / sum(n)
     )
-  title <- glue::glue("Outliers for {var_name} \nwith {round(summary_tbl$outlier_pct*100)} % Outliers")
+  title <- glue::glue("Outliers for {var_name} \n
+                      with {round(summary_tbl$outlier_pct*100)} % Outliers")
 
-  p <- plot_single_discrete_counts(data = new_data, var_name = var_name, summary_tbl = summary_tbl, title = title, y_text = FALSE)
+  p <- plot_single_discrete_counts(data = new_data,
+                                   var_name = var_name,
+                                   summary_tbl = summary_tbl,
+                                   title = title,
+                                   y_text = FALSE)
   p
 }
 
@@ -46,11 +51,15 @@ plot_single.outlier_lgl_count <- function(data, ...) {
     dplyr::mutate(
       pct = n / sum(n),
       outlier_var = factor(outlier_var,
-        levels = c("No Outlier (FALSE)", "Outlier (FALSE)", "No Outlier (TRUE)", "Outlier (TRUE)")
+        levels = c("No Outlier (FALSE)",
+                   "Outlier (FALSE)",
+                   "No Outlier (TRUE)",
+                   "Outlier (TRUE)")
       )
     ) |>
     ggplot2::ggplot(aes(0, pct, fill = outlier_var)) +
-    ggplot2::geom_col(width = 0.5, position = ggplot2::position_fill(reverse = TRUE)) +
+    ggplot2::geom_col(width = 0.5,
+                      position = ggplot2::position_fill(reverse = TRUE)) +
     ggplot2::scale_y_continuous(
       labels = scales::label_percent(),
       sec.axis = ggplot2::sec_axis(
@@ -68,7 +77,8 @@ plot_single.outlier_lgl_count <- function(data, ...) {
       panel.grid.major.y = ggplot2::element_blank()
     ) +
     ggplot2::labs(
-      title = glue::glue("{round(summary_tbl$outlier_pct * 100,2)} % Outliers for {var_name}"),
+      title = glue::glue("{round(summary_tbl$outlier_pct * 100,2)}
+                         % Outliers for {var_name}"),
       fill = NULL,
       y = "Percent",
       x = NULL
@@ -99,7 +109,8 @@ plot_single.outlier_dbl_count <- function(data, ...) {
       pct = n / sum(n)
     ) |>
     ggplot2::ggplot(aes(0, pct, fill = outlier_var)) +
-    ggplot2::geom_col(width = 0.5, position = ggplot2::position_fill(reverse = TRUE)) +
+    ggplot2::geom_col(width = 0.5,
+                      position = ggplot2::position_fill(reverse = TRUE)) +
     ggplot2::scale_y_continuous(
       labels = scales::label_percent(),
       sec.axis = ggplot2::sec_axis(
@@ -117,7 +128,8 @@ plot_single.outlier_dbl_count <- function(data, ...) {
       panel.grid.major.y = ggplot2::element_blank()
     ) +
     ggplot2::labs(
-      title = glue::glue("{round(summary_tbl$outlier_pct * 100,2)} % Outliers for {var_name}"),
+      title = glue::glue("{round(summary_tbl$outlier_pct * 100,2)} %
+                         Outliers for {var_name}"),
       fill = NULL,
       y = "Percent",
       x = NULL
@@ -128,7 +140,8 @@ plot_single.outlier_dbl_count <- function(data, ...) {
   pal <- c(col_mid)
   if (any(dat[[var_name]] > summary_tbl$upper)) pal <- append(pal, col_high)
 
-  if (any(dat[[var_name]] < summary_tbl$lower)) pal <- append(pal, col_low, after = 0)
-
+  if (any(dat[[var_name]] < summary_tbl$lower)) {
+    pal <- append(pal, col_low, after = 0)
+  }
   p + ggplot2::scale_fill_manual(values = pal)
 }

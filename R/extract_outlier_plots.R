@@ -5,7 +5,8 @@ autoplot.extract.logical <- function(object, ...) {
 
   new_vec <-
     atri$vecs |>
-    purrr::map(~ tidyr::replace_na(.x, if (atri$na_action == "keep") TRUE else FALSE))
+    purrr::map(~ tidyr::replace_na(.x,
+                                   if (atri$na_action == "keep") TRUE else FALSE))
 
 
   data <-
@@ -27,10 +28,12 @@ autoplot.extract.logical <- function(object, ...) {
     ggplot2::geom_tile(na.rm = TRUE, width = 0.96) +
     theme_outlier() +
     ggplot2::theme(
-      legend.position = "bottom",
+      legend.position = "top",
       axis.text.y = ggplot2::element_text(size = structure(0.8, class = "rel")),
-      # panel.grid.major.y = ggplot2::element_blank()
-      axis.text.x = ggplot2::element_text(size = structure(1.5, class = "rel"))
+      axis.text.x = ggplot2::element_text(size = structure(0.6, class = "rel"),
+                                          angle = 90),
+      panel.grid.major = element_blank(),
+      panel.grid.minor = element_blank()
     ) +
     ggplot2::labs(
       title = NULL,

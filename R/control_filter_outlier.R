@@ -33,7 +33,8 @@ control_filter_outlier <- function(numeric_method = "mean_sd",
   dots_names <- names(rlang::list2(...))
 
   if (dots_count > 0) {
-    cli::cli_abort(c("i" = "{dots_names} {?is/are} {dots_count} the name{?s} of the wrongly spelled element{?s} in {.fun control_filter_outlier}."))
+    cli::cli_abort(c("i" = "{dots_names} {?is/are} {dots_count} the name{?s} of
+                     the wrongly spelled element{?s} in {.fun control_filter_outlier}."))
   }
 
   ## fix args
@@ -50,9 +51,14 @@ control_filter_outlier <- function(numeric_method = "mean_sd",
     na_action <- "keep"
   }
 
-  num_method <- match.arg(numeric_method, c("mean_sd", "MAD", "IQD", "t_test"), several.ok = FALSE)
-  na_action <- match.arg(na_action, c("keep", "omit"), several.ok = FALSE)
-  discrete_method <- match.arg(discrete_method, c("prop", "n", "low_freq", "min_times"))
+  num_method <- match.arg(numeric_method,
+                          c("mean_sd", "MAD", "IQD", "t_test"),
+                          several.ok = FALSE)
+  na_action <- match.arg(na_action,
+                         c("keep", "omit"),
+                         several.ok = FALSE)
+  discrete_method <- match.arg(discrete_method,
+                               c("prop", "n", "low_freq", "min_times"))
 
   ties_method <- match.arg(ties_method, c(
     "min",
@@ -73,14 +79,10 @@ control_filter_outlier <- function(numeric_method = "mean_sd",
   numeric_or_null(freq)
   ######
 
-
-
-
-
   if (!num_method %in% c("t_test")) {
     threshold <-
       outlier_threshold(num_method, threshold)
-  } else if (num_method == "t_test" & !is.numeric(conf_int)) {
+  } else if (num_method == "t_test" && !is.numeric(conf_int)) {
     conf_int <- 0.95
   }
 
@@ -91,28 +93,36 @@ control_filter_outlier <- function(numeric_method = "mean_sd",
   if (is.null(prop)) prop <- 0.05
   if (is.null(conf_int)) conf_int <- 0.95
 
-  if (prop <= 0 | prop > 1) {
+  if (prop <= 0 || prop > 1) {
     cli::cli_abort(c("x" = "prop for factors must be betweeen 0 and 1"))
   } else if (prop > 0.5) {
     rlang::warn(glue::glue("{prop} is filtering over 50 % of data.. you sure?"))
   }
 
 
-  if (is.null(n_vars) & discrete_method == "n") {
-    cli::cli_abort(c("!" = "{.arg n} must be specified when {.arg discrete_method} is 'n'. "))
+  if (is.null(n_vars) && discrete_method == "n") {
+    mes <-
+      c("!" = "{.arg n} must be specified when {.arg discrete_method} is 'n'. ")
+    cli::cli_abort(mes)
   }
-  if (is.null(min_times) & discrete_method == "min_times") {
-    cli::cli_abort(c("!" = "{.arg min_times} must be specified when {.arg discrete_method} is 'min_times'. "))
+  if (is.null(min_times) && discrete_method == "min_times") {
+    mes <-
+      c("!" = "{.arg min_times} must be specified when {.arg discrete_method} is 'min_times'. ")
+    cli::cli_abort(mes)
   }
   if (!is.null(n_vars)) {
-    if (n_vars < 1 & discrete_method == "n") {
-      cli::cli_abort(c("!" = "{.arg n_vars} must be greater than 0 when {.arg discrete_method} is 'n'. "))
+    if (n_vars < 1 && discrete_method == "n") {
+      mes <-
+        c("!" = "{.arg n_vars} must be greater than 0 when {.arg discrete_method} is 'n'. ")
+      cli::cli_abort(mes)
     }
   }
 
   if (!is.null(min_times)) {
-    if (min_times < 1 & discrete_method == "min_times") {
-      cli::cli_abort(c("!" = "{.arg min_times} must be greater than 0 when {.arg discrete_method} is 'min_times'. "))
+    if (min_times < 1 && discrete_method == "min_times") {
+      mes <-
+        c("!" = "{.arg min_times} must be greater than 0 when {.arg discrete_method} is 'min_times'. ")
+      cli::cli_abort(mes)
     }
   }
 
@@ -142,7 +152,7 @@ control_filter_outlier <- function(numeric_method = "mean_sd",
 
 numeric_or_null <- function(x) {
   name <- deparse1(substitute(x))
-  if (!is.null(x) & !is.numeric(x)) {
+  if (!is.null(x) && !is.numeric(x)) {
     cli::cli_abort(c("!" = "{name} must be numeric or NULL"))
   }
 }

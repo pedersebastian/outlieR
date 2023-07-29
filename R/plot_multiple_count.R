@@ -1,14 +1,6 @@
 plot_multiple.outlier_lglFALSE_dblFALSE_disTRUE_otherFALSE_count <- function(data, ...) {
   summary_tbl <-
     data$summary_tbl
-  #
-  # for (variable  in data$summary_tbl$var) {
-  #   na_count <- data$summary_tbl[data$summary_tbl$var == variable, ]$na_count
-  #   if (na_count > 0 ) {
-  #     test_data <-  add_row(test_data, var = variable, value = NA, outlier_vec = TRUE, n = na_count)
-  #   }
-  # }
-
 
   res_data <-
     data$dat$dis_data |>
@@ -115,7 +107,10 @@ plot_multiple.outlier_lglTRUE_dblFALSE_disFALSE_otherFALSE_count <- function(dat
   summary_tbl <- dplyr::filter(data$summary_tbl, var_type == "lgl")
   rows <- max(summary_tbl$n)
   data <- data$dat$lgl_data
-
+  logical_levels <- c("No Outlier (FALSE)",
+                      "Outlier (FALSE)",
+                      "No Outlier (TRUE)",
+                      "Outlier (TRUE)")
   data <-
     data |>
     dplyr::count(var, outlier_var) |>
@@ -123,13 +118,13 @@ plot_multiple.outlier_lglTRUE_dblFALSE_disFALSE_otherFALSE_count <- function(dat
     dplyr::mutate(
       pct = n / sum(n, na.rm = TRUE),
       outlier_var = factor(outlier_var,
-        levels = c("No Outlier (FALSE)", "Outlier (FALSE)", "No Outlier (TRUE)", "Outlier (TRUE)")
+        levels = logical_levels
       )
     )
 
   pal <- c()
 
-  for (level in c("No Outlier (FALSE)", "Outlier (FALSE)", "No Outlier (TRUE)", "Outlier (TRUE)")) {
+  for (level in logical_levels) {
     if (level %in% levels(droplevels(data$outlier_var))) {
       pal <- switch(level,
         "No Outlier (FALSE)" = append(pal, col_low),

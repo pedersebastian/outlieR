@@ -1,7 +1,7 @@
 Freedman_Diaconis_binwidth <- function(x) {
   # binwidth
   # https://stats.stackexchange.com/questions/798/calculating-optimal-number-of-bins-in-a-histogram
-  if (!is.numeric(x) | length(x) < 1) {
+  if (!is.numeric(x) || length(x) < 1) {
     cli::cli_abort(paste0(deparse1(substitute(x)), " must be a numeric vector > 0 "))
   }
   return(2 * stats::IQR(x, na.rm = TRUE) / (length(x)^(1 / 3)))
@@ -27,7 +27,7 @@ fix_levels_outlier_var <- function(levels) {
   pal <- col_mid
 
   ## LOW
-  if ("Outlier (<)" %in% levels & "Outlier (FALSE)" %in% levels) {
+  if ("Outlier (<)" %in% levels && "Outlier (FALSE)" %in% levels) {
     pal <- c(col_low, col_mid)
     low <- "Outlier (< or FALSE)"
   } else if ("Outlier (<)" %in% levels) {
@@ -42,7 +42,7 @@ fix_levels_outlier_var <- function(levels) {
 
 
   ## HIGH
-  if ("Outlier (>)" %in% levels & "Outlier (TRUE)" %in% levels) {
+  if ("Outlier (>)" %in% levels && "Outlier (TRUE)" %in% levels) {
     pal <- append(pal, col_high)
     high <- "Outlier (> or TRUE)"
   } else if ("Outlier (>)" %in% levels) {

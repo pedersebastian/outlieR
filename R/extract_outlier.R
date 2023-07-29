@@ -15,7 +15,8 @@ extract_outlier <- function(x, ..., .ptype = logical()) {
 #' @export
 extract_outlier.data.frame <- function(x, ...) {
   cli::cli_abort(c(
-    "x" = paste("extract_outlier is not available for an object with class '", class(x)[[1]], "'"),
+    "x" = paste("extract_outlier is not available for an object with class '",
+                class(x)[[1]], "'"),
     "i" = "Must run filter_outliers first."
   ))
 }

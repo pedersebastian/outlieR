@@ -26,17 +26,29 @@ filtred_V12L_omit <-
 
 
 test_that("plots_error", {
-  expect_error(autoplot(filtred_V_ALL_omit, type = 123))
-  expect_error(autoplot(filtred_V_ALL_omit, type = "da"))
+  expect_error(autoplot(filtred_V_ALL_omit,
+                        type = 123))
+  expect_error(autoplot(filtred_V_ALL_omit,
+                        type = "da"))
 })
 
 
 test_that("plots_plot", {
-  vdiffr::expect_doppelganger("A blank plot", ggplot2::ggplot())
-  vdiffr::expect_doppelganger("V3 only", autoplot(filtred_V3))
-  vdiffr::expect_doppelganger("V1 ommited", autoplot(filtred_V1_omit))
-  vdiffr::expect_doppelganger("V1, V2", autoplot(filtred_V12L_omit))
-  vdiffr::expect_doppelganger("V3 onlycount", autoplot(filtred_V3, type = "count"))
-  vdiffr::expect_doppelganger("V1 ommitedcount", autoplot(filtred_V1_omit, type = "count"))
-  vdiffr::expect_doppelganger("V1, V2count", autoplot(filtred_V12L_omit, type = "count"))
+  vdiffr::expect_doppelganger("A blank plot",
+                              ggplot2::ggplot())
+  vdiffr::expect_doppelganger("V3 only",
+                              autoplot(filtred_V3))
+  vdiffr::expect_doppelganger("V1 ommited",
+                              autoplot(filtred_V1_omit))
+  vdiffr::expect_doppelganger("V1, V2",
+                              autoplot(filtred_V12L_omit))
+  vdiffr::expect_doppelganger("V3 onlycount",
+                              autoplot(filtred_V3,
+                                       type = "count"))
+  vdiffr::expect_doppelganger("V1 ommitedcount",
+                              autoplot(filtred_V1_omit,
+                                       type = "count"))
+  vdiffr::expect_doppelganger("V1, V2count",
+                              autoplot(filtred_V12L_omit,
+                                       type = "count"))
 })

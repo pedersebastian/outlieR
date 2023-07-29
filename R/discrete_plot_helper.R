@@ -4,7 +4,7 @@ plot_single_discrete_counts <- function(data, var_name, summary_tbl, title = NUL
   outlier_col <- c("#9C3015", "#EC8D75")
 
 
-  n_dis <- nrow(data)
+
   counts <- dplyr::count(data, outlier_vec)
 
   rows_count <- summary_tbl$n - summary_tbl$na_count

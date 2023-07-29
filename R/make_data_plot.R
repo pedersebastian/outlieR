@@ -23,9 +23,16 @@ prep_data_one <- function(object, type, ...) {
 
     ## Hvis det ikke finnes outlier er data ok som det er.
   } else if (summary_tbl$var_type %in% c("dbl", "int")) {
-    dat["outlier_var"] <- ifelse(dat[[var_name]] > summary_tbl$upper, "Outlier (>)", ifelse(dat[[var_name]] < summary_tbl$lower, "Outlier (<)", "No Outlier"))
+    dat["outlier_var"] <- ifelse(dat[[var_name]] > summary_tbl$upper,
+                                 "Outlier (>)",
+                                 ifelse(dat[[var_name]] < summary_tbl$lower,
+                                        "Outlier (<)",
+                                        "No Outlier"))
     dat <- dat |>
-      dplyr::mutate(outlier_var = factor(outlier_var, levels = c("Outlier (<)", "No Outlier", "Outlier (>)"))) |>
+      dplyr::mutate(outlier_var = factor(outlier_var,
+                                         levels = c("Outlier (<)",
+                                                    "No Outlier",
+                                                    "Outlier (>)"))) |>
       dplyr::filter(!is.na(outlier_var))
     class <- "dbl"
   } else if (summary_tbl$var_type %in% c("fct", "chr")) {
@@ -68,23 +75,32 @@ prep_data_many <- function(object, type, ...) {
   lgl <- length(lgl_names)
   dbl <- length(dbl_names)
   dis <- length(dis_name)
-  other <- 0
   # Not implemented så
-  # other <- length(vars_name) - lgl - dbl
-
-
+  other <- 0
 
 
   dbl_data <-
-    prep_data_many_numeric(attr(object, "old_df"), dbl_names, summary_tbl)
+    prep_data_many_numeric(attr(object, "old_df"),
+                           dbl_names,
+                           summary_tbl)
   lgl_data <-
-    prep_data_many_logical(attr(object, "old_df"), lgl_names, summary_tbl)
+    prep_data_many_logical(attr(object, "old_df"),
+                           lgl_names,
+                           summary_tbl)
 
   dis_data <-
-    prep_data_many_discrete(attr(object, "old_df"), dis_name, summary_tbl, na_action)
+    prep_data_many_discrete(attr(object, "old_df"),
+                            dis_name,
+                            summary_tbl,
+                            na_action)
   #############################################################################
+class_long <-
+    glue::glue("outlier_lgl{lgl>0}_dbl{dbl>0}_dis{dis>0}_other{other>1}_{type}")
 
-  class_var <- c("outlier_data", glue::glue("outlier_lgl{lgl>0}_dbl{dbl>0}_dis{dis>0}_other{other>1}_{type}"), "list")
+
+  class_var <- c("outlier_data",
+                 class_long,
+                 "list")
 
   out <- structure(
     list(
