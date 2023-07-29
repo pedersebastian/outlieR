@@ -23,7 +23,8 @@ control_filter_outlier(
 
 \item{discrete_method}{m}
 
-\item{threshold}{'NULL' for the other methods than t-test. Default is 3 for mean and sd method and MAD method, IQD uses 2.2.}
+\item{threshold}{'NULL' for the other methods than t-test.
+Default is 3 for mean and sd method and MAD method, IQD uses 2.2.}
 
 \item{conf_int}{conf int for t-test}
 

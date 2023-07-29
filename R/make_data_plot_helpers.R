@@ -3,7 +3,11 @@ prep_data_many_discrete <- function(data, dis_name, summary_tbl, na_action) {
     return(NULL)
   }
 
-  fakevar <- sample(c(LETTERS, letters, 1:10, c("!", "?", "&", "$", "#")), size = 20) |> paste0(collapse = "")
+  fakevar <- sample(c(LETTERS,
+                      letters,
+                      1:10, c("!", "?", "&", "$", "#")),
+                    size = 20) |>
+    paste0(collapse = "")
   out <-
     data |>
     dplyr::select(all_of(dis_name)) |>
@@ -29,11 +33,6 @@ prep_data_many_discrete <- function(data, dis_name, summary_tbl, na_action) {
     tidyr::unnest(c(data, outlier_vec)) |>
     filter(value != fakevar) |>
     dplyr::mutate(outlier_vec = !outlier_vec)
-
-
-  # if (inherits(out$value, "factor")) {
-  #   out <- dplyr::mutate(out, value = droplevels(value))
-  # }
 
   out
 }
@@ -82,7 +81,9 @@ prep_data_many_numeric <- function(data, variable_names, summary_tbl) {
         value < lower ~ "Outlier (<)",
         TRUE ~ "No Outlier"
       ),
-      outlier_var = factor(outlier_var, levels = c("Outlier (<)", "No Outlier", "Outlier (>)")),
+      outlier_var = factor(outlier_var, levels = c("Outlier (<)",
+                                                   "No Outlier",
+                                                   "Outlier (>)")),
       count_var = length(variable_names)
     )
   data
@@ -95,8 +96,12 @@ logical_helper_many <- function(data) {
 
   if (!data$outlier_exist[[1]]) {
     data <- dplyr::mutate(data,
-      outlier_var = ifelse(value, "No Outlier (TRUE)", "No Outlier (FALSE)"),
-      outlier_var = factor(outlier_var, levels = c("No Outlier (FALSE)", "No Outlier (TRUE)"))
+      outlier_var = ifelse(value,
+                           "No Outlier (TRUE)",
+                           "No Outlier (FALSE)"),
+      outlier_var = factor(outlier_var,
+                           levels = c("No Outlier (FALSE)",
+                                      "No Outlier (TRUE)"))
     )
   } else if (data$mean_var[[1]] < 0.5) {
     normal_name <- "No Outlier (FALSE)"

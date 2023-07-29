@@ -74,7 +74,7 @@ validate_factor_tbl <- function(.data,
       mes <-
         c("i" = "{.arg min_time} is greater than half of the rows in data.
           \n It is recommend to use a less number")
-      cli::cli_warn(mes ,
+      cli::cli_warn(mes,
         .frequency = "regularly", .frequency_id = "min_times0.5"
       )
     }
@@ -83,7 +83,8 @@ validate_factor_tbl <- function(.data,
   if (discrete_method == "n") {
     if (n_vars > tbl$uniques) {
       mes <-
-        c("x" = "{.arg n_vars} must be less than number of unique levels ({tbl$uniques})")
+        c("x" = "{.arg n_vars} must be less
+          than number of unique levels ({tbl$uniques})")
       cli::cli_abort(mes)
     } else if (n_vars == tbl$uniques) {
       mes <-

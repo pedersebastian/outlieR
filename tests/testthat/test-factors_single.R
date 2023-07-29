@@ -1,21 +1,30 @@
 library(outlieR)
-mtcars["V12"] <- factor(rep(LETTERS[1:5], times = c(10, 5, 15, 1, 1)))
+mtcars["V12"] <- factor(rep(LETTERS[1:5],
+                            times = c(10, 5, 15, 1, 1)))
 mtcars["V13"] <- rep(LETTERS[1:5], times = c(13, 12, 1, 5, 1))
 set.seed(123)
-mtcars["V14"] <- rep(c(LETTERS[1:4], NA_character_), times = c(13, 1, 1, 5, 12)) |> sample()
+mtcars["V14"] <- rep(c(LETTERS[1:4],
+                       NA_character_),
+                     times = c(13, 1, 1, 5, 12)) |> sample()
 set.seed(312)
-mtcars["V15"] <- factor(rep(c(LETTERS[9:12], NA_character_), times = c(13, 1, 1, 5, 12)) |> sample())
+mtcars["V15"] <- factor(rep(c(LETTERS[9:12],
+                              NA_character_),
+                            times = c(13, 1, 1, 5, 12)) |> sample())
 
 
 
-A <- filter_outlier(tibble::as_tibble(mtcars), V12, control = control_filter_outlier(
+A <- filter_outlier(tibble::as_tibble(mtcars),
+                    V12,
+                    control = control_filter_outlier(
   discrete_method = "min_times",
   min_times = 3
 ))
 AF <- fct_lump_min(mtcars$V12, min = 3)
 AF <- AF[AF != "Other"] |> droplevels()
 
-B <- filter_outlier(tibble::as_tibble(mtcars), V12, control = control_filter_outlier(
+B <- filter_outlier(tibble::as_tibble(mtcars),
+                    V12,
+                    control = control_filter_outlier(
   discrete_method = "prop",
   prop = 0.04
 ))
@@ -23,7 +32,9 @@ BF <- fct_lump_prop(mtcars$V12, prop = 0.04)
 BF <- BF[BF != "Other"] |> droplevels()
 
 
-C <- filter_outlier(tibble::as_tibble(mtcars), V12, control = control_filter_outlier(
+C <- filter_outlier(tibble::as_tibble(mtcars),
+                    V12,
+                    control = control_filter_outlier(
   discrete_method = "n",
   n_vars = 2
 ))
@@ -31,7 +42,9 @@ C <- filter_outlier(tibble::as_tibble(mtcars), V12, control = control_filter_out
 CF <- fct_lump_n(mtcars$V12, n = 2)
 CF <- CF[CF != "Other"] |> droplevels()
 
-D <- filter_outlier(tibble::as_tibble(mtcars), V12, control = control_filter_outlier(
+D <- filter_outlier(tibble::as_tibble(mtcars),
+                    V12,
+                    control = control_filter_outlier(
   discrete_method = "low_freq"
 ))
 
@@ -39,7 +52,9 @@ DF <- fct_lump_lowfreq(mtcars$V12)
 DF <- DF[DF != "Other"] |> droplevels()
 
 
-E <- filter_outlier(tibble::as_tibble(mtcars), V13, control = control_filter_outlier(
+E <- filter_outlier(tibble::as_tibble(mtcars),
+                    V13,
+                    control = control_filter_outlier(
   discrete_method = "prop",
   prop = 0.1
 ))
@@ -52,7 +67,9 @@ EF <- EF[EF != "Other"] |>
 
 ### NA
 # G Char
-G <- filter_outlier(tibble::as_tibble(mtcars), V14, control = control_filter_outlier(
+G <- filter_outlier(tibble::as_tibble(mtcars),
+                    V14,
+                    control = control_filter_outlier(
   discrete_method = "prop",
   min_times = 0.1, na_action = "omit"
 ))
@@ -61,7 +78,9 @@ GF <- GF[GF != "Other"] |> as.character()
 GF <- GF[!is.na(GF)]
 
 # H CHAR
-H <- filter_outlier(tibble::as_tibble(mtcars), V14, control = control_filter_outlier(
+H <- filter_outlier(tibble::as_tibble(mtcars),
+                    V14,
+                    control = control_filter_outlier(
   discrete_method = "prop",
   min_times = 0.1, na_action = "keep"
 ))
@@ -73,7 +92,9 @@ H_na_len <- H$V14[is.na(H$V14)] |> length()
 ### I. FCT
 
 I <-
-  filter_outlier(tibble::as_tibble(mtcars), V15, control = control_filter_outlier(
+  filter_outlier(tibble::as_tibble(mtcars),
+                 V15,
+                 control = control_filter_outlier(
     discrete_method = "n",
     n_vars = 2,
     na_action = "omit"
@@ -89,7 +110,9 @@ I_na_len <- sum(is.na(I$V15))
 
 ### J. FCT
 J <-
-  filter_outlier(tibble::as_tibble(mtcars), V15, control = control_filter_outlier(
+  filter_outlier(tibble::as_tibble(mtcars),
+                 V15,
+                 control = control_filter_outlier(
     discrete_method = "prop",
     min_times = 0.1, na_action = "keep"
   ))

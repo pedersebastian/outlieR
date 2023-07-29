@@ -1,8 +1,9 @@
 Freedman_Diaconis_binwidth <- function(x) {
   # binwidth
-  # https://stats.stackexchange.com/questions/798/calculating-optimal-number-of-bins-in-a-histogram
+# https://stats.stackexchange.com/questions/798/calculating-optimal-number-of-bins-in-a-histogram
   if (!is.numeric(x) || length(x) < 1) {
-    cli::cli_abort(paste0(deparse1(substitute(x)), " must be a numeric vector > 0 "))
+    cli::cli_abort(paste0(deparse1(substitute(x)),
+                          " must be a numeric vector > 0"))
   }
   return(2 * stats::IQR(x, na.rm = TRUE) / (length(x)^(1 / 3)))
 }
@@ -12,7 +13,8 @@ Freedman_Diaconis_binwidth <- function(x) {
 get_errormes <- function(class) {
   x <- grepl("TRUE", strsplit(class, "_")[[1]][2:3]) |> as.logical()
   if (all(x)) {
-    mes <- "Outlierplot for both logical and double variables is not yet supported "
+    mes <- "Outlierplot for both logical and
+    double variables is not yet supported "
   } else {
     if (isTRUE(x[[1]])) {
       mes <- "Outlierplot for multiple logical variables is not yet supported. "
@@ -64,12 +66,15 @@ complete_helper <- function(data) {
   }
 
   if (unique(data$outlier_var) == "No Outlier (TRUE)") {
-    # data <- tibble::add_row(data, var = data$var[[1]], outlier_var = "Outlier (FALSE)", n = 0)
 
-    data[2, ] <- data.frame(var = data$var[[1]], outlier_var = "Outlier (FALSE)", n = 0)
+
+    data[2, ] <- data.frame(var = data$var[[1]],
+                            outlier_var = "Outlier (FALSE)",
+                            n = 0)
   } else if (unique(data$outlier_var) == "No Outlier (FALSE)") {
-    data[2, ] <- data.frame(var = data$var[[1]], outlier_var = "Outlier (TRUE)", n = 0)
-    # data <- tibble::add_row(data, var = data$var[[1]], outlier_var = "Outlier (TRUE)", n = 0)
+    data[2, ] <- data.frame(var = data$var[[1]],
+                            outlier_var = "Outlier (TRUE)",
+                            n = 0)
   } else {
     rlang::abort("Noe feil complete factors",
       .internal = TRUE

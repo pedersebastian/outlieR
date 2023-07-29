@@ -2,7 +2,8 @@
 #'
 #' @param numeric_method dd
 #' @param discrete_method m
-#' @param threshold 'NULL' for the other methods than t-test. Default is 3 for mean and sd method and MAD method, IQD uses 2.2.
+#' @param threshold 'NULL' for the other methods than t-test.
+#' Default is 3 for mean and sd method and MAD method, IQD uses 2.2.
 #' @param conf_int conf int for t-test
 #' @param prop proportion of factors/char (0 - 1)
 #' @param ties_method factors
@@ -34,7 +35,8 @@ control_filter_outlier <- function(numeric_method = "mean_sd",
 
   if (dots_count > 0) {
     cli::cli_abort(c("i" = "{dots_names} {?is/are} {dots_count} the name{?s} of
-                     the wrongly spelled element{?s} in {.fun control_filter_outlier}."))
+                     the wrongly spelled element{?s} in
+                     {.fun control_filter_outlier}."))
   }
 
   ## fix args
@@ -107,13 +109,15 @@ control_filter_outlier <- function(numeric_method = "mean_sd",
   }
   if (is.null(min_times) && discrete_method == "min_times") {
     mes <-
-      c("!" = "{.arg min_times} must be specified when {.arg discrete_method} is 'min_times'. ")
+      c("!" = "{.arg min_times} must be specified when
+        {.arg discrete_method} is 'min_times'. ")
     cli::cli_abort(mes)
   }
   if (!is.null(n_vars)) {
     if (n_vars < 1 && discrete_method == "n") {
       mes <-
-        c("!" = "{.arg n_vars} must be greater than 0 when {.arg discrete_method} is 'n'. ")
+        c("!" = "{.arg n_vars} must be greater than 0 when
+          {.arg discrete_method} is 'n'. ")
       cli::cli_abort(mes)
     }
   }
@@ -121,7 +125,8 @@ control_filter_outlier <- function(numeric_method = "mean_sd",
   if (!is.null(min_times)) {
     if (min_times < 1 && discrete_method == "min_times") {
       mes <-
-        c("!" = "{.arg min_times} must be greater than 0 when {.arg discrete_method} is 'min_times'. ")
+        c("!" = "{.arg min_times} must be greater than 0 when
+          {.arg discrete_method} is 'min_times'. ")
       cli::cli_abort(mes)
     }
   }

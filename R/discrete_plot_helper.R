@@ -1,4 +1,8 @@
-plot_single_discrete_counts <- function(data, var_name, summary_tbl, title = NULL, y_text = TRUE) {
+plot_single_discrete_counts <- function(data,
+                                        var_name,
+                                        summary_tbl,
+                                        title = NULL,
+                                        y_text = TRUE) {
   line <- 1 - summary_tbl$outlier_pct
   non_outlier_col <- c("#BC8F1C", "#EFD593")
   outlier_col <- c("#9C3015", "#EC8D75")
@@ -20,7 +24,8 @@ plot_single_discrete_counts <- function(data, var_name, summary_tbl, title = NUL
 
   if (outlier_exist) {
     if (outlier_count > 0) {
-      palette <- c(palette, grDevices::colorRampPalette(outlier_col)(outlier_count))
+      palette <- c(palette,
+                   grDevices::colorRampPalette(outlier_col)(outlier_count))
       palette <- rev(palette)
     }
   }
@@ -72,5 +77,9 @@ plot_single_discrete_counts <- function(data, var_name, summary_tbl, title = NUL
   }
 
 
-  p + ggplot2::geom_col(width = 0.5, alpha = 0.9, color = "#16161D", linewidth = 0.2, na.rm = TRUE)
+  p + ggplot2::geom_col(width = 0.5,
+                        alpha = 0.9,
+                        color = "#16161D",
+                        linewidth = 0.2,
+                        na.rm = TRUE)
 }

@@ -6,15 +6,21 @@ mtcars["V13"] <- factor(rep(c("A", "B"), times = c(15, 17))) |> sample()
 
 
 
-res1 <- filter_outlier(tibble::as_tibble(mtcars), V11, control = control_filter_outlier(
+res1 <- filter_outlier(tibble::as_tibble(mtcars),
+                       V11,
+                       control = control_filter_outlier(
   discrete_method = "min_times",
   min_times = 3
 ))
-res2 <- filter_outlier(tibble::as_tibble(mtcars), V12, control = control_filter_outlier(
+res2 <- filter_outlier(tibble::as_tibble(mtcars),
+                       V12,
+                       control = control_filter_outlier(
   discrete_method = "n",
   n_vars = 2
 ))
-res3 <- filter_outlier(tibble::as_tibble(mtcars), V13, control = control_filter_outlier(
+res3 <- filter_outlier(tibble::as_tibble(mtcars),
+                       V13,
+                       control = control_filter_outlier(
   discrete_method = "min_times",
   min_times = 3
 ))

@@ -84,7 +84,8 @@ test_that("warnings and errors", {
                                 V2,
                                 V3,
                                 control = control_filter_outlier(
-                                  threshold = 10000)))
+                                threshold = 10000)))
+
   expect_error(filter_outlier(mtcars, V1, V2, V3,
                               control = control_filter_outlier(
                                 numeric_method = "mean_sd",

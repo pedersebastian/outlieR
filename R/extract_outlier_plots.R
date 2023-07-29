@@ -42,7 +42,9 @@ autoplot.extract.logical <- function(object, ...) {
       x = NULL
     ) +
     ggplot2::scale_fill_manual(values = pal) +
-    ggplot2::scale_y_continuous(breaks = round(seq(0, length(atri$vecs[[1]]), length.out = 5)))
+    ggplot2::scale_y_continuous(breaks = round(seq(0,
+                                                   length(atri$vecs[[1]]),
+                                                   length.out = 5)))
 
   p
 }
