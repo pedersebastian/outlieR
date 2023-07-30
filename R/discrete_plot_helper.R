@@ -24,8 +24,10 @@ plot_single_discrete_counts <- function(data,
 
   if (outlier_exist) {
     if (outlier_count > 0) {
-      palette <- c(palette,
-                   grDevices::colorRampPalette(outlier_col)(outlier_count))
+      palette <- c(
+        palette,
+        grDevices::colorRampPalette(outlier_col)(outlier_count)
+      )
       palette <- rev(palette)
     }
   }
@@ -77,9 +79,11 @@ plot_single_discrete_counts <- function(data,
   }
 
 
-  p + ggplot2::geom_col(width = 0.5,
-                        alpha = 0.9,
-                        color = "#16161D",
-                        linewidth = 0.2,
-                        na.rm = TRUE)
+  p + ggplot2::geom_col(
+    width = 0.5,
+    alpha = 0.9,
+    color = "#16161D",
+    linewidth = 0.2,
+    na.rm = TRUE
+  )
 }

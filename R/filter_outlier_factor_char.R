@@ -21,7 +21,8 @@ factor_methods <- function(.data,
       "low_freq" = low_freq_discrete(.data, var),
       "min_times" = min_times_discrete(.data, var, min_times),
       rlang::abort(c("!" = "{discrete_method} is not a valid input"),
-                   .internal = TRUE)
+        .internal = TRUE
+      )
     )
   validate_factor_tbl(
     .data,
@@ -110,16 +111,23 @@ prop_discrete <- function(.data,
       "mode_val_dis" = mode_vec(!!var),
       "uniques" = length(unique(!!var)),
       "unique_vars" = list(unique(!!var)),
-      "outlier_vec" = list(discrete_helper(!!var,
-                                           "fct_lump_prop",
-                                           list(prop, NULL, "Otherxxx"))),
+      "outlier_vec" = list(discrete_helper(
+        !!var,
+        "fct_lump_prop",
+        list(prop, NULL, "Otherxxx")
+      )),
       outlier_pct = mean(!outlier_vec[[1]][!is.na(.data[[var]])],
-                         na.rm = TRUE),
+        na.rm = TRUE
+      ),
       outlier_exist = outlier_pct > 0,
-      non_outlier_vars = list(unique(subset(!!var,
-                                            outlier_vec[[1]]))),
-      outlier_vars = list(setdiff(unique_vars[[1]],
-                                  non_outlier_vars[[1]])),
+      non_outlier_vars = list(unique(subset(
+        !!var,
+        outlier_vec[[1]]
+      ))),
+      outlier_vars = list(setdiff(
+        unique_vars[[1]],
+        non_outlier_vars[[1]]
+      )),
       "n_filtred" = length(non_outlier_vars[[1]]),
       n_outliers = length(outlier_vars[[1]]),
       "var_type" = pillar::type_sum(!!var),
@@ -142,19 +150,28 @@ n_discrete <- function(.data,
       "mode_val_dis" = mode_vec(!!var),
       "uniques" = length(unique(!!var)),
       "unique_vars" = list(unique(!!var)),
-      "outlier_vec" = list(discrete_helper(!!var,
-                                           "fct_lump_n",
-                                           list(n_vars,
-                                                NULL,
-                                                "Otherxxx",
-                                                ties_method))),
+      "outlier_vec" = list(discrete_helper(
+        !!var,
+        "fct_lump_n",
+        list(
+          n_vars,
+          NULL,
+          "Otherxxx",
+          ties_method
+        )
+      )),
       outlier_pct = mean(!outlier_vec[[1]][!is.na(.data[[var]])],
-                         na.rm = TRUE),
+        na.rm = TRUE
+      ),
       outlier_exist = outlier_pct > 0,
-      non_outlier_vars = list(unique(subset(!!var,
-                                            outlier_vec[[1]]))),
-      outlier_vars = list(setdiff(unique_vars[[1]],
-                                  non_outlier_vars[[1]])),
+      non_outlier_vars = list(unique(subset(
+        !!var,
+        outlier_vec[[1]]
+      ))),
+      outlier_vars = list(setdiff(
+        unique_vars[[1]],
+        non_outlier_vars[[1]]
+      )),
       "n_filtred" = length(non_outlier_vars[[1]]),
       n_outliers = length(outlier_vars[[1]]),
       "var_type" = pillar::type_sum(!!var),
@@ -172,17 +189,26 @@ low_freq_discrete <- function(.data,
       "mode_val_dis" = mode_vec(!!var),
       "uniques" = length(unique(!!var)),
       "unique_vars" = list(unique(!!var)),
-      "outlier_vec" = list(discrete_helper(!!var,
-                                           "fct_lump_lowfreq",
-                                           list(NULL,
-                                                "Otherxxx"))),
+      "outlier_vec" = list(discrete_helper(
+        !!var,
+        "fct_lump_lowfreq",
+        list(
+          NULL,
+          "Otherxxx"
+        )
+      )),
       outlier_pct = mean(!outlier_vec[[1]][!is.na(.data[[var]])],
-                         na.rm = TRUE),
+        na.rm = TRUE
+      ),
       outlier_exist = outlier_pct > 0,
-      non_outlier_vars = list(unique(subset(!!var,
-                                            outlier_vec[[1]]))),
-      outlier_vars = list(setdiff(unique_vars[[1]],
-                                  non_outlier_vars[[1]])),
+      non_outlier_vars = list(unique(subset(
+        !!var,
+        outlier_vec[[1]]
+      ))),
+      outlier_vars = list(setdiff(
+        unique_vars[[1]],
+        non_outlier_vars[[1]]
+      )),
       "n_filtred" = length(non_outlier_vars[[1]]),
       n_outliers = length(outlier_vars[[1]]),
       "var_type" = pillar::type_sum(!!var),
@@ -202,18 +228,27 @@ min_times_discrete <- function(.data,
       "mode_val_dis" = mode_vec(!!var),
       "uniques" = length(unique(!!var)),
       "unique_vars" = list(unique(!!var)),
-      "outlier_vec" = list(discrete_helper(!!var,
-                                           "fct_lump_min",
-                                           list(min_times,
-                                                NULL,
-                                                "Otherxxx"))),
+      "outlier_vec" = list(discrete_helper(
+        !!var,
+        "fct_lump_min",
+        list(
+          min_times,
+          NULL,
+          "Otherxxx"
+        )
+      )),
       outlier_pct = mean(!outlier_vec[[1]][!is.na(.data[[var]])],
-                         na.rm = TRUE),
+        na.rm = TRUE
+      ),
       outlier_exist = outlier_pct > 0,
-      non_outlier_vars = list(unique(subset(!!var,
-                                            outlier_vec[[1]]))),
-      outlier_vars = list(setdiff(unique_vars[[1]],
-                                  non_outlier_vars[[1]])),
+      non_outlier_vars = list(unique(subset(
+        !!var,
+        outlier_vec[[1]]
+      ))),
+      outlier_vars = list(setdiff(
+        unique_vars[[1]],
+        non_outlier_vars[[1]]
+      )),
       "n_filtred" = length(non_outlier_vars[[1]]),
       n_outliers = length(outlier_vars[[1]]),
       "var_type" = pillar::type_sum(!!var),

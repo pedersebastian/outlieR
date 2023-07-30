@@ -13,10 +13,12 @@ plot_single.outlier_lgl_histogram <- function(data, ...) {
     dplyr::mutate(
       pct = n / sum(n),
       outlier_var = factor(outlier_var,
-        levels = c("No Outlier (FALSE)",
-                   "Outlier (FALSE)",
-                   "No Outlier (TRUE)",
-                   "Outlier (TRUE)")
+        levels = c(
+          "No Outlier (FALSE)",
+          "Outlier (FALSE)",
+          "No Outlier (TRUE)",
+          "Outlier (TRUE)"
+        )
       )
     ) |>
     ggplot2::ggplot(aes(outlier_var,
@@ -60,11 +62,17 @@ plot_single.outlier_dbl_histogram <- function(data, ...) {
   var_name <- data$var_name
   dat <- data$dat
 
-  breaks <- round(seq(min(summary_tbl$min_var,
-                          summary_tbl$lower),
-                      max(summary_tbl$max_var,
-                          summary_tbl$upper),
-                      length.out = 6))
+  breaks <- round(seq(
+    min(
+      summary_tbl$min_var,
+      summary_tbl$lower
+    ),
+    max(
+      summary_tbl$max_var,
+      summary_tbl$upper
+    ),
+    length.out = 6
+  ))
 
   p <-
     ggplot2::ggplot() +
@@ -97,8 +105,9 @@ plot_single.outlier_dbl_histogram <- function(data, ...) {
     unique() |>
     length() == 1) {
     breaks <- round(seq(summary_tbl$min_var,
-                        summary_tbl$max_var,
-                        length.out = 6))
+      summary_tbl$max_var,
+      length.out = 6
+    ))
     only_outlier <- FALSE
 
     if (any(dat[[var_name]] > summary_tbl$upper)) {

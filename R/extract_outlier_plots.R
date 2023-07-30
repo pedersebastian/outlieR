@@ -5,8 +5,10 @@ autoplot.extract.logical <- function(object, ...) {
 
   new_vec <-
     atri$vecs |>
-    purrr::map(~ tidyr::replace_na(.x,
-                                   if (atri$na_action == "keep") TRUE else FALSE))
+    purrr::map(~ tidyr::replace_na(
+      .x,
+      if (atri$na_action == "keep") TRUE else FALSE
+    ))
 
 
   data <-
@@ -30,8 +32,10 @@ autoplot.extract.logical <- function(object, ...) {
     ggplot2::theme(
       legend.position = "top",
       axis.text.y = ggplot2::element_text(size = structure(0.8, class = "rel")),
-      axis.text.x = ggplot2::element_text(size = structure(0.6, class = "rel"),
-                                          angle = 90),
+      axis.text.x = ggplot2::element_text(
+        size = structure(0.6, class = "rel"),
+        angle = 90
+      ),
       panel.grid.major = element_blank(),
       panel.grid.minor = element_blank()
     ) +
@@ -43,8 +47,9 @@ autoplot.extract.logical <- function(object, ...) {
     ) +
     ggplot2::scale_fill_manual(values = pal) +
     ggplot2::scale_y_continuous(breaks = round(seq(0,
-                                                   length(atri$vecs[[1]]),
-                                                   length.out = 5)))
+      length(atri$vecs[[1]]),
+      length.out = 5
+    )))
 
   p
 }

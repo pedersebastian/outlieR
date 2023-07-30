@@ -25,8 +25,10 @@ filter_outlier <- function(.data,
 }
 #' @export
 filter_outlier.default <- function(.data, ...) {
-  mes <- paste("filter_outlier does not support data of type",
-               class(.data)[[1]])
+  mes <- paste(
+    "filter_outlier does not support data of type",
+    class(.data)[[1]]
+  )
   rlang::abort(mes)
 }
 #' @export
@@ -63,7 +65,8 @@ filter_outlier.data.frame <- function(.data, ...,
 
 
   vars <- rlang::names2(select_loc(...,
-                                   .data = .data)) |>
+    .data = .data
+  )) |>
     rlang::syms() |>
     rlang::as_quosures(env = rlang::current_env())
 
@@ -117,9 +120,13 @@ filter_outlier.impl <- function(.data,
   vecs <- list()
   for (i in seq_along(vars)) {
     if (tbls[[i]]$var_type %in% c("lgl", "dbl", "int")) {
-      vec <- purrr::map_lgl(.data[[tbls[[i]]$var]],
-                            ~ out_help(.x, tbls[[i]]$upper,
-                                       tbls[[i]]$lower))
+      vec <- purrr::map_lgl(
+        .data[[tbls[[i]]$var]],
+        ~ out_help(
+          .x, tbls[[i]]$upper,
+          tbls[[i]]$lower
+        )
+      )
     } else if (tbls[[i]]$var_type %in% c("fct", "chr")) {
       vec <- !tbls[[i]]$outlier_vec[[1]]
       if (tbls[[i]]$var_type == "fct") {

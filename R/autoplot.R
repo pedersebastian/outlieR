@@ -11,7 +11,6 @@ autoplot.outlier <- function(object,
                              ...,
                              type = "histogram",
                              return_data = FALSE) {
-
   if (type == "hist") type <- "histogram"
   type <-
     match.arg(type, c("histogram", "count"))

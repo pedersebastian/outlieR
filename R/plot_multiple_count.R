@@ -107,10 +107,12 @@ plot_multiple.outlier_lglTRUE_dblFALSE_disFALSE_otherFALSE_count <- function(dat
   summary_tbl <- dplyr::filter(data$summary_tbl, var_type == "lgl")
   rows <- max(summary_tbl$n)
   data <- data$dat$lgl_data
-  logical_levels <- c("No Outlier (FALSE)",
-                      "Outlier (FALSE)",
-                      "No Outlier (TRUE)",
-                      "Outlier (TRUE)")
+  logical_levels <- c(
+    "No Outlier (FALSE)",
+    "Outlier (FALSE)",
+    "No Outlier (TRUE)",
+    "Outlier (TRUE)"
+  )
   data <-
     data |>
     dplyr::count(var, outlier_var) |>

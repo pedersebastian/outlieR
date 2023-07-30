@@ -54,13 +54,17 @@ control_filter_outlier <- function(numeric_method = "mean_sd",
   }
 
   num_method <- match.arg(numeric_method,
-                          c("mean_sd", "MAD", "IQD", "t_test"),
-                          several.ok = FALSE)
+    c("mean_sd", "MAD", "IQD", "t_test"),
+    several.ok = FALSE
+  )
   na_action <- match.arg(na_action,
-                         c("keep", "omit"),
-                         several.ok = FALSE)
-  discrete_method <- match.arg(discrete_method,
-                               c("prop", "n", "low_freq", "min_times"))
+    c("keep", "omit"),
+    several.ok = FALSE
+  )
+  discrete_method <- match.arg(
+    discrete_method,
+    c("prop", "n", "low_freq", "min_times")
+  )
 
   ties_method <- match.arg(ties_method, c(
     "min",

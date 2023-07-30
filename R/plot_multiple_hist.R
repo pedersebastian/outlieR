@@ -24,17 +24,21 @@ plot_multiple.outlier_lglFALSE_dblFALSE_disTRUE_otherFALSE_histogram <- function
     dplyr::mutate(
       value = forcats::fct_reorder(value, n),
       outlier_vec = ifelse(outlier_vec,
-                           "Outlier", "No outlier"),
+        "Outlier", "No outlier"
+      ),
       outlier_vec = factor(outlier_vec,
-                           levels = c("Outlier", "No outlier"))
+        levels = c("Outlier", "No outlier")
+      )
     ) |>
     ggplot2::ggplot(ggplot2::aes(n,
-                                 value,
-                                 fill = outlier_vec)) +
+      value,
+      fill = outlier_vec
+    )) +
     ggplot2::geom_col() +
     ggplot2::facet_wrap(ggplot2::vars(var),
-                        scales = "free_y",
-                        ncol = 1) +
+      scales = "free_y",
+      ncol = 1
+    ) +
     theme_outlier() +
     ggplot2::theme(
       legend.position = "bottom",
@@ -42,10 +46,12 @@ plot_multiple.outlier_lglFALSE_dblFALSE_disTRUE_otherFALSE_histogram <- function
     ) +
     ggplot2::guides("fill" = ggplot2::guide_legend(reverse = FALSE, nrow = 1)) +
     ggplot2::scale_fill_manual(values = palette) +
-    ggplot2::labs(title = NULL,
-                  y = NULL,
-                  x = "Counts",
-                  fill = NULL) +
+    ggplot2::labs(
+      title = NULL,
+      y = NULL,
+      x = "Counts",
+      fill = NULL
+    ) +
     ggplot2::scale_x_continuous(breaks = seq(0, max(test_data$n, na.rm = TRUE)))
   p
 }
@@ -85,10 +91,12 @@ plot_multiple.outlier_lglTRUE_dblFALSE_disFALSE_otherFALSE_histogram <- function
     data$dat$lgl_data
   rows <- max(summary_tbl$n, na.rm = TRUE)
 
-  logical_levels <- c("No Outlier (FALSE)",
-                      "Outlier (FALSE)",
-                      "No Outlier (TRUE)",
-                      "Outlier (TRUE)")
+  logical_levels <- c(
+    "No Outlier (FALSE)",
+    "Outlier (FALSE)",
+    "No Outlier (TRUE)",
+    "Outlier (TRUE)"
+  )
   data <-
     data |>
     dplyr::count(var, outlier_var) |>
@@ -226,7 +234,7 @@ plot_multiple.outlier_lglFALSE_dblTRUE_disFALSE_otherFALSE_histogram <- function
   if (any(is.finite(summary_tbl$upper_outlier))) pal <- append(pal, col_high)
   if (any(is.finite(summary_tbl$lower_outlier))) {
     pal <- append(pal, col_low, after = 0)
-    }
+  }
   p <-
     p + ggplot2::scale_fill_manual(values = pal)
   p
