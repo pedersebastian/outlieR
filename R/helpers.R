@@ -186,8 +186,3 @@ outlier_t_test <- function(.data, var, conf_int) {
 out_help <- function(number, upper, lower) {
   return(number > upper | number < lower)
 }
-
-
-# factor_helper <- function(x, outlier_vars) {
-#   unlist(map(x, ~ .x %in% outlier_vars))
-# }

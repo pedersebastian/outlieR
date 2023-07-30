@@ -1,4 +1,4 @@
-plot_multiple.outlier_lglFALSE_dblFALSE_disTRUE_otherFALSE_count <- function(data, ...) {
+plot_multiple.outlier_dis_count <- function(data, ...) {
   summary_tbl <-
     data$summary_tbl
 
@@ -31,9 +31,11 @@ plot_multiple.outlier_lglFALSE_dblFALSE_disTRUE_otherFALSE_count <- function(dat
 }
 
 
+################################################################################
+#                            #                        #                        #
+################################################################################
 
-
-plot_multiple.outlier_lglTRUE_dblTRUE_disFALSE_otherFALSE_count <- function(data, ...) {
+plot_multiple.outlier_lgl_dbl_count <- function(data, ...) {
   # TRUE TRUE
 
   summary_tbl <-
@@ -101,7 +103,7 @@ plot_multiple.outlier_lglTRUE_dblTRUE_disFALSE_otherFALSE_count <- function(data
 ################################################################################
 #                            #                        #                        #
 ################################################################################
-plot_multiple.outlier_lglTRUE_dblFALSE_disFALSE_otherFALSE_count <- function(data, ...) {
+plot_multiple.outlier_lgl_count <- function(data, ...) {
   # KUN LGL
 
   summary_tbl <- dplyr::filter(data$summary_tbl, var_type == "lgl")
@@ -178,7 +180,7 @@ plot_multiple.outlier_lglTRUE_dblFALSE_disFALSE_otherFALSE_count <- function(dat
 ################################################################################
 #                            #                        #                        #
 ################################################################################
-plot_multiple.outlier_lglFALSE_dblTRUE_disFALSE_otherFALSE_count <- function(data, ...) {
+plot_multiple.outlier_dbl_count <- function(data, ...) {
   # Kun dbl
 
   summary_tbl <- dplyr::filter(data$summary_tbl, var_type %in% c("dbl", "int"))

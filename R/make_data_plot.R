@@ -104,9 +104,19 @@ prep_data_many <- function(object, type, ...) {
       summary_tbl,
       na_action
     )
+
+  lgl_class <-
+    if (lgl>0) "lgl_" else ""
+  dbl_class <-
+    if (dbl>0) "dbl_" else ""
+  dis_class <-
+    if (dis>0) "dis_" else ""
+  other_class <-
+    if (other>0) "other_" else ""
+
   #############################################################################
   class_long <-
-    glue::glue("outlier_lgl{lgl>0}_dbl{dbl>0}_dis{dis>0}_other{other>1}_{type}")
+    glue::glue("outlier_{lgl_class}{dbl_class}{dis_class}{other_class}{type}")
 
 
   class_var <- c(

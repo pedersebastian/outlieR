@@ -98,17 +98,13 @@ plot_single.outlier_dbl_histogram <- function(data, ...) {
     ggplot2::theme(legend.position = "bottom") +
     ggplot2::scale_x_continuous(breaks = breaks)
 
-  only_outlier <- TRUE
   pal <- c(col_mid)
 
-  if (!dat$outlier_var |>
-    unique() |>
-    length() == 1) {
+  if (!length(unique(dat$outlier_var)) == 1) {
     breaks <- round(seq(summary_tbl$min_var,
       summary_tbl$max_var,
       length.out = 6
     ))
-    only_outlier <- FALSE
 
     if (any(dat[[var_name]] > summary_tbl$upper)) {
       p <- p +
@@ -161,7 +157,6 @@ plot_single.outlier_fct_histogram <- function(data, ...) {
   summary_tbl <- data$summary_tbl
   var_name <- data$var_name
   data <- data$dat
-
 
   new_data <- data |>
     dplyr::count(var, value, outlier_vec) |>

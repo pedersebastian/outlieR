@@ -101,7 +101,8 @@ filter_outlier.impl <- function(.data,
                                 ties_method,
                                 min_times,
                                 control) {
-  tbls <- purrr::map(vars, ~ get_tbl(.data,
+  tbls <- purrr::map(vars, ~ get_tbl(
+    .data,
     .x,
     num_method = num_method,
     discrete_method = discrete_method,
