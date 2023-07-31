@@ -63,7 +63,9 @@ outlier_mean_sd <- function(.data, var, threshold) {
 
 
 
-outlier_MAD <- function(.data, var, threshold) {
+outlier_MAD <- function(.data,
+                        var,
+                        threshold) {
   tbl <-
     dplyr::summarise(.data,
       var = rlang::quo_name(var),

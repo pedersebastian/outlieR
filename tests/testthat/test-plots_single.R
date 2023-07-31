@@ -1,35 +1,35 @@
 set.seed(123)
-mtcars["V1"] <- c(rnorm(29), -100, 100, NA)
+mtcars["v1"] <- c(rnorm(29), -100, 100, NA)
 set.seed(234)
-mtcars["V2"] <- c(-50, 32, rnorm(30))
-mtcars["V3"] <- c(rep(TRUE, 31), FALSE)
-mtcars["V4"] <- c(rep(2, 31), 100)
-mtcars["V5"] <- c(rep(TRUE, 16), rep(FALSE, 16))
-mtcars["V6"] <- c(rep(FALSE, 31), TRUE)
-mtcars["V7"] <- c(rep(2, 31), -100)
-mtcars["V8"] <- rep(FALSE, 32)
-mtcars["V9"] <- c(rep(FALSE, 15), rep(NA, 16), TRUE)
-mtcars["V10"] <- rep(TRUE, 32)
+mtcars["v2"] <- c(-50, 32, rnorm(30))
+mtcars["v3"] <- c(rep(TRUE, 31), FALSE)
+mtcars["v4"] <- c(rep(2, 31), 100)
+mtcars["v5"] <- c(rep(TRUE, 16), rep(FALSE, 16))
+mtcars["v6"] <- c(rep(FALSE, 31), TRUE)
+mtcars["v7"] <- c(rep(2, 31), -100)
+mtcars["v8"] <- rep(FALSE, 32)
+mtcars["v9"] <- c(rep(FALSE, 15), rep(NA, 16), TRUE)
+mtcars["v10"] <- rep(TRUE, 32)
 
-filtred_V3 <-
+filtred_v3 <-
   mtcars |>
-  filter_outlier(V3)
+  filter_outlier(v3)
 
-filtred_V1_omit <-
+filtred_v1_omit <-
   mtcars |>
-  filter_outlier(V1)
+  filter_outlier(v1)
 
 
-filtred_V12L_omit <-
+filtred_v12_omit <-
   mtcars |>
-  filter_outlier(V1, V2)
+  filter_outlier(v1, v2)
 
 
 test_that("plots_error", {
-  expect_error(autoplot(filtred_V_ALL_omit,
+  expect_error(autoplot(filtred_v12_omit,
     type = 123
   ))
-  expect_error(autoplot(filtred_V_ALL_omit,
+  expect_error(autoplot(filtred_v12_omit,
     type = "da"
   ))
 })
@@ -42,31 +42,31 @@ test_that("plots_plot", {
   )
   vdiffr::expect_doppelganger(
     "V3 only",
-    autoplot(filtred_V3)
+    autoplot(filtred_v3)
   )
   vdiffr::expect_doppelganger(
     "V1 ommited",
-    autoplot(filtred_V1_omit)
+    autoplot(filtred_v1_omit)
   )
   vdiffr::expect_doppelganger(
     "V1, V2",
-    autoplot(filtred_V12L_omit)
+    autoplot(filtred_v12_omit)
   )
   vdiffr::expect_doppelganger(
     "V3 onlycount",
-    autoplot(filtred_V3,
+    autoplot(filtred_v3,
       type = "count"
     )
   )
   vdiffr::expect_doppelganger(
     "V1 ommitedcount",
-    autoplot(filtred_V1_omit,
+    autoplot(filtred_v1_omit,
       type = "count"
     )
   )
   vdiffr::expect_doppelganger(
     "V1, V2count",
-    autoplot(filtred_V12L_omit,
+    autoplot(filtred_v12_omit,
       type = "count"
     )
   )

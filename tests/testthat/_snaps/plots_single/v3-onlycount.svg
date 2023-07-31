@@ -80,6 +80,6 @@
 <text x='294.37' y='559.43' style='font-size: 8.80px; font-family: sans;' textLength='62.11px' lengthAdjust='spacingAndGlyphs'>Outlier (FALSE)</text>
 <text x='384.72' y='559.43' style='font-size: 8.80px; font-family: sans;' textLength='71.88px' lengthAdjust='spacingAndGlyphs'>No Outlier (TRUE)</text>
 <text x='361.37' y='14.19' text-anchor='middle' style='font-size: 11.00px; font-family: sans;' textLength='21.41px' lengthAdjust='spacingAndGlyphs'>3.12</text>
-<text x='361.37' y='26.07' text-anchor='middle' style='font-size: 11.00px; font-family: sans;' textLength='83.15px' lengthAdjust='spacingAndGlyphs'>% Outliers for V3</text>
+<text x='361.37' y='26.07' text-anchor='middle' style='font-size: 11.00px; font-family: sans;' textLength='81.31px' lengthAdjust='spacingAndGlyphs'>% Outliers for v3</text>
 </g>
 </svg>

@@ -106,13 +106,13 @@ prep_data_many <- function(object, type, ...) {
     )
 
   lgl_class <-
-    if (lgl>0) "lgl_" else ""
+    if (lgl > 0) "lgl_" else ""
   dbl_class <-
-    if (dbl>0) "dbl_" else ""
+    if (dbl > 0) "dbl_" else ""
   dis_class <-
-    if (dis>0) "dis_" else ""
+    if (dis > 0) "dis_" else ""
   other_class <-
-    if (other>0) "other_" else ""
+    if (other > 0) "other_" else ""
 
   #############################################################################
   class_long <-
