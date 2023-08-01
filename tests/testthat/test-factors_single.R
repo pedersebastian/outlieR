@@ -1,10 +1,10 @@
 library(outlieR)
-mtcars["V12"] <- factor(rep(LETTERS[1:5],
+mtcars["v12"] <- factor(rep(LETTERS[1:5],
   times = c(10, 5, 15, 1, 1)
 ))
-mtcars["V13"] <- rep(LETTERS[1:5], times = c(13, 12, 1, 5, 1))
+mtcars["v13"] <- rep(LETTERS[1:5], times = c(13, 12, 1, 5, 1))
 set.seed(123)
-mtcars["V14"] <- rep(
+mtcars["v14"] <- rep(
   c(
     LETTERS[1:4],
     NA_character_
@@ -12,7 +12,7 @@ mtcars["V14"] <- rep(
   times = c(13, 1, 1, 5, 12)
 ) |> sample()
 set.seed(312)
-mtcars["V15"] <- factor(rep(
+mtcars["v15"] <- factor(rep(
   c(
     LETTERS[9:12],
     NA_character_
@@ -22,94 +22,95 @@ mtcars["V15"] <- factor(rep(
 
 
 
-A <- filter_outlier(tibble::as_tibble(mtcars),
-  V12,
+a <- filter_outlier(tibble::as_tibble(mtcars),
+  v12,
   control = control_filter_outlier(
     discrete_method = "min_times",
     min_times = 3
   )
 )
-AF <- fct_lump_min(mtcars$V12, min = 3)
-AF <- AF[AF != "Other"] |> droplevels()
+af <- fct_lump_min(mtcars$v12, min = 3)
+af <- af[af != "Other"] |> droplevels()
 
-B <- filter_outlier(tibble::as_tibble(mtcars),
-  V12,
+b <- filter_outlier(tibble::as_tibble(mtcars),
+  v12,
   control = control_filter_outlier(
     discrete_method = "prop",
     prop = 0.04
   )
 )
-BF <- fct_lump_prop(mtcars$V12, prop = 0.04)
-BF <- BF[BF != "Other"] |> droplevels()
+bf <- fct_lump_prop(mtcars$v12, prop = 0.04)
+bf <- bf[bf != "Other"] |> droplevels()
 
 
-C <- filter_outlier(tibble::as_tibble(mtcars),
-  V12,
+c <- filter_outlier(tibble::as_tibble(mtcars),
+  v12,
   control = control_filter_outlier(
     discrete_method = "n",
     n_vars = 2
   )
 )
 
-CF <- fct_lump_n(mtcars$V12, n = 2)
-CF <- CF[CF != "Other"] |> droplevels()
+cf <- fct_lump_n(mtcars$v12, n = 2)
+cf <- cf[cf != "Other"] |> droplevels()
 
-D <- filter_outlier(tibble::as_tibble(mtcars),
-  V12,
+d <- filter_outlier(tibble::as_tibble(mtcars),
+  v12,
   control = control_filter_outlier(
     discrete_method = "low_freq"
   )
 )
 
-DF <- fct_lump_lowfreq(mtcars$V12)
-DF <- DF[DF != "Other"] |> droplevels()
+df <- fct_lump_lowfreq(mtcars$v12)
+df <- df[df != "Other"] |> droplevels()
 
 
-E <- filter_outlier(tibble::as_tibble(mtcars),
-  V13,
+e <- filter_outlier(tibble::as_tibble(mtcars),
+  v13,
   control = control_filter_outlier(
     discrete_method = "prop",
     prop = 0.1
   )
 )
 
-EF <- fct_lump_prop(mtcars$V13, prop = 0.1)
-EF <- EF[EF != "Other"] |>
+ef <- fct_lump_prop(mtcars$v13, prop = 0.1)
+ef <- ef[ef != "Other"] |>
   droplevels() |>
   as.character()
 ###
 
 ### NA
 # G Char
-G <- filter_outlier(tibble::as_tibble(mtcars),
-  V14,
+g <- filter_outlier(tibble::as_tibble(mtcars),
+  v14,
   control = control_filter_outlier(
     discrete_method = "prop",
     min_times = 0.1, na_action = "omit"
   )
 )
-GF <- fct_lump_prop(mtcars$V14, prop = 0.1)
-GF <- GF[GF != "Other"] |> as.character()
-GF <- GF[!is.na(GF)]
+gf <- fct_lump_prop(mtcars$v14, prop = 0.1)
+gf <- gf[gf != "Other"] |> as.character()
+gf <- gf[!is.na(gf)]
 
 # H CHAR
-H <- filter_outlier(tibble::as_tibble(mtcars),
-  V14,
+h <- filter_outlier(tibble::as_tibble(mtcars),
+  v14,
   control = control_filter_outlier(
     discrete_method = "prop",
-    min_times = 0.1, na_action = "keep"
+    min_times = 0.1,
+    na_action = "keep"
   )
 )
-HF <- fct_lump_prop(mtcars$V14, prop = 0.1)
-HF <- HF[HF != "Other"] |> as.character()
-HF_na_length <- HF[is.na(HF)] |> length()
-H_na_len <- H$V14[is.na(H$V14)] |> length()
+hf <- fct_lump_prop(mtcars$v14, prop = 0.1)
+hf <- hf[hf != "Other"] |> as.character()
+hf_na_length <- hf[is.na(hf)] |> length()
+h_na_len <- h$v14[is.na(h$v14)] |> length()
 
 ### I. FCT
 
-I <-
+i <-
   filter_outlier(tibble::as_tibble(mtcars),
-    V15,
+    v15,
     control = control_filter_outlier(
       discrete_method = "n",
       n_vars = 2,
@@ -117,120 +118,121 @@ I <-
     )
   )
 
-IF <- fct_lump_n(mtcars$V15, n = 2)
-IF <- IF[IF != "Other"] |> droplevels()
-IF <- IF[!is.na(IF)]
-IF_na_length <- IF[is.na(IF)] |> length()
-I_na_len <- sum(is.na(I$V15))
+iff <- fct_lump_n(mtcars$v15, n = 2)
+iff <- iff[iff != "Other"] |> droplevels()
+iff <- iff[!is.na(iff)]
+iff_na_length <- iff[is.na(iff)] |> length()
+i_na_len <- sum(is.na(i$v15))
 
 
 
 ### J. FCT
-J <-
+j <-
   filter_outlier(tibble::as_tibble(mtcars),
-    V15,
+    v15,
     control = control_filter_outlier(
       discrete_method = "prop",
-      min_times = 0.1, na_action = "keep"
+      min_times = 0.1,
+      na_action = "keep"
     )
   )
 
-JF <- fct_lump_prop(mtcars$V15, prop = 0.1)
-JF <- JF[JF != "Other"] |> droplevels()
-JF_na_length <- JF[is.na(JF)] |> length()
-J_na_len <- J$V15[is.na(J$V15)] |> length()
+jf <- fct_lump_prop(mtcars$v15, prop = 0.1)
+jf <- jf[jf != "Other"] |> droplevels()
+jf_na_length <- jf[is.na(jf)] |> length()
+j_na_len <- j$v15[is.na(j$v15)] |> length()
 
 
 
 
 test_that("factor_works_single_without_NAs", {
   # A
-  expect_equal(nrow(A), 30)
-  expect_equal(levels(A$V12), c("A", "B", "C"))
-  expect_true(is.factor(A$V12))
-  expect_equal(A$V12, AF)
-  expect_equal(levels(A$V12), levels(AF))
-  expect_equal(length(levels(A$V12)), length(levels(AF)))
-  expect_equal(ncol(A), ncol(mtcars))
+  expect_equal(nrow(a), 30)
+  expect_equal(levels(a$v12), c("A", "B", "C"))
+  expect_true(is.factor(a$v12))
+  expect_equal(a$v12, af)
+  expect_equal(levels(a$v12), levels(af))
+  expect_equal(length(levels(a$v12)), length(levels(af)))
+  expect_equal(ncol(a), ncol(mtcars))
 
   # B
-  expect_equal(nrow(B), 30)
-  expect_equal(levels(B$V12), c("A", "B", "C"))
-  expect_true(is.factor(B$V12))
-  expect_equal(B$V12, BF)
-  expect_equal(levels(B$V12), levels(BF))
-  expect_equal(length(levels(B$V12)), length(levels(BF)))
-  expect_equal(ncol(B), ncol(mtcars))
+  expect_equal(nrow(b), 30)
+  expect_equal(levels(b$v12), c("A", "B", "C"))
+  expect_true(is.factor(b$v12))
+  expect_equal(b$v12, bf)
+  expect_equal(levels(b$v12), levels(bf))
+  expect_equal(length(levels(b$v12)), length(levels(bf)))
+  expect_equal(ncol(b), ncol(mtcars))
 
   # C
-  expect_equal(nrow(C), 25)
-  expect_equal(levels(C$V12), c("A", "C"))
-  expect_true(is.factor(C$V12))
-  expect_equal(C$V12, CF)
-  expect_equal(levels(C$V12), levels(CF))
-  expect_equal(length(levels(C$V12)), length(levels(CF)))
-  expect_equal(ncol(C), ncol(mtcars))
+  expect_equal(nrow(c), 25)
+  expect_equal(levels(c$v12), c("A", "C"))
+  expect_true(is.factor(c$v12))
+  expect_equal(c$v12, cf)
+  expect_equal(levels(c$v12), levels(cf))
+  expect_equal(length(levels(c$v12)), length(levels(cf)))
+  expect_equal(ncol(c), ncol(mtcars))
 
   # D
-  expect_equal(nrow(D), 25)
-  expect_equal(levels(D$V12), c("A", "C"))
-  expect_true(is.factor(D$V12))
-  expect_equal(D$V12, DF)
-  expect_false(is.character(D$V12))
-  expect_equal(levels(D$V12), levels(DF))
-  expect_equal(length(levels(D$V12)), length(levels(DF)))
-  expect_equal(ncol(D), ncol(mtcars))
+  expect_equal(nrow(d), 25)
+  expect_equal(levels(d$v12), c("A", "C"))
+  expect_true(is.factor(d$v12))
+  expect_equal(d$v12, df)
+  expect_false(is.character(d$v12))
+  expect_equal(levels(d$v12), levels(df))
+  expect_equal(length(levels(d$v12)), length(levels(df)))
+  expect_equal(ncol(d), ncol(mtcars))
 
   # E 13
 
-  expect_equal(nrow(E), 30)
-  expect_equal(unique(E$V13), c("A", "B", "D"))
-  expect_false(is.factor(E$V13))
-  expect_equal(E$V13, EF)
-  expect_equal(unique(E$V13), unique(EF))
-  expect_equal(length(unique(E$V13)), length(unique(EF)))
-  expect_equal(ncol(E), ncol(mtcars))
+  expect_equal(nrow(e), 30)
+  expect_equal(unique(e$v13), c("A", "B", "D"))
+  expect_false(is.factor(e$v13))
+  expect_equal(e$v13, ef)
+  expect_equal(unique(e$v13), unique(ef))
+  expect_equal(length(unique(e$v13)), length(unique(ef)))
+  expect_equal(ncol(e), ncol(mtcars))
 })
 
 
 
 test_that("factor_works_single_NA", {
   # G
-  expect_equal(nrow(G), 18)
-  expect_equal(unique(G$V14), c("D", "A"))
-  expect_false(is.factor(G$V14))
-  expect_equal(G$V14, GF)
-  expect_equal(unique(G$V14), unique(GF))
-  expect_equal(length(unique(G$V14)), length(unique(GF)))
-  expect_equal(ncol(G), ncol(mtcars))
+  expect_equal(nrow(g), 18)
+  expect_equal(unique(g$v14), c("D", "A"))
+  expect_false(is.factor(g$v14))
+  expect_equal(g$v14, gf)
+  expect_equal(unique(g$v14), unique(gf))
+  expect_equal(length(unique(g$v14)), length(unique(gf)))
+  expect_equal(ncol(g), ncol(mtcars))
 
   # H
-  expect_equal(nrow(H), 30)
-  expect_equal(unique(H$V14), c(NA, "D", "A"))
-  expect_false(is.factor(H$V14))
-  expect_equal(H$V14, HF)
-  expect_equal(unique(H$V14), unique(HF))
-  expect_equal(length(unique(H$V14)), length(unique(HF)))
-  expect_equal(ncol(H), ncol(mtcars))
-  expect_equal(HF_na_length, H_na_len)
+  expect_equal(nrow(h), 30)
+  expect_equal(unique(h$v14), c(NA, "D", "A"))
+  expect_false(is.factor(h$v14))
+  expect_equal(h$v14, hf)
+  expect_equal(unique(h$v14), unique(hf))
+  expect_equal(length(unique(h$v14)), length(unique(hf)))
+  expect_equal(ncol(h), ncol(mtcars))
+  expect_equal(hf_na_length, h_na_len)
 
   # I
-  expect_equal(nrow(I), 18)
-  expect_equal(unique(I$V15) |> as.character(), c("I", "L"))
-  expect_true(is.factor(I$V15))
-  expect_equal(I$V15, IF)
-  expect_equal(unique(I$V15), unique(IF))
-  expect_equal(length(unique(I$V15)), length(unique(IF)))
-  expect_equal(ncol(I), ncol(mtcars))
-  expect_equal(IF_na_length, I_na_len)
+  expect_equal(nrow(i), 18)
+  expect_equal(unique(i$v15) |> as.character(), c("I", "L"))
+  expect_true(is.factor(i$v15))
+  expect_equal(i$v15, iff)
+  expect_equal(unique(i$v15), unique(iff))
+  expect_equal(length(unique(i$v15)), length(unique(iff)))
+  expect_equal(ncol(i), ncol(mtcars))
+  expect_equal(iff_na_length, i_na_len)
 
   # J
-  expect_equal(nrow(J), 30)
-  expect_equal(unique(J$V15) |> as.character(), c("I", NA, "L"))
-  expect_true(is.factor(J$V15))
-  expect_equal(J$V15, JF)
-  expect_equal(unique(J$V15), unique(JF))
-  expect_equal(length(unique(J$V15)), length(unique(JF)))
-  expect_equal(ncol(J), ncol(mtcars))
-  expect_equal(JF_na_length, J_na_len)
+  expect_equal(nrow(j), 30)
+  expect_equal(unique(j$v15) |> as.character(), c("I", NA, "L"))
+  expect_true(is.factor(j$v15))
+  expect_equal(j$v15, jf)
+  expect_equal(unique(j$v15), unique(jf))
+  expect_equal(length(unique(j$v15)), length(unique(jf)))
+  expect_equal(ncol(j), ncol(mtcars))
+  expect_equal(jf_na_length, j_na_len)
 })

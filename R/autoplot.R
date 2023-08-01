@@ -55,6 +55,7 @@ theme_outlier <- function(...) {
         color = "black",
         linewidth = 0.1,
         linetype = NULL
-      ), ...
+      ),
+      ...
     )
 }
