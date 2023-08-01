@@ -9,17 +9,16 @@ atr_ignore <- c(
   "control"
 )
 
-mtcars["V12"] <- factor(
-  rep(
-    LETTERS[1:5],
-    times = c(10, 5, 15, 1, 1)
-))
+mtcars["v12"] <- factor(rep(
+  LETTERS[1:5],
+  times = c(10, 5, 15, 1, 1)
+  ))
 
-mtcars["V13"] <- rep(LETTERS[1:5],
+mtcars["v13"] <- rep(LETTERS[1:5],
   times = c(13, 12, 1, 5, 1)
 )
 set.seed(123)
-mtcars["V14"] <- rep(
+mtcars["v14"] <- rep(
   c(
     LETTERS[1:4],
     NA_character_
@@ -27,7 +26,7 @@ mtcars["V14"] <- rep(
   times = c(13, 1, 1, 5, 12)
 ) |> sample()
 set.seed(312)
-mtcars["V15"] <- factor(rep(
+mtcars["v15"] <- factor(rep(
   c(
     LETTERS[9:12],
     NA_character_
@@ -39,29 +38,29 @@ mtcars["V15"] <- factor(rep(
 
 ###########
 
-A <- filter_outlier(tibble::as_tibble(mtcars),
-  V12,
-  V13,
+a <- filter_outlier(tibble::as_tibble(mtcars),
+  v12,
+  v13,
   control = control_filter_outlier(
     discrete_method = "n",
     n_vars = 2
   )
 )
-A_raw_meth <-
+a_raw_meth <-
   mtcars |>
   dplyr::as_tibble() |>
-  dplyr::mutate(dplyr::across(V12:V13, ~ fct_lump_n(.x, n = 2)),
-    V13 = as.character(V13)
+  dplyr::mutate(dplyr::across(v12:v13, ~ forcats::fct_lump_n(.x, n = 2)),
+    v13 = as.character(v13)
   ) |>
-  dplyr::filter(V12 != "Other", V13 != "Other") |>
-  dplyr::mutate(V12 = droplevels(V12))
+  dplyr::filter(v12 != "Other", v13 != "Other") |>
+  dplyr::mutate(v12 = droplevels(v12))
 
 
-B <- filter_outlier(tibble::as_tibble(mtcars),
-  V12,
-  V13,
-  V14,
-  V15,
+b <- filter_outlier(tibble::as_tibble(mtcars),
+  v12,
+  v13,
+  v14,
+  v15,
   control = control_filter_outlier(
     discrete_method = "n",
     n_vars = 3,
@@ -70,28 +69,28 @@ B <- filter_outlier(tibble::as_tibble(mtcars),
 )
 
 
-B_raw_meth <-
+b_raw_meth <-
   tibble::as_tibble(mtcars) |>
-  dplyr::mutate(dplyr::across(V12:V14, ~ fct_lump_n(.x, n = 3)),
-    V13 = as.character(V13),
-    V14 = as.character(V14)
+  dplyr::mutate(dplyr::across(v12:v14, ~ forcats::fct_lump_n(.x, n = 3)),
+    v13 = as.character(v13),
+    v14 = as.character(v14)
   ) |>
   dplyr::filter(
-    V12 != "Other",
-    V13 != "Other",
-    V14 != "Other",
-    V15 != "Other"
+    v12 != "Other",
+    v13 != "Other",
+    v14 != "Other",
+    v15 != "Other"
   ) |>
   dplyr::mutate(
-    V12 = droplevels(V12),
-    V15 = droplevels(V15)
+    v12 = droplevels(v12),
+    v15 = droplevels(v15)
   )
 
-C <- filter_outlier(tibble::as_tibble(mtcars),
-  V12,
-  V13,
-  V14,
-  V15,
+c <- filter_outlier(tibble::as_tibble(mtcars),
+  v12,
+  v13,
+  v14,
+  v15,
   control = control_filter_outlier(
     discrete_method = "n",
     n_vars = 3,
@@ -102,7 +101,7 @@ C <- filter_outlier(tibble::as_tibble(mtcars),
 
 
 test_that("factor_works_multiple", {
-  expect_identical(A, A_raw_meth, ignore_attr = atr_ignore)
-  expect_identical(B, B_raw_meth, ignore_attr = atr_ignore)
-  expect_identical(nrow(C), as.integer(29))
+  expect_identical(a, a_raw_meth, ignore_attr = atr_ignore)
+  expect_identical(b, b_raw_meth, ignore_attr = atr_ignore)
+  expect_identical(nrow(c), as.integer(29))
 })
