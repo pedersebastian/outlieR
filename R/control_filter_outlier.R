@@ -31,9 +31,9 @@ control_filter_outlier <- function(numeric_method = "mean_sd",
                                    ...) {
   dots_n <- function(...) nargs()
   dots_count <- dots_n(...)
-  dots_names <- names(rlang::list2(...))
 
   if (dots_count > 0) {
+    dots_names <- names(rlang::list2(...))
     cli::cli_abort(c("i" = "{dots_names} {?is/are} {dots_count} the name{?s} of
                      the wrongly spelled element{?s} in
                      {.fun control_filter_outlier}."))
@@ -160,8 +160,9 @@ control_filter_outlier <- function(numeric_method = "mean_sd",
 }
 
 numeric_or_null <- function(x) {
-  name <- deparse1(substitute(x))
+
   if (!is.null(x) && !is.numeric(x)) {
+    name <- deparse1(substitute(x))
     cli::cli_abort(c("!" = "{name} must be numeric or NULL"))
   }
 }

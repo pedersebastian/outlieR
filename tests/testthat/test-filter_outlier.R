@@ -101,10 +101,11 @@ test_that("warnings and errors", {
     )
   ))
 
-  expect_error(filter_outlier(mtcars,
-                              v1,
-                              v2,
-                              v3,
+  expect_error(filter_outlier(
+    mtcars,
+    v1,
+    v2,
+    v3,
     control = control_filter_outlier(
       numeric_method = "mean_sd",
       na_action = "djsa"
