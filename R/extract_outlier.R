@@ -26,8 +26,8 @@ extract_outlier.data.frame <- function(x, ...) {
 #' @export
 extract_outlier.outlier <- function(x, ..., .ptype = logical()) {
   out <- switch(class(.ptype),
-    "logical" = extract_outlier_logical.impl(x),
-    "character" = extract_outlier_character.impl(x),
+    "logical" = extract_outlier_logical_impl(x),
+    "character" = extract_outlier_character_impl(x),
     cli::cli_abort(c(
       "x" = paste("Not implemented for class", class(.ptype)),
       "i" = "Only logical or character"
@@ -37,7 +37,7 @@ extract_outlier.outlier <- function(x, ..., .ptype = logical()) {
 }
 
 
-extract_outlier_logical.impl <- function(x) {
+extract_outlier_logical_impl <- function(x) {
   out <-
     structure(
       !attr(x, "filter_res"),
@@ -51,7 +51,7 @@ extract_outlier_logical.impl <- function(x) {
 
 
 
-extract_outlier_character.impl <- function(x) {
+extract_outlier_character_impl <- function(x) {
   rlang::abort("not implemented yet character")
 }
 

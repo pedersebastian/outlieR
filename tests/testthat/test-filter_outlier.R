@@ -1,50 +1,50 @@
 set.seed(123)
-mtcars["V1"] <- c(rnorm(29), -100, 100, NA)
+mtcars["v1"] <- c(rnorm(29), -100, 100, NA)
 set.seed(234)
-mtcars["V2"] <- c(-50, 32, rnorm(30))
-mtcars["V3"] <- c(rep(TRUE, 31), FALSE)
-mtcars["V4"] <- c(rep(2, 31), 100)
-mtcars["V5"] <- c(rep(TRUE, 16), rep(FALSE, 16))
-mtcars["V6"] <- c(rep(FALSE, 31), TRUE)
-mtcars["V7"] <- c(rep(2, 31), -100)
-mtcars["V8"] <- rep(FALSE, 32)
-mtcars["V9"] <- c(rep(FALSE, 15), rep(NA, 16), TRUE)
-mtcars["V10"] <- rep(TRUE, 32)
+mtcars["v2"] <- c(-50, 32, rnorm(30))
+mtcars["v3"] <- c(rep(TRUE, 31), FALSE)
+mtcars["v4"] <- c(rep(2, 31), 100)
+mtcars["v5"] <- c(rep(TRUE, 16), rep(FALSE, 16))
+mtcars["v6"] <- c(rep(FALSE, 31), TRUE)
+mtcars["v7"] <- c(rep(2, 31), -100)
+mtcars["v8"] <- rep(FALSE, 32)
+mtcars["v9"] <- c(rep(FALSE, 15), rep(NA, 16), TRUE)
+mtcars["v10"] <- rep(TRUE, 32)
 
 
 
 
-filtred_V1 <-
+filtred_v1 <-
   mtcars |>
-  filter_outlier(V1,
+  filter_outlier(v1,
     control = control_filter_outlier(numeric_method = "mean_sd")
   )
-filtred_V2 <-
+filtred_v2 <-
   mtcars |>
-  filter_outlier(V2,
-    control = control_filter_outlier(numeric_method = "mean_sd")
-  )
-
-filtred_V3 <-
-  mtcars |>
-  filter_outlier(V3,
+  filter_outlier(v2,
     control = control_filter_outlier(numeric_method = "mean_sd")
   )
 
-filtred_V1_omit <-
+filtred_v3 <-
   mtcars |>
-  filter_outlier(V1,
+  filter_outlier(v3,
+    control = control_filter_outlier(numeric_method = "mean_sd")
+  )
+
+filtred_v1_omit <-
+  mtcars |>
+  filter_outlier(v1,
     control = control_filter_outlier(
       numeric_method = "mean_sd",
       na_action = "omit"
     )
   )
 
-filtred_V_ALL_omit <-
+filtred_v_all_omit <-
   mtcars |>
-  filter_outlier(V1,
-    V2,
-    V3,
+  filter_outlier(v1,
+    v2,
+    v3,
     control = control_filter_outlier(
       numeric_method = "mean_sd",
       na_action = "omit"
@@ -65,24 +65,24 @@ date_tbl <-
 atr_ignore <- c("tbls", "old_df", "vecs", "na_action", "filter_res", "control")
 
 test_that("equals", {
-  expect_equal(nrow(filtred_V1), 30)
-  expect_equal(nrow(filtred_V2), 30)
-  expect_equal(nrow(filtred_V3), 31)
-  expect_equal(nrow(filtred_V1_omit), 29)
-  expect_equal(nrow(filtred_V_ALL_omit), 27)
+  expect_equal(nrow(filtred_v1), 30)
+  expect_equal(nrow(filtred_v2), 30)
+  expect_equal(nrow(filtred_v3), 31)
+  expect_equal(nrow(filtred_v1_omit), 29)
+  expect_equal(nrow(filtred_v_all_omit), 27)
   expect_equal(nrow(filtred_everything), 27)
 
   expect_identical(subset(mtcars, c(FALSE, FALSE, rep(TRUE, 30))),
-    filtred_V2 |> as.data.frame(),
+    filtred_v2 |> as.data.frame(),
     ignore_attr = atr_ignore
   )
   expect_identical(subset(mtcars, c(rep(TRUE, 29), FALSE, FALSE, TRUE)),
-    filtred_V1 |>
+    filtred_v1 |>
       as.data.frame(),
     ignore_attr = atr_ignore
   )
   expect_identical(subset(mtcars, c(rep(TRUE, 29), FALSE, FALSE, FALSE)),
-    filtred_V1_omit |>
+    filtred_v1_omit |>
       as.data.frame(),
     ignore_attr = atr_ignore
   )
@@ -93,24 +93,27 @@ test_that("warnings and errors", {
   expect_error(filter_outlier())
   expect_error(filter_outlier(mtcars, fakevar))
   expect_warning(filter_outlier(mtcars,
-    V1,
-    V2,
-    V3,
+    v1,
+    v2,
+    v3,
     control = control_filter_outlier(
       threshold = 10000
     )
   ))
 
-  expect_error(filter_outlier(mtcars, V1, V2, V3,
+  expect_error(filter_outlier(mtcars,
+                              v1,
+                              v2,
+                              v3,
     control = control_filter_outlier(
       numeric_method = "mean_sd",
       na_action = "djsa"
     )
   ))
   expect_error(filter_outlier(mtcars,
-    V1,
-    V2,
-    V3,
+    v1,
+    v2,
+    v3,
     control = control_filter_outlier(
       numeric_method = "t_test",
       conf_int = 8,

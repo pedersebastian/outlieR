@@ -1,6 +1,7 @@
 discrete_helper <- function(x, fun, args) {
   new <- rlang::exec(fun, x, !!!args)
-  lvl <- levels(new)[levels(new) != "Otherxxx"]
+  lvl <- levels(new)
+  lvl <- lvl[lvl != "Otherxxx"]
   out <- purrr::map_lgl(new, ~ .x %in% lvl)
   out
 }

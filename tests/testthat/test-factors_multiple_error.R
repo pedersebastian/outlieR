@@ -12,7 +12,7 @@ atr_ignore <- c(
 mtcars["v12"] <- factor(rep(
   LETTERS[1:5],
   times = c(10, 5, 15, 1, 1)
-  ))
+))
 
 mtcars["v13"] <- rep(LETTERS[1:5],
   times = c(13, 12, 1, 5, 1)
