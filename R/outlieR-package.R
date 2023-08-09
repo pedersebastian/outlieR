@@ -44,6 +44,7 @@
 #' @importFrom ggplot2 vars
 #' @importFrom glue glue
 #' @importFrom grDevices colorRampPalette
+#' @importFrom knitr kable
 #' @importFrom patchwork wrap_plots
 #' @importFrom pillar type_sum
 #' @importFrom purrr map
