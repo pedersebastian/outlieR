@@ -9,7 +9,6 @@ summary.outlier <- function(object, ...) {
   }
 
   tbls <- attr(object, "tbls") |> dplyr::bind_rows()
-  vars <- tbls$var
 
   col_names <-
     c("Variable", "Variable Type", "Outlier Exist?", "N Outliers", "% Outlier", "N of NAs")
