@@ -160,7 +160,6 @@ control_filter_outlier <- function(numeric_method = "mean_sd",
 }
 
 numeric_or_null <- function(x) {
-
   if (!is.null(x) && !is.numeric(x)) {
     name <- deparse1(substitute(x))
     cli::cli_abort(c("!" = "{name} must be numeric or NULL"))

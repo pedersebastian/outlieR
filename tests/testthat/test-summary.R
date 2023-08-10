@@ -8,9 +8,6 @@ v1_filtred <-
   filter_outlier(mtcars, v1, v2, v3)
 
 
-test_that("summary_nofail",{
-
-
-          #expect_no_error(summary(v1_filtred))
-}
-)
+test_that("summary_nofail", {
+  expect_snapshot(summary(v1_filtred))
+})
