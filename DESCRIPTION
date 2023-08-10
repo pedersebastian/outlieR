@@ -1,11 +1,10 @@
 Package: outlieR
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Identify, Filter and Visualisation of Outliers
 Version: 0.2.0.9000
 Author: Peder Sebastian Martinsen
 Maintainer: Peder Sebastian Martinsen <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
+Description: Identify, Filter and Visualisation of Outliers using tidy principles. 
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true

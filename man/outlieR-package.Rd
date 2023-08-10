@@ -4,9 +4,9 @@
 \name{outlieR-package}
 \alias{outlieR}
 \alias{outlieR-package}
-\title{outlieR: What the Package Does (Title Case)}
+\title{outlieR: Identify, Filter and Visualisation of Outliers}
 \description{
-More about what it does (maybe more than one line) Use four spaces when indenting paragraphs within the Description.
+Identify, Filter and Visualisation of Outliers using tidy principles.
 }
 \seealso{
 Useful links:
