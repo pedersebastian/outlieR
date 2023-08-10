@@ -1,7 +1,7 @@
 Package: outlieR
 Type: Package
 Title: What the Package Does (Title Case)
-Version: 0.2.0
+Version: 0.2.0.9000
 Author: Peder Sebastian Martinsen
 Maintainer: Peder Sebastian Martinsen <yourself@somewhere.net>
 Description: More about what it does (maybe more than one line)
