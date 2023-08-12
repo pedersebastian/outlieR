@@ -1,5 +1,5 @@
 #' @export
-print.outlier <- function(x, ...){
+print.outlier <- function(x, ...) {
   vec_raw <- attr(x, "filter_res")
   if (mean(vec_raw, na.rm = TRUE) < 1) {
     # finnes outliers

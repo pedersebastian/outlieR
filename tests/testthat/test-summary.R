@@ -14,7 +14,3 @@ test_that("summary_nofail", {
   expect_snapshot(summary(v1_filtred))
   expect_snapshot(summary(everything_filtred))
 })
-
-
-
-
