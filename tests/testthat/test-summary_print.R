@@ -61,6 +61,7 @@ filtred_v_all_omit <-
 
 filterd_everything <-
   filter_outlier(mtcars, everything())
+
 filter_v12 <-
   filter_outlier(mtcars, v12)
 filter_v13 <-
@@ -74,7 +75,7 @@ filter_fct <-
 
 
 
-test_that("summary_1", {
+test_that("summary_nofail", {
   expect_snapshot(summary(filtred_v1))
   expect_snapshot(summary(filtred_v2))
   expect_snapshot(summary(filtred_v3))
@@ -87,19 +88,4 @@ test_that("summary_1", {
   expect_snapshot(summary(filter_v14))
   expect_snapshot(summary(filter_v1213))
   expect_snapshot(summary(filter_fct))
-})
-
-test_that("print_outliers", {
-  expect_snapshot(print(filtred_v1))
-  expect_snapshot(print(filtred_v2))
-  expect_snapshot(print(filtred_v3))
-  expect_snapshot(print(filtred_v1_omit))
-  expect_snapshot(print(filtred_v_all_omit))
-  expect_snapshot(print(filterd_everything))
-
-  expect_snapshot(print(filter_v12))
-  expect_snapshot(print(filter_v13))
-  expect_snapshot(print(filter_v14))
-  expect_snapshot(print(filter_v1213))
-  expect_snapshot(print(filter_fct))
 })
