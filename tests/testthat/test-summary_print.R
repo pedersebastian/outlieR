@@ -4,7 +4,7 @@ set.seed(234)
 mtcars["v2"] <- c(-50, 32, rnorm(30))
 mtcars["v3"] <- c(rep(TRUE, 31), FALSE)
 mtcars["v12"] <- factor(rep(LETTERS[1:5],
-                            times = c(10, 5, 15, 1, 1)
+  times = c(10, 5, 15, 1, 1)
 ))
 mtcars["v13"] <- rep(LETTERS[1:5], times = c(13, 12, 1, 5, 1))
 set.seed(123)
@@ -27,36 +27,36 @@ mtcars["v15"] <- factor(rep(
 filtred_v1 <-
   mtcars |>
   filter_outlier(v1,
-                 control = control_filter_outlier(numeric_method = "mean_sd")
+    control = control_filter_outlier(numeric_method = "mean_sd")
   )
 filtred_v2 <-
   mtcars |>
   filter_outlier(v2,
-                 control = control_filter_outlier(numeric_method = "mean_sd")
+    control = control_filter_outlier(numeric_method = "mean_sd")
   )
 filtred_v3 <-
   mtcars |>
   filter_outlier(v3,
-                 control = control_filter_outlier(numeric_method = "mean_sd")
+    control = control_filter_outlier(numeric_method = "mean_sd")
   )
 filtred_v1_omit <-
   mtcars |>
   filter_outlier(v1,
-                 control = control_filter_outlier(
-                   numeric_method = "mean_sd",
-                   na_action = "omit"
-                 )
+    control = control_filter_outlier(
+      numeric_method = "mean_sd",
+      na_action = "omit"
+    )
   )
 
 filtred_v_all_omit <-
   mtcars |>
   filter_outlier(v1,
-                 v2,
-                 v3,
-                 control = control_filter_outlier(
-                   numeric_method = "mean_sd",
-                   na_action = "omit"
-                 )
+    v2,
+    v3,
+    control = control_filter_outlier(
+      numeric_method = "mean_sd",
+      na_action = "omit"
+    )
   )
 
 filterd_everything <-
