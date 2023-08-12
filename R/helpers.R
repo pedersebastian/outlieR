@@ -181,13 +181,11 @@ outlier_t_test <- function(.data, var, conf_int) {
   }
 
   if (tbl$uniques < 4) {
-    variable_name <- tbl$var
     cli::cli_abort(c(
-      "x" = "The Variable {variable_name} have less than 4 unique values, witch is not allowed. ",
+      "x" = "The Variable {tbl$var} have less than 4 unique values, witch is not allowed. ",
       "i" = "Use another method. "
     ))
   }
-
   tbl
 }
 
