@@ -6,8 +6,15 @@ mtcars["v3"] <- c(rep(TRUE, 31), FALSE)
 
 v1_filtred <-
   filter_outlier(mtcars, v1, v2, v3)
+everything_filtred <-
+  filter_outlier(mtcars, everything())
 
 
 test_that("summary_nofail", {
   expect_snapshot(summary(v1_filtred))
+  expect_snapshot(summary(everything_filtred))
 })
+
+
+
+

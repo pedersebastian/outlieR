@@ -16,7 +16,7 @@ summary.outlier <- function(object, ...) {
   summary_tbl <-
     tbls |>
     dplyr::mutate(
-      outlier_pct = glue::glue(" {round(outlier_pct*100, 1)} %"),
+      outlier_pct = ifelse(outlier_pct == 0, "", glue::glue(" {round(outlier_pct*100, 1)} %")),
       outlier_exist = ifelse(outlier_exist, "Yes", "No")
     ) |>
     dplyr::select(all_of(c("var", "var_type", "outlier_exist", "n_outliers", "outlier_pct", "na_count"))) |>
