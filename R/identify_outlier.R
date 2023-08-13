@@ -161,16 +161,6 @@ identify_outlier.impl <- function(.data,
       dplyr::mutate(dplyr::across(all_of(factor_variables), forcats::fct_drop))
   }
 
-
-  # class(res) <- c("outlier_identify","outlier", class(res))
-  # attributes(res) <- c(attributes(res), list(
-  #   old_df = .data,
-  #   tbls = tbls,
-  #   vecs = vecs,
-  #   filter_res = filter_res,
-  #   na_action = na_action,
-  #   control = control
-  # ))
   out <- list(
     filtred_data = filtred_data,
     old_df = .data,
