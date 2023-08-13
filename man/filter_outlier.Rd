@@ -2,30 +2,21 @@
 % Please edit documentation in R/filter_outlier.R
 \name{filter_outlier}
 \alias{filter_outlier}
-\title{Outlier filter}
+\title{Filter a data frame/ tibble of outliers}
 \usage{
-filter_outlier(.data, ..., control = control_outlier())
+filter_outlier(object, ...)
 }
 \arguments{
-\item{.data}{data.frame or tibble}
+\item{object}{an object created by identify_outlier}
 
-\item{...}{variable(s) to filter outlier}
-
-\item{control}{control_obj}
+\item{...}{not currently fused}
 }
 \value{
-data.frame or tibble
+a tbl/dataframe
 }
 \description{
-Outlier filter
+Filter a data frame/ tibble of outliers
 }
 \examples{
-
-mtcars["var_1"] <- c(rnorm(30), -100, 100)
-mtcars["var_2"] <- c(-50, 32, rnorm(30))
-filtred <-
-  mtcars |> filter_outlier(var_1, var_2)
-
-paste(nrow(mtcars), "rows before filtered and", nrow(filtred), "rows after")
-# "32 rows before filtered and 28 rows after"
+print("hei")
 }

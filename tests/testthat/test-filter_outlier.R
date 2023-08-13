@@ -15,47 +15,41 @@ mtcars["v10"] <- rep(TRUE, 32)
 
 
 filtred_v1 <-
-  mtcars |>
-  filter_outlier(v1,
+  filter_outlier(identify_outlier(mtcars, v1,
     control = control_outlier(numeric_method = "mean_sd")
-  )
+  ))
 filtred_v2 <-
-  mtcars |>
-  filter_outlier(v2,
+  filter_outlier(identify_outlier(mtcars, v2,
     control = control_outlier(numeric_method = "mean_sd")
-  )
+  ))
 
 filtred_v3 <-
-  mtcars |>
-  filter_outlier(v3,
+  filter_outlier(identify_outlier(mtcars, v3,
     control = control_outlier(numeric_method = "mean_sd")
-  )
+  ))
 
 filtred_v1_omit <-
-  mtcars |>
-  filter_outlier(v1,
+  filter_outlier(identify_outlier(mtcars, v1,
     control = control_outlier(
       numeric_method = "mean_sd",
       na_action = "omit"
     )
-  )
+  ))
 
 filtred_v_all_omit <-
-  mtcars |>
-  filter_outlier(v1,
+  filter_outlier(identify_outlier(mtcars, v1,
     v2,
     v3,
     control = control_outlier(
       numeric_method = "mean_sd",
       na_action = "omit"
     )
-  )
+  ))
 
 filtred_everything <-
-  mtcars |>
-  filter_outlier(everything(),
+  filter_outlier(identify_outlier(mtcars, everything(),
     control = control_outlier(na_action = "keep")
-  )
+  ))
 
 date_tbl <-
   mtcars |>
@@ -89,19 +83,19 @@ test_that("equals", {
 })
 
 test_that("warnings and errors", {
-  expect_error(filter_outlier(mtcars, "hei"))
-  expect_error(filter_outlier())
-  expect_error(filter_outlier(mtcars, fakevar))
-  expect_warning(filter_outlier(mtcars,
+  expect_error(filter_outlier(identify_outlier(mtcars, "hei")))
+  expect_error(filter_outlier(identify_outlier()))
+  expect_error(filter_outlier(identify_outlier(mtcars, fakevar)))
+  expect_warning(filter_outlier(identify_outlier(mtcars,
     v1,
     v2,
     v3,
     control = control_outlier(
       threshold = 10000
     )
-  ))
+  )))
 
-  expect_error(filter_outlier(
+  expect_error(filter_outlier(identify_outlier(
     mtcars,
     v1,
     v2,
@@ -110,8 +104,8 @@ test_that("warnings and errors", {
       numeric_method = "mean_sd",
       na_action = "djsa"
     )
-  ))
-  expect_error(filter_outlier(mtcars,
+  )))
+  expect_error(filter_outlier(identify_outlier(mtcars,
     v1,
     v2,
     v3,
@@ -120,6 +114,6 @@ test_that("warnings and errors", {
       conf_int = 8,
       na_action = "omit"
     )
-  ))
-  expect_error(filter_outlier(date_tbl, date_var))
+  )))
+  expect_error(filter_outlier(identify_outlier(date_tbl, date_var)))
 })

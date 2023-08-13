@@ -13,16 +13,16 @@ mtcars["v10"] <- rep(TRUE, 32)
 
 filtred_v3 <-
   mtcars |>
-  filter_outlier(v3)
+  identify_outlier(v3)
 
 filtred_v1_omit <-
   mtcars |>
-  filter_outlier(v1)
+  identify_outlier(v1)
 
 
 filtred_v12_omit <-
   mtcars |>
-  filter_outlier(v1, v2)
+  identify_outlier(v1, v2)
 
 
 test_that("plots_error", {

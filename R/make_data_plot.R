@@ -1,8 +1,8 @@
 ## .  DATA PREP
 prep_data <- function(object, type, ...) {
-  if (length(attr(object, "tbls")) > 1) {
+  if (length(object$tbls) > 1) {
     data <- prep_data_many(object, type, ...)
-  } else if (length(attr(object, "tbls")) == 1) {
+  } else if (length(object$tbls) == 1) {
     data <- prep_data_one(object, type, ...)
   } else {
     cli::cli_abort("noe feil as")
@@ -11,11 +11,11 @@ prep_data <- function(object, type, ...) {
 }
 ###############################################
 prep_data_one <- function(object, type, ...) {
-  summary_tbl <- attr(object, "tbl")[[1]]
+  summary_tbl <- object$tbls[[1]]
   var_name <- summary_tbl$var
-  dat <- attr(object, "old_df")
+  dat <- object$old_df
 
-  na_action <- attr(object, "na_action")
+  na_action <- object$na_action
 
   if (summary_tbl$var_type == "lgl") {
     dat <- prep_data_many_logical(data = dat, var_name, summary_tbl)
@@ -62,10 +62,10 @@ prep_data_one <- function(object, type, ...) {
 }
 
 prep_data_many <- function(object, type, ...) {
-  summary_tbl <- attr(object, "tbls") |> dplyr::bind_rows()
+  summary_tbl <- object$tbls |> dplyr::bind_rows()
   vars_name <- summary_tbl$var
 
-  na_action <- attr(object, "na_action")
+  na_action <- object$na_action
 
   lgl_names <- summary_tbl["var"][summary_tbl["var_type"] == "lgl"]
   dbl_names <- summary_tbl["var"][summary_tbl["var_type"] == "dbl"]
@@ -86,20 +86,20 @@ prep_data_many <- function(object, type, ...) {
 
   dbl_data <-
     prep_data_many_numeric(
-      attr(object, "old_df"),
+      object$old_df,
       dbl_names,
       summary_tbl
     )
   lgl_data <-
     prep_data_many_logical(
-      attr(object, "old_df"),
+      object$old_df,
       lgl_names,
       summary_tbl
     )
 
   dis_data <-
     prep_data_many_discrete(
-      attr(object, "old_df"),
+      object$old_df,
       dis_name,
       summary_tbl,
       na_action

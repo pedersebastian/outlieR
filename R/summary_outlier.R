@@ -1,6 +1,6 @@
 #' @export
 summary.outlier <- function(object, ...) {
-  vec_raw <- attr(object, "filter_res")
+  vec_raw <- object$filter_res
   if (mean(vec_raw, na.rm = TRUE) < 1) {
     # finnes outliers
     first_text <- glue::glue("{sum(vec_raw == FALSE)} Outliers were removed of {length(vec_raw)} rows.")
@@ -8,7 +8,7 @@ summary.outlier <- function(object, ...) {
     first_text <- "No Outliers were removed"
   }
 
-  tbls <- attr(object, "tbls") |> dplyr::bind_rows()
+  tbls <- object$tbls |> dplyr::bind_rows()
 
   col_names <-
     c("Variable", "Variable Type", "Outlier Exist?", "N Outliers", "% Outlier", "N of NAs")

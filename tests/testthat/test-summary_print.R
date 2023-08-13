@@ -26,22 +26,22 @@ mtcars["v15"] <- factor(rep(
 
 filtred_v1 <-
   mtcars |>
-  filter_outlier(v1,
+  identify_outlier(v1,
                  control = control_outlier(numeric_method = "mean_sd")
   )
 filtred_v2 <-
   mtcars |>
-  filter_outlier(v2,
+  identify_outlier(v2,
                  control = control_outlier(numeric_method = "mean_sd")
   )
 filtred_v3 <-
   mtcars |>
-  filter_outlier(v3,
+  identify_outlier(v3,
                  control = control_outlier(numeric_method = "mean_sd")
   )
 filtred_v1_omit <-
   mtcars |>
-  filter_outlier(v1,
+  identify_outlier(v1,
                  control = control_outlier(
                    numeric_method = "mean_sd",
                    na_action = "omit"
@@ -50,7 +50,7 @@ filtred_v1_omit <-
 
 filtred_v_all_omit <-
   mtcars |>
-  filter_outlier(v1,
+  identify_outlier(v1,
                  v2,
                  v3,
                  control = control_outlier(
@@ -60,17 +60,17 @@ filtred_v_all_omit <-
   )
 
 filterd_everything <-
-  filter_outlier(mtcars, everything())
+  identify_outlier(mtcars, everything())
 filter_v12 <-
-  filter_outlier(mtcars, v12)
+  identify_outlier(mtcars, v12)
 filter_v13 <-
-  filter_outlier(mtcars, v13)
+  identify_outlier(mtcars, v13)
 filter_v14 <-
-  filter_outlier(mtcars, v14)
+  identify_outlier(mtcars, v14)
 filter_v1213 <-
-  filter_outlier(mtcars, v12, v14)
+  identify_outlier(mtcars, v12, v14)
 filter_fct <-
-  filter_outlier(mtcars |> tibble::as_tibble(), v12, v13, v14)
+  identify_outlier(mtcars |> tibble::as_tibble(), v12, v13, v14)
 
 
 

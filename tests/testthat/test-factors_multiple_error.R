@@ -38,14 +38,14 @@ mtcars["v15"] <- factor(rep(
 
 ###########
 
-a <- filter_outlier(tibble::as_tibble(mtcars),
+a <- identify_outlier(tibble::as_tibble(mtcars),
   v12,
   v13,
   control = control_outlier(
     discrete_method = "n",
     n_vars = 2
   )
-)
+) |> filter_outlier()
 a_raw_meth <-
   mtcars |>
   dplyr::as_tibble() |>
@@ -56,7 +56,7 @@ a_raw_meth <-
   dplyr::mutate(v12 = droplevels(v12))
 
 
-b <- filter_outlier(tibble::as_tibble(mtcars),
+b <- filter_outlier(identify_outlier(tibble::as_tibble(mtcars),
   v12,
   v13,
   v14,
@@ -66,7 +66,7 @@ b <- filter_outlier(tibble::as_tibble(mtcars),
     n_vars = 3,
     na_action = "omit"
   )
-)
+))
 
 
 b_raw_meth <-
@@ -86,7 +86,7 @@ b_raw_meth <-
     v15 = droplevels(v15)
   )
 
-c <- filter_outlier(tibble::as_tibble(mtcars),
+c <- filter_outlier(identify_outlier(tibble::as_tibble(mtcars),
   v12,
   v13,
   v14,
@@ -96,7 +96,7 @@ c <- filter_outlier(tibble::as_tibble(mtcars),
     n_vars = 3,
     na_action = "keep"
   )
-)
+))
 
 
 

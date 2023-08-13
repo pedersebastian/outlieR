@@ -1,6 +1,6 @@
 #' @export
-print.outlier <- function(x, ...) {
-  vec_raw <- attr(x, "filter_res")
+print.outlier_identify <- function(x, ...) {
+  vec_raw <- x$filter_res
   if (mean(vec_raw, na.rm = TRUE) < 1) {
     # finnes outliers
     first_text <- glue::glue("{sum(vec_raw == FALSE)} Outliers were removed of {length(vec_raw)} rows.")
@@ -9,5 +9,5 @@ print.outlier <- function(x, ...) {
   }
   cli::cat_rule(first_text)
   cat("\n")
-  NextMethod()
+ # NextMethod()
 }

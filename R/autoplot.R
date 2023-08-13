@@ -1,13 +1,12 @@
 #' @importFrom ggplot2 autoplot
 #' @export
-
 ggplot2::autoplot
 
 #' @param object data
 #' @param ... Not Currently used
 #' @param type histogram or count
 #' @export
-autoplot.outlier <- function(object,
+autoplot.outlier_identify <- function(object,
                              ...,
                              type = "histogram",
                              return_data = FALSE) {

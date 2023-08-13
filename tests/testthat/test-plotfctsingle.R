@@ -6,21 +6,21 @@ mtcars["V13"] <- factor(rep(c("A", "B"), times = c(15, 17))) |> sample()
 
 
 
-res1 <- filter_outlier(tibble::as_tibble(mtcars),
+res1 <- identify_outlier(tibble::as_tibble(mtcars),
   V11,
   control = control_outlier(
     discrete_method = "min_times",
     min_times = 3
   )
 )
-res2 <- filter_outlier(tibble::as_tibble(mtcars),
+res2 <- identify_outlier(tibble::as_tibble(mtcars),
   V12,
   control = control_outlier(
     discrete_method = "n",
     n_vars = 2
   )
 )
-res3 <- filter_outlier(tibble::as_tibble(mtcars),
+res3 <- identify_outlier(tibble::as_tibble(mtcars),
   V13,
   control = control_outlier(
     discrete_method = "min_times",
@@ -34,7 +34,7 @@ test_df <- tibble::tibble(let = rep(LETTERS[1:10], times = c(
 )))
 
 res4 <-
-  filter_outlier(test_df, let, control = control_outlier(
+  identify_outlier(test_df, let, control = control_outlier(
     discrete_method = "prop", prop = 0.03
   ))
 
@@ -47,17 +47,17 @@ data <- ggplot2::mpg
 # trans.    c("prop", "n", "low_freq", "min_times")
 
 res5 <-
-  filter_outlier(data, manufacturer, control = control_outlier(
+  identify_outlier(data, manufacturer, control = control_outlier(
     discrete_method = "min_times", min_times = 10
   ))
 
 res6 <-
-  filter_outlier(data, model, control = control_outlier(
+  identify_outlier(data, model, control = control_outlier(
     discrete_method = "n", n_vars = 7
   ))
 
 res7 <-
-  filter_outlier(data, trans, control = control_outlier(
+  identify_outlier(data, trans, control = control_outlier(
     discrete_method = "low_freq"
   ))
 
