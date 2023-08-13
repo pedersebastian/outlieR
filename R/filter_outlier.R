@@ -13,7 +13,7 @@ filter_outlier  <- function(object, ...) {
 }
 #' @export
 filter_outlier.default <- function(object, ...) {
-  cli::cli_abort(c("x" = "filter_outlier is not supported for an object with class {.class {class(object)}}",
+  cli::cli_abort(c("x" = "filter_outlier is not supported for an object with class {.class {class(object)[[1]]}}",
                    "i" = "Did you forget to use {.fun identify_outlier} first? "))
 }
 #' @export
