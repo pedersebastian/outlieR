@@ -3,7 +3,7 @@ summary.outlier <- function(object, ...) {
   vec_raw <- object$filter_res
   if (mean(vec_raw, na.rm = TRUE) < 1) {
     # finnes outliers
-    first_text <- glue::glue("{sum(vec_raw == FALSE)} Outliers were removed of {length(vec_raw)} rows.")
+    first_text <- glue::glue("{sum(vec_raw == FALSE, na.rm = TRUE)} Outliers were removed of {length(vec_raw)} rows.")
   } else {
     first_text <- "No Outliers were removed"
   }
