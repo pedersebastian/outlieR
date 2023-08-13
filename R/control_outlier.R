@@ -3,7 +3,7 @@
 #' @param numeric_method dd
 #' @param discrete_method m
 #' @param threshold 'NULL' for the other methods than t-test.
-#' Default is 3 for mean and sd method and MAD method, IQD uses 2.2.
+#'     Default is 3 for mean and sd method and MAD method, IQD uses 2.2.
 #' @param conf_int conf int for t-test
 #' @param prop proportion of factors/char (0 - 1)
 #' @param ties_method factors
@@ -17,8 +17,8 @@
 #' @export
 #'
 #' @examples
-#' control_filter_outlier()
-control_filter_outlier <- function(numeric_method = "mean_sd",
+#' control_outlier()
+control_outlier <- function(numeric_method = "mean_sd",
                                    discrete_method = "prop",
                                    threshold = NULL,
                                    conf_int = NULL,
@@ -36,7 +36,7 @@ control_filter_outlier <- function(numeric_method = "mean_sd",
     dots_names <- names(rlang::list2(...))
     cli::cli_abort(c("i" = "{dots_names} {?is/are} {dots_count} the name{?s} of
                      the wrongly spelled element{?s} in
-                     {.fun control_filter_outlier}."))
+                     {.fun control_outlier}."))
   }
 
   ## fix args
@@ -154,7 +154,7 @@ control_filter_outlier <- function(numeric_method = "mean_sd",
 
   out <- structure(
     res,
-    class = c("control_filter_outlier", "list")
+    class = c("control_outlier", "list")
   )
   out
 }

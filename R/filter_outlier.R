@@ -8,16 +8,16 @@
 #' @return data.frame or tibble
 #' @examples
 #'
-#' mtcars["V1"] <- c(rnorm(30), -100, 100)
-#' mtcars["V2"] <- c(-50, 32, rnorm(30))
+#' mtcars["var_1"] <- c(rnorm(30), -100, 100)
+#' mtcars["var_2"] <- c(-50, 32, rnorm(30))
 #' filtred <-
-#'   mtcars |> filter_outlier(V1, V2)
+#'   mtcars |> filter_outlier(var_1, var_2)
 #'
 #' paste(nrow(mtcars), "rows before filtered and", nrow(filtred), "rows after")
 #' # "32 rows before filtered and 28 rows after"
 filter_outlier <- function(.data,
                            ...,
-                           control = control_filter_outlier()) {
+                           control = control_outlier()) {
   if (missing(.data)) {
     rlang::abort(".data must be supplied")
   }
@@ -33,11 +33,11 @@ filter_outlier.default <- function(.data, ...) {
 }
 #' @export
 filter_outlier.data.frame <- function(.data, ...,
-                                      control = control_filter_outlier()) {
-  if (!inherits(control, "control_filter_outlier")) {
+                                      control = control_outlier()) {
+  if (!inherits(control, "control_outlier")) {
     cli::cli_abort(c(
       "x" = "{.arg control} is of class {.cls {class(control)[[1]]}}.",
-      "!" = "Use {.fun control_filter_outlier} to create a control_object."
+      "!" = "Use {.fun control_outlier} to create a control_object."
     ))
   } else {
     num_method <- control$numeric_method
@@ -173,4 +173,13 @@ filter_outlier.impl <- function(.data,
   ))
 
   return(res)
+}
+
+filter_outlier2  <- function(object, ...) {
+  UseMethod("filter_outlier2")
+}
+filter_outlier2.outlier_ident <- function(object, ...) {
+  data <- attr(object, "old_df")
+  filter_vec <- attr(object, "filter_res")
+  return(subset(data, filter_vec))
 }

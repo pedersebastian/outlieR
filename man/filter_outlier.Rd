@@ -4,7 +4,7 @@
 \alias{filter_outlier}
 \title{Outlier filter}
 \usage{
-filter_outlier(.data, ..., control = control_filter_outlier())
+filter_outlier(.data, ..., control = control_outlier())
 }
 \arguments{
 \item{.data}{data.frame or tibble}
@@ -21,10 +21,10 @@ Outlier filter
 }
 \examples{
 
-mtcars["V1"] <- c(rnorm(30), -100, 100)
-mtcars["V2"] <- c(-50, 32, rnorm(30))
+mtcars["var_1"] <- c(rnorm(30), -100, 100)
+mtcars["var_2"] <- c(-50, 32, rnorm(30))
 filtred <-
-  mtcars |> filter_outlier(V1, V2)
+  mtcars |> filter_outlier(var_1, var_2)
 
 paste(nrow(mtcars), "rows before filtered and", nrow(filtred), "rows after")
 # "32 rows before filtered and 28 rows after"

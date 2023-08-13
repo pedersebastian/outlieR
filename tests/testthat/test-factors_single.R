@@ -24,7 +24,7 @@ mtcars["v15"] <- factor(rep(
 
 a <- filter_outlier(tibble::as_tibble(mtcars),
   v12,
-  control = control_filter_outlier(
+  control = control_outlier(
     discrete_method = "min_times",
     min_times = 3
   )
@@ -34,7 +34,7 @@ af <- af[af != "Other"] |> droplevels()
 
 b <- filter_outlier(tibble::as_tibble(mtcars),
   v12,
-  control = control_filter_outlier(
+  control = control_outlier(
     discrete_method = "prop",
     prop = 0.04
   )
@@ -45,7 +45,7 @@ bf <- bf[bf != "Other"] |> droplevels()
 
 c <- filter_outlier(tibble::as_tibble(mtcars),
   v12,
-  control = control_filter_outlier(
+  control = control_outlier(
     discrete_method = "n",
     n_vars = 2
   )
@@ -56,7 +56,7 @@ cf <- cf[cf != "Other"] |> droplevels()
 
 d <- filter_outlier(tibble::as_tibble(mtcars),
   v12,
-  control = control_filter_outlier(
+  control = control_outlier(
     discrete_method = "low_freq"
   )
 )
@@ -67,7 +67,7 @@ df <- df[df != "Other"] |> droplevels()
 
 e <- filter_outlier(tibble::as_tibble(mtcars),
   v13,
-  control = control_filter_outlier(
+  control = control_outlier(
     discrete_method = "prop",
     prop = 0.1
   )
@@ -83,7 +83,7 @@ ef <- ef[ef != "Other"] |>
 # G Char
 g <- filter_outlier(tibble::as_tibble(mtcars),
   v14,
-  control = control_filter_outlier(
+  control = control_outlier(
     discrete_method = "prop",
     min_times = 0.1, na_action = "omit"
   )
@@ -95,7 +95,7 @@ gf <- gf[!is.na(gf)]
 # H CHAR
 h <- filter_outlier(tibble::as_tibble(mtcars),
   v14,
-  control = control_filter_outlier(
+  control = control_outlier(
     discrete_method = "prop",
     min_times = 0.1,
     na_action = "keep"
@@ -111,7 +111,7 @@ h_na_len <- h$v14[is.na(h$v14)] |> length()
 i <-
   filter_outlier(tibble::as_tibble(mtcars),
     v15,
-    control = control_filter_outlier(
+    control = control_outlier(
       discrete_method = "n",
       n_vars = 2,
       na_action = "omit"
@@ -130,7 +130,7 @@ i_na_len <- sum(is.na(i$v15))
 j <-
   filter_outlier(tibble::as_tibble(mtcars),
     v15,
-    control = control_filter_outlier(
+    control = control_outlier(
       discrete_method = "prop",
       min_times = 0.1,
       na_action = "keep"

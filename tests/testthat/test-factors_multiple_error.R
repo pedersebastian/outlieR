@@ -41,7 +41,7 @@ mtcars["v15"] <- factor(rep(
 a <- filter_outlier(tibble::as_tibble(mtcars),
   v12,
   v13,
-  control = control_filter_outlier(
+  control = control_outlier(
     discrete_method = "n",
     n_vars = 2
   )
@@ -61,7 +61,7 @@ b <- filter_outlier(tibble::as_tibble(mtcars),
   v13,
   v14,
   v15,
-  control = control_filter_outlier(
+  control = control_outlier(
     discrete_method = "n",
     n_vars = 3,
     na_action = "omit"
@@ -91,7 +91,7 @@ c <- filter_outlier(tibble::as_tibble(mtcars),
   v13,
   v14,
   v15,
-  control = control_filter_outlier(
+  control = control_outlier(
     discrete_method = "n",
     n_vars = 3,
     na_action = "keep"

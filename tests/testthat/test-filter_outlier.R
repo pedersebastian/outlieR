@@ -17,24 +17,24 @@ mtcars["v10"] <- rep(TRUE, 32)
 filtred_v1 <-
   mtcars |>
   filter_outlier(v1,
-    control = control_filter_outlier(numeric_method = "mean_sd")
+    control = control_outlier(numeric_method = "mean_sd")
   )
 filtred_v2 <-
   mtcars |>
   filter_outlier(v2,
-    control = control_filter_outlier(numeric_method = "mean_sd")
+    control = control_outlier(numeric_method = "mean_sd")
   )
 
 filtred_v3 <-
   mtcars |>
   filter_outlier(v3,
-    control = control_filter_outlier(numeric_method = "mean_sd")
+    control = control_outlier(numeric_method = "mean_sd")
   )
 
 filtred_v1_omit <-
   mtcars |>
   filter_outlier(v1,
-    control = control_filter_outlier(
+    control = control_outlier(
       numeric_method = "mean_sd",
       na_action = "omit"
     )
@@ -45,7 +45,7 @@ filtred_v_all_omit <-
   filter_outlier(v1,
     v2,
     v3,
-    control = control_filter_outlier(
+    control = control_outlier(
       numeric_method = "mean_sd",
       na_action = "omit"
     )
@@ -54,7 +54,7 @@ filtred_v_all_omit <-
 filtred_everything <-
   mtcars |>
   filter_outlier(everything(),
-    control = control_filter_outlier(na_action = "keep")
+    control = control_outlier(na_action = "keep")
   )
 
 date_tbl <-
@@ -96,7 +96,7 @@ test_that("warnings and errors", {
     v1,
     v2,
     v3,
-    control = control_filter_outlier(
+    control = control_outlier(
       threshold = 10000
     )
   ))
@@ -106,7 +106,7 @@ test_that("warnings and errors", {
     v1,
     v2,
     v3,
-    control = control_filter_outlier(
+    control = control_outlier(
       numeric_method = "mean_sd",
       na_action = "djsa"
     )
@@ -115,7 +115,7 @@ test_that("warnings and errors", {
     v1,
     v2,
     v3,
-    control = control_filter_outlier(
+    control = control_outlier(
       numeric_method = "t_test",
       conf_int = 8,
       na_action = "omit"
