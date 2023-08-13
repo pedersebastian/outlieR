@@ -6,3 +6,6 @@
 ^old_files$
 ^cran-comments\.md$
 .lintr
+^_pkgdown\.yml$
+^docs$
+^pkgdown$

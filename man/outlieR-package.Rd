@@ -12,6 +12,7 @@ Identify, Filter and Visualisation of Outliers using tidy principles.
 Useful links:
 \itemize{
   \item \url{https://github.com/pedersebastian/outlieR}
+  \item \url{https://pedersebastian.github.io/outlieR/}
   \item Report bugs at \url{https://github.com/pedersebastian/outlieR/issues}
 }
 
