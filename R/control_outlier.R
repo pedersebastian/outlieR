@@ -19,16 +19,16 @@
 #' @examples
 #' control_outlier()
 control_outlier <- function(numeric_method = "mean_sd",
-                                   discrete_method = "prop",
-                                   threshold = NULL,
-                                   conf_int = NULL,
-                                   prop = NULL,
-                                   n_vars = NULL,
-                                   freq = NULL,
-                                   min_times = NULL,
-                                   ties_method = "min",
-                                   na_action = "keep",
-                                   ...) {
+                            discrete_method = "prop",
+                            threshold = NULL,
+                            conf_int = NULL,
+                            prop = NULL,
+                            n_vars = NULL,
+                            freq = NULL,
+                            min_times = NULL,
+                            ties_method = "min",
+                            na_action = "keep",
+                            ...) {
   dots_n <- function(...) nargs()
   dots_count <- dots_n(...)
 

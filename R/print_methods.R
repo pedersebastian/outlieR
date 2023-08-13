@@ -9,5 +9,5 @@ print.outlier_identify <- function(x, ...) {
   }
   cli::cat_rule(first_text)
   cat("\n")
- # NextMethod()
+  # NextMethod()
 }

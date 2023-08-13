@@ -15,7 +15,6 @@
 #'
 #' print(filtred)
 #' # ── 4 Outliers were removed of 32 rows. ──────────────────────────────────────────────────
-
 identify_outlier <- function(.data,
                              ...,
                              control = control_outlier()) {
@@ -56,35 +55,35 @@ identify_outlier.data.frame <- function(.data, ...,
 
 
   check_outlier(.data,
-                ...,
-                discrete_method = discrete_method,
-                prop = prop,
-                n_vars = n_vars,
-                freq = freq,
-                min_times = min_times
+    ...,
+    discrete_method = discrete_method,
+    prop = prop,
+    n_vars = n_vars,
+    freq = freq,
+    min_times = min_times
   )
 
 
   vars <- rlang::names2(select_loc(...,
-                                   .data = .data
+    .data = .data
   )) |>
     rlang::syms() |>
     rlang::as_quosures(env = rlang::current_env())
 
 
   identify_outlier.impl(.data,
-                        vars = vars,
-                        num_method = num_method,
-                        discrete_method = discrete_method,
-                        threshold = threshold,
-                        conf_int = conf_int,
-                        na_action = na_action,
-                        prop = prop,
-                        n_vars = n_vars,
-                        freq = freq,
-                        ties_method = ties_method,
-                        min_times = min_times,
-                        control = control
+    vars = vars,
+    num_method = num_method,
+    discrete_method = discrete_method,
+    threshold = threshold,
+    conf_int = conf_int,
+    na_action = na_action,
+    prop = prop,
+    n_vars = n_vars,
+    freq = freq,
+    ties_method = ties_method,
+    min_times = min_times,
+    control = control
   )
 }
 
@@ -163,7 +162,7 @@ identify_outlier.impl <- function(.data,
   }
 
 
-  #class(res) <- c("outlier_identify","outlier", class(res))
+  # class(res) <- c("outlier_identify","outlier", class(res))
   # attributes(res) <- c(attributes(res), list(
   #   old_df = .data,
   #   tbls = tbls,
@@ -183,8 +182,8 @@ identify_outlier.impl <- function(.data,
   )
   out <- structure(
     out,
-    class = c("outlier_identify","outlier", "list")
+    class = c("outlier_identify", "outlier", "list")
   )
   return(out)
-  #return(invisible(out))
+  # return(invisible(out))
 }
