@@ -13,7 +13,79 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 ```
+### Data creation
+
+First, we’re going to load the package and create some outliers in the 'mtcars' dataset. Two continuous variables (one with NA´s), one logical and one factor level. 
 
 ```{r setup}
 library(outlieR)
+
+set.seed(123)
+mtcars["var_1"] <- c(rnorm(29), -100, 100, NA)
+set.seed(234)
+mtcars["var_2"] <- c(-50, 32, rnorm(30))
+mtcars["var_3"] <- c(rep(TRUE, 31), FALSE)
+mtcars["var_4"] = factor(rep(LETTERS[1:5], times = c( 10, 5, 15, 1, 1)))
+
+#For better printing. 
+mtcars <- tibble::as_tibble(mtcars)
 ```
+## Identification of Outliers
+
+The 'identify_outlier()' function is used to identify outliers based on methods and parameters spesificed in 'control_outlier()' function. This control function is optional to use. 
+
+
+```{r}
+outlier_mtcars <- 
+  identify_outlier(mtcars,
+                        var_1, var_2, var_3, var_4, 
+                        control = control_outlier(discrete_method = "prop", prop = 0.06, na_action = "keep"))
+print(outlier_mtcars)
+```
+
+To get a summary of the results. 
+
+```{r}
+summary(outlier_mtcars)
+```
+
+
+### Filtering
+
+To remove rows in the data with outliers identified in the previous step - call 'filter_outlier()' on the outlier object. 
+```{r}
+filtred_mtcars <- filter_outlier(outlier_mtcars)
+  
+pillar::glimpse(filtred_mtcars)
+```
+
+## Visualisation
+
+First continuous 
+```{r}
+#type  = "histogram" is the default
+identify_outlier(mtcars, var_1) |> 
+  autoplot()
+
+identify_outlier(mtcars, var_1) |> 
+  autoplot(type = "count")
+```
+
+Also multiple 
+(not all combinations are supported yet)
+
+```{r}
+identify_outlier(mtcars, var_1, var_2) |> 
+  autoplot(type = "hist")
+
+identify_outlier(mtcars, var_1, var_2, var_3) |> 
+  autoplot(type = "count")
+```
+
+Autoplot returns a ggplot, so its customisable with ggplot2s functions. 
+
+```{r}
+identify_outlier(mtcars, var_4) |> 
+  autoplot(type = "count") + ggplot2::ggtitle("Look E and D are Outliers")
+```
+
