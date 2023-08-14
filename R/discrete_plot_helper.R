@@ -34,7 +34,7 @@ plot_single_discrete_counts <- function(data,
 
   p <-
     data |>
-    ggplot2::ggplot(ggplot2::aes(pct, variable, fill = value)) +
+    ggplot2::ggplot(ggplot2::aes(pct, var, fill = value)) +
     ggplot2::scale_x_continuous(
       labels = scales::label_percent(),
       sec.axis = ggplot2::sec_axis(
