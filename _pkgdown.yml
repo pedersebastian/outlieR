@@ -1,4 +1,8 @@
 url: https://pedersebastian.github.io/outlieR/
 template:
   bootstrap: 5
-
+  bootswatch: simplex
+  bslib:
+    bg: "#FCFCFC"
+    fg: "#16161D"
+    primary: "#025373"
