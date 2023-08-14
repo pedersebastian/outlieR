@@ -46,6 +46,8 @@ a <- identify_outlier(tibble::as_tibble(mtcars),
     n_vars = 2
   )
 ) |> filter_outlier()
+
+
 a_raw_meth <-
   mtcars |>
   dplyr::as_tibble() |>

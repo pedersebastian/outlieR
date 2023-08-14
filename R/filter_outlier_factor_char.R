@@ -36,6 +36,9 @@ factor_methods <- function(.data,
     ties_method,
     tbl
   )
+  tbl$outlier_vec <-
+    list(!tbl$outlier_vec[[1]])
+
   if (na_action == "keep") {
     tbl <-
       factor_na(.data, tbl)
@@ -46,7 +49,7 @@ factor_methods <- function(.data,
 
 factor_na <- function(.data, tbl) {
   vec <-
-    purrr::map2_lgl(.data[[tbl$var]], tbl$outlier_vec[[1]], ~ is.na(.x) + .y)
+    purrr::map2_lgl(.data[[tbl$var]], tbl$outlier_vec[[1]], ~ if (is.na(.x)) FALSE else .y)
   tbl$outlier_vec <- list(vec)
   tbl
 }

@@ -129,7 +129,8 @@ identify_outlier.impl <- function(.data,
         )
       )
     } else if (tbls[[i]]$var_type %in% c("fct", "chr")) {
-      vec <- !tbls[[i]]$outlier_vec[[1]]
+      #vec <- !tbls[[i]]$outlier_vec[[1]]
+      vec <- tbls[[i]]$outlier_vec[[1]]
       if (tbls[[i]]$var_type == "fct") {
         factor_variables <- append(factor_variables, tbls[[i]]$var)
       }
