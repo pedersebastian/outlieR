@@ -77,9 +77,117 @@
 
     
     
+<div class="section level3">
+<h3 id="data-creation">Data creation<a class="anchor" aria-label="anchor" href="#data-creation"></a>
+</h3>
+<p>First, we’re going to load the package and create some outliers in
+the ‘mtcars’ dataset. Two continuous variables (one with NA´s), one
+logical and one factor level.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/pedersebastian/outlieR" class="external-link">outlieR</a></span><span class="op">)</span></span></code></pre></div>
-  </main>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/pedersebastian/outlieR" class="external-link">outlieR</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span>
+<span><span class="va">mtcars</span><span class="op">[</span><span class="st">"var_1"</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">29</span><span class="op">)</span>, <span class="op">-</span><span class="fl">100</span>, <span class="fl">100</span>, <span class="cn">NA</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">234</span><span class="op">)</span></span>
+<span><span class="va">mtcars</span><span class="op">[</span><span class="st">"var_2"</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">50</span>, <span class="fl">32</span>, <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">30</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">mtcars</span><span class="op">[</span><span class="st">"var_3"</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="fl">31</span><span class="op">)</span>, <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="va">mtcars</span><span class="op">[</span><span class="st">"var_4"</span><span class="op">]</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="va">LETTERS</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span>, times <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span> <span class="fl">10</span>, <span class="fl">5</span>, <span class="fl">15</span>, <span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">#For better printing. </span></span>
+<span><span class="va">mtcars</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html" class="external-link">as_tibble</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="identification-of-outliers">Identification of Outliers<a class="anchor" aria-label="anchor" href="#identification-of-outliers"></a>
+</h2>
+<p>The ‘identify_outlier()’ function is used to identify outliers based
+on methods and parameters spesificed in ‘control_outlier()’ function.
+This control function is optional to use.</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">outlier_mtcars</span> <span class="op">&lt;-</span> </span>
+<span>  <span class="fu"><a href="../reference/identify_outlier.html">identify_outlier</a></span><span class="op">(</span><span class="va">mtcars</span>,</span>
+<span>                        <span class="va">var_1</span>, <span class="va">var_2</span>, <span class="va">var_3</span>, <span class="va">var_4</span>, </span>
+<span>                        control <span class="op">=</span> <span class="fu"><a href="../reference/control_outlier.html">control_outlier</a></span><span class="op">(</span>discrete_method <span class="op">=</span> <span class="st">"prop"</span>, prop <span class="op">=</span> <span class="fl">0.06</span>, na_action <span class="op">=</span> <span class="st">"keep"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">outlier_mtcars</span><span class="op">)</span></span>
+<span><span class="co">#&gt; ── 5 Outliers were removed of 32 rows. ─────────────────────────────────────────</span></span></code></pre></div>
+<p>To get a summary of the results.</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">outlier_mtcars</span><span class="op">)</span></span>
+<span><span class="co">#&gt; ┌─────────────────────────────────────────┐</span></span>
+<span><span class="co">#&gt; │                                         │</span></span>
+<span><span class="co">#&gt; │   5 Outliers were removed of 32 rows.   │</span></span>
+<span><span class="co">#&gt; │                                         │</span></span>
+<span><span class="co">#&gt; └─────────────────────────────────────────┘</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ── Summary Table of outliers ───────────────────────────────────────────────────</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; |Variable |Variable Type |Outlier Exist? | N Outliers|% Outlier | N of NAs|</span></span>
+<span><span class="co">#&gt; |:--------|:-------------|:--------------|----------:|:---------|--------:|</span></span>
+<span><span class="co">#&gt; |var_1    |dbl           |Yes            |          2|6.5 %     |        1|</span></span>
+<span><span class="co">#&gt; |var_2    |dbl           |Yes            |          2|6.2 %     |        0|</span></span>
+<span><span class="co">#&gt; |var_3    |lgl           |Yes            |          1|3.1 %     |        0|</span></span>
+<span><span class="co">#&gt; |var_4    |fct           |Yes            |          2|6.2 %     |        0|</span></span></code></pre></div>
+<div class="section level3">
+<h3 id="filtering">Filtering<a class="anchor" aria-label="anchor" href="#filtering"></a>
+</h3>
+<p>To remove rows in the data with outliers identified in the previous
+step - call ‘filter_outlier()’ on the outlier object.</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">filtred_mtcars</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/filter_outlier.html">filter_outlier</a></span><span class="op">(</span><span class="va">outlier_mtcars</span><span class="op">)</span></span>
+<span>  </span>
+<span><span class="fu">pillar</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">filtred_mtcars</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Rows: 27</span></span>
+<span><span class="co">#&gt; Columns: 15</span></span>
+<span><span class="co">#&gt; $ mpg   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 22.8, 21.4, 18.7, 18.1, 14.3, 24.4, 22.8, 19.2, 17.8, 16.4, 17.3…</span></span>
+<span><span class="co">#&gt; $ cyl   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 4, 6, 8, 6, 8, 4, 4, 6, 6, 8, 8, 8, 8, 8, 8, 4, 4, 4, 4, 8, 8, 8…</span></span>
+<span><span class="co">#&gt; $ disp  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 108.0, 258.0, 360.0, 225.0, 360.0, 146.7, 140.8, 167.6, 167.6, 2…</span></span>
+<span><span class="co">#&gt; $ hp    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 93, 110, 175, 105, 245, 62, 95, 123, 123, 180, 180, 180, 205, 21…</span></span>
+<span><span class="co">#&gt; $ drat  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 3.85, 3.08, 3.15, 2.76, 3.21, 3.69, 3.92, 3.92, 3.92, 3.07, 3.07…</span></span>
+<span><span class="co">#&gt; $ wt    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 2.320, 3.215, 3.440, 3.460, 3.570, 3.190, 3.150, 3.440, 3.440, 4…</span></span>
+<span><span class="co">#&gt; $ qsec  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 18.61, 19.44, 17.02, 20.22, 15.84, 20.00, 22.90, 18.30, 18.90, 1…</span></span>
+<span><span class="co">#&gt; $ vs    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1, 1, 0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0…</span></span>
+<span><span class="co">#&gt; $ am    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0…</span></span>
+<span><span class="co">#&gt; $ gear  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 4, 3, 3, 3, 3, 4, 4, 4, 4, 3, 3, 3, 3, 3, 3, 4, 4, 4, 3, 3, 3, 3…</span></span>
+<span><span class="co">#&gt; $ carb  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1, 1, 2, 1, 4, 2, 2, 4, 4, 3, 3, 3, 4, 4, 4, 1, 2, 1, 1, 2, 2, 4…</span></span>
+<span><span class="co">#&gt; $ var_1 <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1.55870831, 0.07050839, 0.12928774, 1.71506499, 0.46091621, -1.2…</span></span>
+<span><span class="co">#&gt; $ var_2 <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.66076974, -2.05298300, -1.49920605, 1.47123312, 1.45913853, 0.…</span></span>
+<span><span class="co">#&gt; $ var_3 <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span> TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE…</span></span>
+<span><span class="co">#&gt; $ var_4 <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span> A, A, A, A, A, A, A, A, B, B, B, B, B, C, C, C, C, C, C, C, C, C…</span></span></code></pre></div>
+</div>
+</div>
+<div class="section level2">
+<h2 id="visualisation">Visualisation<a class="anchor" aria-label="anchor" href="#visualisation"></a>
+</h2>
+<p>First continuous</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">#type  = "histogram" is the default</span></span>
+<span><span class="fu"><a href="../reference/identify_outlier.html">identify_outlier</a></span><span class="op">(</span><span class="va">mtcars</span>, <span class="va">var_1</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p><img src="basic_useage_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="fu"><a href="../reference/identify_outlier.html">identify_outlier</a></span><span class="op">(</span><span class="va">mtcars</span>, <span class="va">var_1</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"count"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="basic_useage_files/figure-html/unnamed-chunk-5-2.png" width="700"></p>
+<p>Also multiple (not all combinations are supported yet)</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/identify_outlier.html">identify_outlier</a></span><span class="op">(</span><span class="va">mtcars</span>, <span class="va">var_1</span>, <span class="va">var_2</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"hist"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="basic_useage_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="fu"><a href="../reference/identify_outlier.html">identify_outlier</a></span><span class="op">(</span><span class="va">mtcars</span>, <span class="va">var_1</span>, <span class="va">var_2</span>, <span class="va">var_3</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"count"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="basic_useage_files/figure-html/unnamed-chunk-6-2.png" width="700"></p>
+<p>Autoplot returns a ggplot, so its customisable with ggplot2s
+functions.</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/identify_outlier.html">identify_outlier</a></span><span class="op">(</span><span class="va">mtcars</span>, <span class="va">var_4</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"count"</span><span class="op">)</span> <span class="op">+</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ggtitle</a></span><span class="op">(</span><span class="st">"Look E and D are Outliers"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="basic_useage_files/figure-html/unnamed-chunk-7-1.png" width="700"></p>
+</div>
+  </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
+    </nav></aside>
 </div>
 
 
