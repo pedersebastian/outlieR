@@ -59,7 +59,7 @@
     Output
       +-----------------------------------------+
       |                                         |
-      |   2 Outliers were removed of 32 rows.   |
+      |   3 Outliers were removed of 32 rows.   |
       |                                         |
       +-----------------------------------------+
       
@@ -77,7 +77,7 @@
     Output
       +-----------------------------------------+
       |                                         |
-      |   4 Outliers were removed of 32 rows.   |
+      |   5 Outliers were removed of 32 rows.   |
       |                                         |
       +-----------------------------------------+
       
@@ -247,7 +247,7 @@
     Code
       print(filtred_v1_omit)
     Output
-      -- 2 Outliers were removed of 32 rows. -----------------------------------------
+      -- 3 Outliers were removed of 32 rows. -----------------------------------------
       
 
 ---
@@ -255,7 +255,7 @@
     Code
       print(filtred_v_all_omit)
     Output
-      -- 4 Outliers were removed of 32 rows. -----------------------------------------
+      -- 5 Outliers were removed of 32 rows. -----------------------------------------
       
 
 ---
