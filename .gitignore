@@ -6,3 +6,4 @@
 .quarto
 .lintr
 docs
+inst/doc
