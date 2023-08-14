@@ -40,4 +40,4 @@ This is a basic example which shows you how to solve a common problem:
 ```{r example}
 library(outlieR)
 ```
-[&#x0040;pedersebastian](https://github.com/pedersebastian).
+[&#x0040;pedersebastian](https://github.com/pedersebastian)

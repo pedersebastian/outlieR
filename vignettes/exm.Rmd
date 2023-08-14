@@ -1,0 +1,22 @@
+---
+title: "Basic Identification and Visualisation of outliers"
+description: >
+  Learn how to set up search for your pkgdown site.
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+
+```{r}
+hist(mtcars$mpg)
+```
+
