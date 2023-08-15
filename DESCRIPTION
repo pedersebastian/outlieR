@@ -24,7 +24,8 @@ Imports:
     scales,
     stats,
     tidyr,
-    tidyselect
+    tidyselect,
+    withr
 URL: https://github.com/pedersebastian/outlieR, https://pedersebastian.github.io/outlieR/
 BugReports: https://github.com/pedersebastian/outlieR/issues
 Suggests: 

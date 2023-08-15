@@ -72,5 +72,6 @@
 #' @importFrom tidyr nest
 #' @importFrom tidyr pivot_longer
 #' @importFrom tidyr unnest
+#' @importFrom withr with_package
 ## usethis namespace: end
 NULL

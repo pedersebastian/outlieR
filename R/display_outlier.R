@@ -7,7 +7,7 @@
 #' @export
 #'
 #' @examples
-#'
+#' print("kommer")
 #'
 
 display_outlier <- function(object, ...) {

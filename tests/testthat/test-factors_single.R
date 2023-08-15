@@ -159,6 +159,7 @@ l_rows <-
 
 
 
+identify_outlier(l_df, x, control = control_outlier(na_action = "omit")) |> filter_outlier() |> nrow()
 
 
 test_that("factor_works_single_without_NAs", {

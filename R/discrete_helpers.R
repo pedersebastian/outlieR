@@ -1,5 +1,10 @@
 discrete_helper <- function(x, fun, args) {
-  new <- rlang::exec(fun, x, !!!args)
+
+
+  withr::with_package("forcats", {
+    new <- rlang::exec(fun, x, !!!args)
+  })
+
   lvl <- levels(new)
   lvl <- lvl[lvl != "Otherxxx"]
   out <- purrr::map_lgl(new, ~ .x %in% lvl)
