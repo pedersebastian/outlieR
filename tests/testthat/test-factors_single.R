@@ -148,18 +148,24 @@ j_na_len <- j$v15[is.na(j$v15)] |> length()
 k_df <- tibble::tibble(x = rep(LETTERS, 4) |> sample())
 
 k_rows <-
-  identify_outlier(k_df, x) |> filter_outlier() |> nrow()
+  identify_outlier(k_df, x) |>
+  filter_outlier() |>
+  nrow()
 
 ## L EQUAL VARIANCE with NA
 
 l_df <- tibble::tibble(x = rep(c(LETTERS, NA_character_), 4) |> sample())
 
 l_rows <-
-  identify_outlier(l_df, x) |> filter_outlier() |> nrow()
+  identify_outlier(l_df, x) |>
+  filter_outlier() |>
+  nrow()
 
 
 
-identify_outlier(l_df, x, control = control_outlier(na_action = "omit")) |> filter_outlier() |> nrow()
+identify_outlier(l_df, x, control = control_outlier(na_action = "omit")) |>
+  filter_outlier() |>
+  nrow()
 
 
 test_that("factor_works_single_without_NAs", {
@@ -257,5 +263,4 @@ test_that("factor_works_single_NA", {
 test_that("equal_variance", {
   expect_equal(k_rows, 104)
   expect_equal(l_rows, 108)
-
 })

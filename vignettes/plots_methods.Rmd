@@ -1,0 +1,29 @@
+---
+title: "All plot method"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{All plot method}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(outlieR)
+```
+
+## Display all outliers
+
+```{r}
+outliers <- 
+  identify_outlier(ggplot2::txhousing, everything())
+
+display_outlier(outliers)
+```
+

@@ -9,7 +9,6 @@
 #' @examples
 #' print("kommer")
 #'
-
 display_outlier <- function(object, ...) {
   UseMethod("display_outlier")
 }
@@ -32,7 +31,6 @@ display_outlier.outlier_identify <- function(object, ...) {
 
 
 make_data_display <- function(object, ...) {
-
   data <-
     object$tbls |>
     dplyr::bind_rows()
@@ -43,29 +41,33 @@ make_data_display <- function(object, ...) {
     dplyr::mutate(dplyr::across(everything(), is.na)) |>
     tidyr::pivot_longer(everything(), names_to = "variable") |>
     dplyr::group_by(variable) |>
-    dplyr::mutate(id = dplyr::row_number(),
-                  .before = "variable") |>
+    dplyr::mutate(
+      id = dplyr::row_number(),
+      .before = "variable"
+    ) |>
     dplyr::ungroup()
 
-   out <-
-  data |>
+  out <-
+    data |>
     select(variable = var, var_type, outlier_vec) |>
     tidyr::unnest(outlier_vec) |>
     dplyr::group_by(variable) |>
-    dplyr::mutate(id = dplyr::row_number(),
-                  .before = "variable") |>
+    dplyr::mutate(
+      id = dplyr::row_number(),
+      .before = "variable"
+    ) |>
     dplyr::ungroup() |>
     dplyr::left_join(na_df, by = dplyr::join_by(id, variable)) |>
-    dplyr::mutate(outlier_vec = ifelse(value, NA, outlier_vec),
-                  variable = glue::glue("{variable} ({var_type})"),
-                  value = ifelse(outlier_vec, "Outlier", "No Outlier"),
-                  value = factor(value)
+    dplyr::mutate(
+      outlier_vec = ifelse(value, NA, outlier_vec),
+      variable = glue::glue("{variable} ({var_type})"),
+      value = ifelse(outlier_vec, "Outlier", "No Outlier"),
+      value = factor(value)
     )
   out
 }
 
 make_plot_display <- function(data, ...) {
-
   if (any(data$outlier_vec, na.rm = TRUE)) pal <- c(col_mid, col_high) else pal <- col_mid
 
   row_count <- max(data$id)
@@ -95,5 +97,4 @@ make_plot_display <- function(data, ...) {
     scale_y_continuous(breaks = seq(0, row_count, length.out = 6))
 
   p
-
 }

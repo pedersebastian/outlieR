@@ -7,16 +7,17 @@ factor_methods <- function(.data,
                            freq,
                            ties_method,
                            na_action) {
-
-  tbl <- table_getter_discrete(.data,
-                               var,
-                               discrete_method,
-                               prop,
-                               n_vars,
-                               min_times,
-                               freq,
-                               ties_method,
-                               na_action)
+  tbl <- table_getter_discrete(
+    .data,
+    var,
+    discrete_method,
+    prop,
+    n_vars,
+    min_times,
+    freq,
+    ties_method,
+    na_action
+  )
 
   validate_factor_tbl(
     .data,
@@ -38,6 +39,3 @@ factor_methods <- function(.data,
   }
   tbl
 }
-
-
-

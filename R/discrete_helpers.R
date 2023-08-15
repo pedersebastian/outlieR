@@ -1,6 +1,4 @@
 discrete_helper <- function(x, fun, args) {
-
-
   withr::with_package("forcats", {
     new <- rlang::exec(fun, x, !!!args)
   })
@@ -11,13 +9,12 @@ discrete_helper <- function(x, fun, args) {
   out
 }
 all_var_equal <- function(x) {
-  #returns true if all variables has the same counts
+  # returns true if all variables has the same counts
   length(unique(table(x))) == 1
-
 }
 
 fix_zero_variance <- function(variance, outlier_vec) {
-  outlier_vec <-  if (variance) !outlier_vec else outlier_vec
+  outlier_vec <- if (variance) !outlier_vec else outlier_vec
   return(outlier_vec)
 }
 
@@ -48,14 +45,14 @@ validate_factor_tbl <- function(.data,
         c("i" = "Negative numbers for {.arg min_times} is not recommend. \n
                       Because it is doing the opposite of finding outliers.")
       cli::cli_warn(mes,
-                    .frequency = "regularly", .frequency_id = "min_times_negative"
+        .frequency = "regularly", .frequency_id = "min_times_negative"
       )
     } else if (min_times > tbl$n / 2) {
       mes <-
         c("i" = "{.arg min_time} is greater than half of the rows in data.
           \n It is recommend to use a less number")
       cli::cli_warn(mes,
-                    .frequency = "regularly", .frequency_id = "min_times0.5"
+        .frequency = "regularly", .frequency_id = "min_times0.5"
       )
     }
   }

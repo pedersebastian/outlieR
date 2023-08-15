@@ -12,8 +12,7 @@ plot_single <- function(data, ...) {
   UseMethod("plot_single")
 }
 plot_single.default <- function(data, ...) {
-  rlang::abort(glue::glue("{class(data)[[1]]} is not supported")
-  )
+  rlang::abort(glue::glue("{class(data)[[1]]} is not supported"))
 }
 
 

@@ -144,7 +144,7 @@ identify_outlier.impl <- function(.data,
   # if (na_action == "keep") {
   #   y <- ifelse(is.na(y), FALSE, y)
   # }
-  #nytt
+  # nytt
   # else {
   #   y <- ifelse(is.na(y), TRUE, y)
   # }
