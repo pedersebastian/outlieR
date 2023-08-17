@@ -54,10 +54,11 @@ discrete_summariser <- function(.data, var, na_action, forcats_fun, forcats_args
       "variance" = all_var_equal(!!var),
       "outlier_vec" = list(discrete_helper(
         !!var,
-        forcats_fun, forcats_args
+        forcats_fun,
+        forcats_args
       )),
       "outlier_vec" = purrr::map2(variance, outlier_vec, fix_zero_variance),
-      outlier_pct = mean(!outlier_vec[[1]][!is.na(.data[[var]])],
+      outlier_pct = mean(outlier_vec[[1]][!is.na(.data[[var]])],
         na.rm = TRUE
       ),
       outlier_exist = outlier_pct > 0,

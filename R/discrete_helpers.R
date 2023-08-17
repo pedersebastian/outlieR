@@ -5,7 +5,7 @@ discrete_helper <- function(x, fun, args) {
 
   lvl <- levels(new)
   lvl <- lvl[lvl != "Otherxxx"]
-  out <- purrr::map_lgl(new, ~ .x %in% lvl)
+  out <- purrr::map_lgl(new, ~ !.x %in% lvl)
   out
 }
 all_var_equal <- function(x) {

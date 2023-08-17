@@ -30,8 +30,8 @@ factor_methods <- function(.data,
     ties_method,
     tbl
   )
-  tbl$outlier_vec <-
-    list(!tbl$outlier_vec[[1]])
+  # tbl$outlier_vec <-
+  #   list(!tbl$outlier_vec[[1]])
 
   if (na_action == "keep") {
     tbl <-

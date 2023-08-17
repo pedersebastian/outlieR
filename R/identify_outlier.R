@@ -140,20 +140,8 @@ identify_outlier.impl <- function(.data,
 
 
   y <- unlist(vecs)
-
-  # if (na_action == "keep") {
-  #   y <- ifelse(is.na(y), FALSE, y)
-  # }
-  # nytt
-  # else {
-  #   y <- ifelse(is.na(y), TRUE, y)
-  # }
-
   y <- ifelse(is.na(y), na_action == "omit", y)
-
-
   y <- matrix(y, ncol = length(vecs))
-
 
   res <- vector()
   for (row in seq_len(nrow(y))) {

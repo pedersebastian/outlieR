@@ -17,3 +17,7 @@ plot
 \description{
 Display outliers of an
 }
+\examples{
+print("kommer")
+
+}

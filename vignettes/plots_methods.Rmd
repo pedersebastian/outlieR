@@ -21,7 +21,7 @@ library(outlieR)
 ## Display all outliers
 
 ```{r}
-outliers <- 
+outliers <-
   identify_outlier(ggplot2::txhousing, everything())
 
 display_outlier(outliers)
