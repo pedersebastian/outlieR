@@ -62,18 +62,19 @@ discrete_summariser <- function(.data, var, na_action, forcats_fun, forcats_args
         na.rm = TRUE
       ),
       outlier_exist = outlier_pct > 0,
-      non_outlier_vars = list(unique(subset(
+      outlier_vars = list(unique(subset(
         !!var,
         outlier_vec[[1]]
       ))),
-      outlier_vars = list(setdiff(
+      non_outlier_vars = list(setdiff(
         unique_vars[[1]],
-        non_outlier_vars[[1]]
+        outlier_vars[[1]]
       )),
       "n_filtred" = length(non_outlier_vars[[1]]),
       n_outliers = length(outlier_vars[[1]]),
       "var_type" = pillar::type_sum(!!var),
-      "na_vec" = list(is.na(!!var))
+      "na_vec" = list(is.na(!!var)),
+      outlier_vec2 = outlier_vec
     )
   tbl
 }

@@ -120,10 +120,10 @@
       |v1       |dbl           |Yes            |          2|6.5 %     |        1|
       |v2       |dbl           |Yes            |          2|6.2 %     |        0|
       |v3       |lgl           |Yes            |          1|3.1 %     |        0|
-      |v12      |fct           |Yes            |          3|6.2 %     |        0|
-      |v13      |chr           |Yes            |          3|6.2 %     |        0|
-      |v14      |chr           |Yes            |          2|10 %      |       12|
-      |v15      |fct           |Yes            |          2|10 %      |       12|
+      |v12      |fct           |Yes            |          2|6.2 %     |        0|
+      |v13      |chr           |Yes            |          2|6.2 %     |        0|
+      |v14      |chr           |Yes            |          3|10 %      |       12|
+      |v15      |fct           |Yes            |          3|10 %      |       12|
 
 ---
 
@@ -141,7 +141,7 @@
       
       |Variable |Variable Type |Outlier Exist? | N Outliers|% Outlier | N of NAs|
       |:--------|:-------------|:--------------|----------:|:---------|--------:|
-      |v12      |fct           |Yes            |          3|6.2 %     |        0|
+      |v13      |chr           |Yes            |          2|6.2 %     |        0|
 
 ---
 
@@ -159,7 +159,7 @@
       
       |Variable |Variable Type |Outlier Exist? | N Outliers|% Outlier | N of NAs|
       |:--------|:-------------|:--------------|----------:|:---------|--------:|
-      |v13      |chr           |Yes            |          3|6.2 %     |        0|
+      |v13      |chr           |Yes            |          2|6.2 %     |        0|
 
 ---
 
@@ -177,7 +177,7 @@
       
       |Variable |Variable Type |Outlier Exist? | N Outliers|% Outlier | N of NAs|
       |:--------|:-------------|:--------------|----------:|:---------|--------:|
-      |v14      |chr           |Yes            |          2|10 %      |       12|
+      |v14      |chr           |Yes            |          3|10 %      |       12|
 
 ---
 
@@ -195,8 +195,8 @@
       
       |Variable |Variable Type |Outlier Exist? | N Outliers|% Outlier | N of NAs|
       |:--------|:-------------|:--------------|----------:|:---------|--------:|
-      |v12      |fct           |Yes            |          3|6.2 %     |        0|
-      |v14      |chr           |Yes            |          2|10 %      |       12|
+      |v12      |fct           |Yes            |          2|6.2 %     |        0|
+      |v14      |chr           |Yes            |          3|10 %      |       12|
 
 ---
 
@@ -214,9 +214,9 @@
       
       |Variable |Variable Type |Outlier Exist? | N Outliers|% Outlier | N of NAs|
       |:--------|:-------------|:--------------|----------:|:---------|--------:|
-      |v12      |fct           |Yes            |          3|6.2 %     |        0|
-      |v13      |chr           |Yes            |          3|6.2 %     |        0|
-      |v14      |chr           |Yes            |          2|10 %      |       12|
+      |v12      |fct           |Yes            |          2|6.2 %     |        0|
+      |v13      |chr           |Yes            |          2|6.2 %     |        0|
+      |v14      |chr           |Yes            |          3|10 %      |       12|
 
 # print_outliers
 
