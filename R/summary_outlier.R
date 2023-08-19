@@ -17,7 +17,6 @@ summary.outlier <- function(object, ...) {
     knitr::kable(col.names = col_names)
 
   print(object, ...)
-  #cli::cat_boxx(first_text)
   cat("\n")
   cli::cat_rule("Summary Table of outliers")
   print(summary_tbl)
