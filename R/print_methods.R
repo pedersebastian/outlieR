@@ -2,8 +2,7 @@
 print.outlier_identify <- function(x, ...) {
   if (length(x$tbls) == 1) {
     print_single(x, ...)
-  }
-  else {
+  } else {
     print_multiple(x, ...)
   }
 }
@@ -23,11 +22,9 @@ print_simple <- function(x, ...) {
 }
 
 print_single <- function(x, ...) {
-
   if (x$na_action == "keep") {
     print_simple(x, ...)
-  }
-  else {
+  } else {
     # outlier_vec <-
     #   x$tbls[[1]]$outlier_vec[[1]]
     # na_vec <-
@@ -38,7 +35,7 @@ print_single <- function(x, ...) {
     #   x$tbls[[1]]$outlier_vars[[1]]
     # non_outlier_vars <-
     #   x$tbls[[1]]$non_outlier_vars[[1]]
-    #sum_vec <- (outlier_vec + na_vec) |> purrr::map_lgl(~.x > 0)
+    # sum_vec <- (outlier_vec + na_vec) |> purrr::map_lgl(~.x > 0)
 
     na_count <-
       x$tbls[[1]]$na_count
@@ -51,42 +48,33 @@ print_single <- function(x, ...) {
     vec_mode <- if (x$tbls[[1]]$var_type %in% c("chr", "fct")) "discrete" else "numeric"
 
 
-    if (x$tbls[[1]]$na_exist ) {
-      #Det finnes NA som er outlier
+    if (x$tbls[[1]]$na_exist) {
+      # Det finnes NA som er outlier
       if (n_outliers == 1) {
         text <- glue::glue("{n_outliers} Outlier (NA) were removed out of {n} rows. ")
-      }
-      else {
-        #Finnes begge deler.
+      } else {
+        # Finnes begge deler.
         if (vec_mode == "discrete") {
-          n_outliers <-  n_outliers - na_count
+          n_outliers <- n_outliers - na_count
         }
 
         text <- glue::glue("{n_outliers} Outliers and {na_count} NA's were removed out of {n} rows. ")
       }
-    }
-
-    else if (any(is.na(non_outlier_vars))) {
-      #Det finnes NA som IKKE er outlier, men som skal filteres
+    } else if (any(is.na(non_outlier_vars))) {
+      # Det finnes NA som IKKE er outlier, men som skal filteres
       text <- glue::glue("{n_outliers} Outliers and {na_count} NA's were removed out of {n} rows. ")
-    }
-
-
-
-    else if (length(outlier_vars) > 0) {
-      #Finnes bare outliers
+    } else if (length(outlier_vars) > 0) {
+      # Finnes bare outliers
       text <- glue::glue("{n_outliers} Outliers were removed out of {n} rows. ")
-    }
-    else {
+    } else {
       text <-
         "No Outliers were removed"
-
     }
     cli::cat_rule(text)
     cat("\n")
   }
 }
 
-print_multiple  <- function(x, ...) {
+print_multiple <- function(x, ...) {
   print_simple(x, ...)
 }

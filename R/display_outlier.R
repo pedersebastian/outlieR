@@ -81,8 +81,7 @@ make_plot_display <- function(data, ...) {
       axis.text.y = ggplot2::element_text(size = structure(0.8, class = "rel")),
       axis.text.x = ggplot2::element_text(
         size = structure(0.8, class = "rel"),
-        angle = 60,
-        vjust = 0.1
+        angle = 40
       ),
       panel.grid.major = element_blank(),
       panel.grid.minor = element_blank()
@@ -94,7 +93,7 @@ make_plot_display <- function(data, ...) {
       x = NULL
     ) +
     ggplot2::scale_fill_manual(values = pal, na.value = NA, limits = c("No Outlier", "Outlier")) +
-    scale_y_continuous(breaks = round(seq(0, row_count, length.out = 6),0))
+    scale_y_continuous(breaks = round(seq(0, row_count, length.out = 6), 0))
 
   p
 }

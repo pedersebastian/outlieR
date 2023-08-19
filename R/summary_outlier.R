@@ -1,7 +1,5 @@
 #' @export
 summary.outlier <- function(object, ...) {
-
-
   tbls <- object$tbls |> dplyr::bind_rows()
 
   col_names <-
