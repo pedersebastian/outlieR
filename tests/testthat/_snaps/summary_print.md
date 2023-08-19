@@ -3,11 +3,8 @@
     Code
       summary(filtred_v1)
     Output
-      +-----------------------------------------+
-      |                                         |
-      |   2 Outliers were removed of 32 rows.   |
-      |                                         |
-      +-----------------------------------------+
+      -- 2 Outliers were removed of 32 rows. -----------------------------------------
+      
       
       -- Summary Table of outliers ---------------------------------------------------
       
@@ -21,11 +18,8 @@
     Code
       summary(filtred_v2)
     Output
-      +-----------------------------------------+
-      |                                         |
-      |   2 Outliers were removed of 32 rows.   |
-      |                                         |
-      +-----------------------------------------+
+      -- 2 Outliers were removed of 32 rows. -----------------------------------------
+      
       
       -- Summary Table of outliers ---------------------------------------------------
       
@@ -39,11 +33,8 @@
     Code
       summary(filtred_v3)
     Output
-      +-----------------------------------------+
-      |                                         |
-      |   1 Outliers were removed of 32 rows.   |
-      |                                         |
-      +-----------------------------------------+
+      -- 1 Outliers were removed of 32 rows. -----------------------------------------
+      
       
       -- Summary Table of outliers ---------------------------------------------------
       
@@ -57,11 +48,8 @@
     Code
       summary(filtred_v1_omit)
     Output
-      +-----------------------------------------+
-      |                                         |
-      |   3 Outliers were removed of 32 rows.   |
-      |                                         |
-      +-----------------------------------------+
+      -- 2 Outliers and 1 NA's were removed out of 32 rows.  -------------------------
+      
       
       -- Summary Table of outliers ---------------------------------------------------
       
@@ -75,11 +63,8 @@
     Code
       summary(filtred_v_all_omit)
     Output
-      +-----------------------------------------+
-      |                                         |
-      |   5 Outliers were removed of 32 rows.   |
-      |                                         |
-      +-----------------------------------------+
+      -- 5 Outliers were removed of 32 rows. -----------------------------------------
+      
       
       -- Summary Table of outliers ---------------------------------------------------
       
@@ -95,11 +80,8 @@
     Code
       summary(filterd_everything)
     Output
-      +-----------------------------------------+
-      |                                         |
-      |   9 Outliers were removed of 32 rows.   |
-      |                                         |
-      +-----------------------------------------+
+      -- 9 Outliers were removed of 32 rows. -----------------------------------------
+      
       
       -- Summary Table of outliers ---------------------------------------------------
       
@@ -130,11 +112,8 @@
     Code
       summary(filter_v12)
     Output
-      +-----------------------------------------+
-      |                                         |
-      |   2 Outliers were removed of 32 rows.   |
-      |                                         |
-      +-----------------------------------------+
+      -- 2 Outliers were removed of 32 rows. -----------------------------------------
+      
       
       -- Summary Table of outliers ---------------------------------------------------
       
@@ -148,11 +127,8 @@
     Code
       summary(filter_v13)
     Output
-      +-----------------------------------------+
-      |                                         |
-      |   2 Outliers were removed of 32 rows.   |
-      |                                         |
-      +-----------------------------------------+
+      -- 2 Outliers were removed of 32 rows. -----------------------------------------
+      
       
       -- Summary Table of outliers ---------------------------------------------------
       
@@ -166,11 +142,8 @@
     Code
       summary(filter_v14)
     Output
-      +-----------------------------------------+
-      |                                         |
-      |   2 Outliers were removed of 32 rows.   |
-      |                                         |
-      +-----------------------------------------+
+      -- 2 Outliers were removed of 32 rows. -----------------------------------------
+      
       
       -- Summary Table of outliers ---------------------------------------------------
       
@@ -184,11 +157,8 @@
     Code
       summary(filter_v1213)
     Output
-      +-----------------------------------------+
-      |                                         |
-      |   4 Outliers were removed of 32 rows.   |
-      |                                         |
-      +-----------------------------------------+
+      -- 4 Outliers were removed of 32 rows. -----------------------------------------
+      
       
       -- Summary Table of outliers ---------------------------------------------------
       
@@ -203,11 +173,8 @@
     Code
       summary(filter_fct)
     Output
-      +-----------------------------------------+
-      |                                         |
-      |   5 Outliers were removed of 32 rows.   |
-      |                                         |
-      +-----------------------------------------+
+      -- 5 Outliers were removed of 32 rows. -----------------------------------------
+      
       
       -- Summary Table of outliers ---------------------------------------------------
       
@@ -247,7 +214,7 @@
     Code
       print(filtred_v1_omit)
     Output
-      -- 3 Outliers were removed of 32 rows. -----------------------------------------
+      -- 2 Outliers and 1 NA's were removed out of 32 rows.  -------------------------
       
 
 ---

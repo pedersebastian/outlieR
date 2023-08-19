@@ -1,14 +1,6 @@
 #' @export
 summary.outlier <- function(object, ...) {
-  vec_raw <- object$filter_res
-  if (mean(vec_raw, na.rm = TRUE) < 1) {
-    # finnes outliers
-    first_text <-
-      glue::glue("{sum(vec_raw == FALSE, na.rm = TRUE)} Outliers were removed of {length(vec_raw)} rows.")
-  } else {
-    first_text <-
-      "No Outliers were removed"
-  }
+
 
   tbls <- object$tbls |> dplyr::bind_rows()
 
@@ -24,7 +16,8 @@ summary.outlier <- function(object, ...) {
     dplyr::select(all_of(c("var", "var_type", "outlier_exist", "n_outliers", "outlier_pct", "na_count"))) |>
     knitr::kable(col.names = col_names)
 
-  cli::cat_boxx(first_text)
+  print(object, ...)
+  #cli::cat_boxx(first_text)
   cat("\n")
   cli::cat_rule("Summary Table of outliers")
   print(summary_tbl)

@@ -88,13 +88,13 @@ make_plot_display <- function(data, ...) {
       panel.grid.minor = element_blank()
     ) +
     ggplot2::labs(
-      title = NULL,
+      title = "Display of Outliers",
       fill = NULL,
-      y = "Rows",
+      y = "Row",
       x = NULL
     ) +
     ggplot2::scale_fill_manual(values = pal, na.value = NA, limits = c("No Outlier", "Outlier")) +
-    scale_y_continuous(breaks = seq(0, row_count, length.out = 6))
+    scale_y_continuous(breaks = round(seq(0, row_count, length.out = 6),0))
 
   p
 }
