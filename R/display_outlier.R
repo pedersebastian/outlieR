@@ -74,7 +74,7 @@ make_plot_display <- function(data, ...) {
 
   p <-
     ggplot2::ggplot() +
-    ggplot2::geom_tile(data = data, ggplot2::aes(variable, id, fill = value), na.rm = F, width = 0.94) +
+    ggplot2::geom_tile(data = data, ggplot2::aes(variable, id, fill = value), na.rm = FALSE, width = 0.94) +
     theme_outlier() +
     ggplot2::theme(
       legend.position = "top",

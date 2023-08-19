@@ -25,18 +25,6 @@ print_single <- function(x, ...) {
   if (x$na_action == "keep") {
     print_simple(x, ...)
   } else {
-    # outlier_vec <-
-    #   x$tbls[[1]]$outlier_vec[[1]]
-    # na_vec <-
-    #   x$tbls[[1]]$na_vec[[1]]
-
-
-    # outlier_vars <-
-    #   x$tbls[[1]]$outlier_vars[[1]]
-    # non_outlier_vars <-
-    #   x$tbls[[1]]$non_outlier_vars[[1]]
-    # sum_vec <- (outlier_vec + na_vec) |> purrr::map_lgl(~.x > 0)
-
     na_count <-
       x$tbls[[1]]$na_count
 

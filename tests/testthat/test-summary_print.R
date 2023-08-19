@@ -62,7 +62,7 @@ filtred_v_all_omit <-
 filterd_everything <-
   identify_outlier(mtcars, everything())
 filter_v12 <-
-  # identify_outlier(mtcars, v12)
+   identify_outlier(mtcars, v12)
   filter_v13 <-
   identify_outlier(mtcars, v13)
 filter_v14 <-
