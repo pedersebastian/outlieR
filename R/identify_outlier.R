@@ -143,14 +143,13 @@ identify_outlier.impl <- function(.data,
   y <- ifelse(is.na(y), na_action == "omit", y)
   y <- matrix(y, ncol = length(vecs))
 
-  res <- vector()
+  filter_res <- vector()
   for (row in seq_len(nrow(y))) {
-    res[row] <- sum(y[row, ]) == 0
+    filter_res[row] <- sum(y[row, ]) == 0
   }
 
   names(vecs) <- purrr::map(vars, quo_name)
-  filter_res <- res
-  filtred_data <- subset(.data, res)
+  filtred_data <- subset(.data, filter_res)
 
   if (length(factor_variables) > 0) {
     filtred_data <- filtred_data |>
@@ -171,5 +170,4 @@ identify_outlier.impl <- function(.data,
     class = c("outlier_identify", "outlier", "list")
   )
   return(out)
-  # return(invisible(out))
 }
