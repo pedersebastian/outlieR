@@ -32,9 +32,14 @@ print_single <- function(x, ...) {
       x$tbls[[1]]$n_outliers
     n <-
       x$tbls[[1]]$n
+var_type = x$tbls[[1]]$var_type
 
-
-    non_outlier_vars <- x$tbls[[1]]$non_outlier_vars[[1]]
+if (var_type %in% c("chr", "fct")) {
+  non_outlier_vars <- x$tbls[[1]]$non_outlier_vars[[1]]
+}
+else {
+  non_outlier_vars <- NULL
+}
 
     if (x$tbls[[1]]$na_exist) {
       # Det finnes NA som er outlier
@@ -42,7 +47,7 @@ print_single <- function(x, ...) {
         text <- glue::glue("{n_outliers} Outlier (NA) were removed out of {n} rows. ")
       } else {
         # Finnes begge deler.
-        if (x$tbls[[1]]$var_type %in% c("chr", "fct")) {
+        if (var_type %in% c("chr", "fct")) {
           n_outliers <- n_outliers - na_count
         }
 

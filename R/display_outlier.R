@@ -80,7 +80,8 @@ make_plot_display <- function(data, ...) {
       axis.text.y = ggplot2::element_text(size = structure(0.8, class = "rel")),
       axis.text.x = ggplot2::element_text(
         size = structure(0.8, class = "rel"),
-        angle = 40
+        angle = 40,
+        vjust = structure(0.7, class = "rel")
       ),
       panel.grid.major = element_blank(),
       panel.grid.minor = element_blank()
