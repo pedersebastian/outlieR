@@ -4,7 +4,7 @@ pkgdown_sha: ~
 articles:
   basic_useage: basic_useage.html
   plots_methods: plots_methods.html
-last_built: 2023-08-20T08:58Z
+last_built: 2023-08-20T15:56Z
 urls:
   reference: https://pedersebastian.github.io/outlieR/reference
   article: https://pedersebastian.github.io/outlieR/articles
