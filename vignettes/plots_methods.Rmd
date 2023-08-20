@@ -24,8 +24,7 @@ library(outlieR)
 outliers <-
   identify_outlier(ggplot2::txhousing, everything())
 
-  display_outlier(outliers) + ggplot2::theme(plot.background = ggplot2::element_rect(fill = "#fafafa"), 
-                                              panel.background = ggplot2::element_rect(fill = "#fafafa"))
+display_outlier(outliers) 
 ```
 
 
@@ -33,6 +32,6 @@ outliers <-
 Across different variable types. 
 
 ```{r}
-summarise_outlier(outliers) 
+summarise_outlier(outliers)
 ```
 

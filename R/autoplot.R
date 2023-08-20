@@ -61,5 +61,3 @@ theme_outlier <- function(bg_colour = "#fafafa", ...) {
       ...
     )
 }
-
-

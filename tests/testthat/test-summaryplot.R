@@ -12,13 +12,23 @@ mtcars["v9"] <- c(rep(FALSE, 15), rep(NA, 16), TRUE)
 mtcars["v10"] <- rep(TRUE, 32)
 
 test_that("summary_plot", {
-  vdiffr::expect_doppelganger("mtcarseverything",
-                              summarise_outlier(
-                                identify_outlier(mtcars,
-                                                 everything())))
+  vdiffr::expect_doppelganger(
+    "mtcarseverything",
+    summarise_outlier(
+      identify_outlier(
+        mtcars,
+        everything()
+      )
+    )
+  )
 
-  vdiffr::expect_doppelganger("texas_everything",
-                              summarise_outlier(
-                                identify_outlier(ggplot2::txhousing,
-                                                 everything())))
+  vdiffr::expect_doppelganger(
+    "texas_everything",
+    summarise_outlier(
+      identify_outlier(
+        ggplot2::txhousing,
+        everything()
+      )
+    )
+  )
 })
