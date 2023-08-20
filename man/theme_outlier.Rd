@@ -7,9 +7,9 @@
 theme_outlier(bg_colour = "#fafafa", ...)
 }
 \arguments{
-\item{...}{dots}
+\item{bg_colour}{background colour}
 
-\item{bg_col}{background colour}
+\item{...}{dots}
 }
 \description{
 Theme for outlier plots
