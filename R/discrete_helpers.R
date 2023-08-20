@@ -14,7 +14,7 @@ all_var_equal <- function(x) {
 }
 
 fix_zero_variance <- function(variance, outlier_vec, n_uniques) {
-  if (n_uniques>2) {
+  if (n_uniques > 2) {
     outlier_vec <- if (variance) !outlier_vec else outlier_vec
   }
 

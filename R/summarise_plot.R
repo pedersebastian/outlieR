@@ -8,7 +8,7 @@
 #'
 #' @examples
 #' identify_outlier(tibble::as_tibble(ggplot2::txhousing), everything()) |>
-#' summarise_outlier()
+#'   summarise_outlier()
 summarise_outlier <- function(object, ...) {
   UseMethod("summarise_outlier")
 }
@@ -32,25 +32,27 @@ summarise_outlier.outlier_identify <- function(object, ...) {
 }
 
 make_plot_summariser <- function(data) {
-
   data <-
     data |>
     dplyr::group_by(var_type) |>
     dplyr::count(value) |>
-    dplyr::mutate(pct = n/sum(n))
+    dplyr::mutate(pct = n / sum(n))
 
 
   if (any(data$value == "Outlier", na.rm = TRUE)) pal <- c(col_mid, col_high) else pal <- col_mid
 
 
- p <-  data |>
+  p <- data |>
     ggplot2::ggplot(aes(pct,
-                        var_type,
-                        fill = value)) +
-    ggplot2::geom_col(position = "fill",
-                      width = 0.8,
-                      color = "#16161D",
-                      linewidth = 0.1) +
+      var_type,
+      fill = value
+    )) +
+    ggplot2::geom_col(
+      position = "fill",
+      width = 0.8,
+      color = "#16161D",
+      linewidth = 0.1
+    ) +
     theme_outlier() +
     ggplot2::theme(
       legend.position = "top",
@@ -68,6 +70,6 @@ make_plot_summariser <- function(data) {
       x = NULL
     ) +
     ggplot2::scale_fill_manual(values = pal, na.value = "gray80") +
-   ggplot2::scale_x_continuous(labels = scales::label_percent())
- p
+    ggplot2::scale_x_continuous(labels = scales::label_percent())
+  p
 }

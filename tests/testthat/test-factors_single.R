@@ -168,17 +168,19 @@ identify_outlier(l_df, x, control = control_outlier(na_action = "omit")) |>
   nrow()
 
 
-##M ONLY TWO
+## M ONLY TWO
 m_df <- tibble::tibble(A = rep(c("K", "P"), 20))
 
 m_rows <- identify_outlier(m_df, A) |>
-  filter_outlier() |> nrow()
+  filter_outlier() |>
+  nrow()
 
-##N ONLY ONE
+## N ONLY ONE
 n_df <- tibble::tibble(M = rep("L", 2007))
 
 n_row <- identify_outlier(n_df, M) |>
-  filter_outlier() |> nrow()
+  filter_outlier() |>
+  nrow()
 
 test_that("factor_works_single_without_NAs", {
   # A
