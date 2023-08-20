@@ -24,7 +24,7 @@ library(outlieR)
 outliers <-
   identify_outlier(ggplot2::txhousing, everything())
 
-display_outlier(outliers) 
+display_outlier(outliers)
 ```
 
 
