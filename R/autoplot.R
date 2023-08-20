@@ -33,11 +33,12 @@ col_text <- "#264653"
 # https://coolors.co/palette/264653-2a9d8f-e9c46a-f4a261-e76f51
 
 #' @title Theme for outlier plots
+#' @param bg_colour background colour
 #' @param ... dots
 #'
 #' @importFrom ggplot2 %+replace%
 #' @export
-theme_outlier <- function(...) {
+theme_outlier <- function(bg_colour = "#fafafa", ...) {
   `%+replace%` <- ggplot2::`%+replace%`
 
   ggplot2::theme_light() %+replace%
@@ -55,6 +56,10 @@ theme_outlier <- function(...) {
         linewidth = 0.1,
         linetype = NULL
       ),
+      plot.background = ggplot2::element_rect(fill = bg_colour),
+      panel.background = ggplot2::element_rect(fill = bg_colour),
       ...
     )
 }
+
+

@@ -4,10 +4,12 @@
 \alias{theme_outlier}
 \title{Theme for outlier plots}
 \usage{
-theme_outlier(...)
+theme_outlier(bg_colour = "#fafafa", ...)
 }
 \arguments{
 \item{...}{dots}
+
+\item{bg_col}{background colour}
 }
 \description{
 Theme for outlier plots
