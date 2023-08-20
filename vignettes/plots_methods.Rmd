@@ -27,3 +27,11 @@ outliers <-
 display_outlier(outliers)
 ```
 
+
+## Summarise method
+Across different variable types. 
+
+```{r}
+summarise_outlier(outliers)
+```
+

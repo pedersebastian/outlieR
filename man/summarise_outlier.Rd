@@ -19,5 +19,5 @@ Summary of Outliers
 }
 \examples{
 identify_outlier(tibble::as_tibble(ggplot2::txhousing), everything()) |>
-summarise_outlier()
+  summarise_outlier()
 }
