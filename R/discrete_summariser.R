@@ -49,7 +49,7 @@ discrete_summariser <- function(.data, var, na_action, forcats_fun, forcats_args
       "na_count" = sum(is.na(!!var)),
       "n" = dplyr::n(),
       "mode_val_dis" = mode_vec(!!var),
-      "uniques" = length(unique(!!var)),
+      uniques = length(unique(!!var)),
       "unique_vars" = list(unique(!!var)),
       "variance" = all_var_equal(!!var),
       "outlier_vec" = list(discrete_helper(
@@ -57,7 +57,7 @@ discrete_summariser <- function(.data, var, na_action, forcats_fun, forcats_args
         forcats_fun,
         forcats_args
       )),
-      "outlier_vec" = purrr::map2(variance, outlier_vec, fix_zero_variance),
+      "outlier_vec" = purrr::pmap(list(variance, outlier_vec, uniques), fix_zero_variance),
       outlier_pct = mean(outlier_vec[[1]][!is.na(.data[[var]])],
         na.rm = TRUE
       ),

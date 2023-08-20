@@ -27,5 +27,6 @@ utils::globalVariables(c(
   "variable",
   "outlier_exist",
   "id",
+  "uniques",
   "variance"
 ))

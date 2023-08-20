@@ -13,8 +13,11 @@ all_var_equal <- function(x) {
   length(unique(table(x))) == 1
 }
 
-fix_zero_variance <- function(variance, outlier_vec) {
-  outlier_vec <- if (variance) !outlier_vec else outlier_vec
+fix_zero_variance <- function(variance, outlier_vec, n_uniques) {
+  if (n_uniques>2) {
+    outlier_vec <- if (variance) !outlier_vec else outlier_vec
+  }
+
   outlier_vec
 }
 

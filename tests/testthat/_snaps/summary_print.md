@@ -120,7 +120,7 @@
       
       |Variable |Variable Type |Outlier Exist? | N Outliers|% Outlier | N of NAs|
       |:--------|:-------------|:--------------|----------:|:---------|--------:|
-      |v13      |chr           |Yes            |          2|6.2 %     |        0|
+      |v12      |fct           |Yes            |          2|6.2 %     |        0|
 
 ---
 

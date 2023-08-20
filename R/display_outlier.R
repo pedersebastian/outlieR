@@ -16,7 +16,7 @@ display_outlier <- function(object, ...) {
 display_outlier.default <- function(object, ...) {
   cli::cli_abort(c(
     "x" = paste(
-      "extract_outlier is not available for an object with class '",
+      "display_outlier is not available for an object with class '",
       class(object)[[1]], "'"
     ),
     "i" = "Must run identify_outliers first."
@@ -28,7 +28,6 @@ display_outlier.outlier_identify <- function(object, ...) {
   plot <- make_plot_display(data)
   plot
 }
-
 
 make_data_display <- function(object, ...) {
   data <-

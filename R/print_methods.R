@@ -33,8 +33,8 @@ print_single <- function(x, ...) {
     n <-
       x$tbls[[1]]$n
 
-    vec_mode <- if (x$tbls[[1]]$var_type %in% c("chr", "fct")) "discrete" else "numeric"
 
+    non_outlier_vars <- x$tbls[[1]]$non_outlier_vars[[1]]
 
     if (x$tbls[[1]]$na_exist) {
       # Det finnes NA som er outlier
@@ -42,7 +42,7 @@ print_single <- function(x, ...) {
         text <- glue::glue("{n_outliers} Outlier (NA) were removed out of {n} rows. ")
       } else {
         # Finnes begge deler.
-        if (vec_mode == "discrete") {
+        if (x$tbls[[1]]$var_type %in% c("chr", "fct")) {
           n_outliers <- n_outliers - na_count
         }
 
@@ -51,7 +51,7 @@ print_single <- function(x, ...) {
     } else if (any(is.na(non_outlier_vars))) {
       # Det finnes NA som IKKE er outlier, men som skal filteres
       text <- glue::glue("{n_outliers} Outliers and {na_count} NA's were removed out of {n} rows. ")
-    } else if (length(outlier_vars) > 0) {
+    } else if (n_outliers > 0) {
       # Finnes bare outliers
       text <- glue::glue("{n_outliers} Outliers were removed out of {n} rows. ")
     } else {
