@@ -1,7 +1,7 @@
 Package: outlieR
 Type: Package
 Title: Identify, Filter and Visualisation of Outliers
-Version: 0.3.1.9000
+Version: 0.3.2
 Author: Peder Sebastian Martinsen
 Maintainer: Peder Sebastian Martinsen <yourself@somewhere.net>
 Description: Identify, Filter and Visualisation of Outliers using tidy principles. 
