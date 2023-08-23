@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">outlieR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.1.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -134,7 +134,7 @@ step - call ‘filter_outlier()’ on the outlier object.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">filtred_mtcars</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/filter_outlier.html">filter_outlier</a></span><span class="op">(</span><span class="va">outlier_mtcars</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">pillar</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">filtred_mtcars</span><span class="op">)</span></span>
+<span><span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">filtred_mtcars</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Rows: 27</span></span>
 <span><span class="co">#&gt; Columns: 15</span></span>
 <span><span class="co">#&gt; $ mpg   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 22.8, 21.4, 18.7, 18.1, 14.3, 24.4, 22.8, 19.2, 17.8, 16.4, 17.3…</span></span>
