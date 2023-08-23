@@ -35,8 +35,7 @@ prep_data_many_discrete <- function(data, dis_name, summary_tbl, na_action) {
     dplyr::left_join(summary_tbl, dplyr::join_by(var)) |>
     dplyr::select(var, data, outlier_vec) |>
     tidyr::unnest(c(data, outlier_vec)) |>
-    filter(value != fakevar) #|>
-    #dplyr::mutate(outlier_vec = !outlier_vec)
+    filter(value != fakevar)
 
   out
 }
