@@ -28,7 +28,7 @@ plot_single.outlier_fct_count <- function(data, ...) {
       value = fct_reorder(value, n),
       pct = n / sum(n)
     )
-  title <- glue::glue("Outliers for {var_name} \n
+  title <- glue::glue("Outliers for {var_name}
                       with {round(summary_tbl$outlier_pct*100)} % Outliers")
 
   p <- plot_single_discrete_counts(
