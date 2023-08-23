@@ -57,7 +57,7 @@ To remove rows in the data with outliers identified in the previous step - call 
 ```{r}
 filtred_mtcars <- filter_outlier(outlier_mtcars)
 
-pillar::glimpse(filtred_mtcars)
+tibble::glimpse(filtred_mtcars)
 ```
 
 ## Visualisation

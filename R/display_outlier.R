@@ -48,7 +48,7 @@ make_data_display <- function(object, ...) {
 
   out <-
     data |>
-    select(variable = var, var_type, outlier_vec) |>
+    dplyr::select(variable = var, var_type, outlier_vec) |>
     tidyr::unnest(outlier_vec) |>
     dplyr::group_by(variable) |>
     dplyr::mutate(
