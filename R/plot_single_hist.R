@@ -3,7 +3,7 @@ plot_single.outlier_lgl_histogram <- function(data, ...) {
   summary_tbl <- data$summary_tbl
   var_name <- data$var_name
 
-  title <- glue::glue("{round(summary_tbl$outlier_pct * 100,2)} % Outliers for {var_name}")
+  title <- glue::glue("{var_name} contains {round(summary_tbl$outlier_pct * 100,2)} % Outliers")
 
   p <-
     dplyr::count(
@@ -201,9 +201,7 @@ plot_single.outlier_fct_histogram <- function(data, ...) {
       panel.grid.major.y = ggplot2::element_blank()
     )
 
-
-    title <- glue::glue("Outliers for {var_name}
-                      with {round(summary_tbl$outlier_pct*100)} % Outliers")
+    title <- glue::glue("{var_name} contains {round(summary_tbl$outlier_pct * 100,2)} % Outliers")
   } else {
     p <- p + ggplot2::theme(
       legend.position = "none",

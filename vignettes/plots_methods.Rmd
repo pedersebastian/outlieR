@@ -34,4 +34,3 @@ Across different variable types.
 ```{r}
 summarise_outlier(outliers)
 ```
-

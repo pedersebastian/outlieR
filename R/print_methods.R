@@ -32,14 +32,13 @@ print_single <- function(x, ...) {
       x$tbls[[1]]$n_outliers
     n <-
       x$tbls[[1]]$n
-var_type = x$tbls[[1]]$var_type
+    var_type <- x$tbls[[1]]$var_type
 
-if (var_type %in% c("chr", "fct")) {
-  non_outlier_vars <- x$tbls[[1]]$non_outlier_vars[[1]]
-}
-else {
-  non_outlier_vars <- NULL
-}
+    if (var_type %in% c("chr", "fct")) {
+      non_outlier_vars <- x$tbls[[1]]$non_outlier_vars[[1]]
+    } else {
+      non_outlier_vars <- NULL
+    }
 
     if (x$tbls[[1]]$na_exist) {
       # Det finnes NA som er outlier

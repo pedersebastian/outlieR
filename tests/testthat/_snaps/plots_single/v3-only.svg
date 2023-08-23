@@ -76,6 +76,6 @@
 <rect x='367.66' y='548.47' width='15.86' height='15.86' style='stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #E76F51;' />
 <text x='299.36' y='559.43' style='font-size: 8.80px; font-family: sans;' textLength='62.11px' lengthAdjust='spacingAndGlyphs'>Outlier (FALSE)</text>
 <text x='389.71' y='559.43' style='font-size: 8.80px; font-family: sans;' textLength='71.88px' lengthAdjust='spacingAndGlyphs'>No Outlier (TRUE)</text>
-<text x='366.36' y='14.19' text-anchor='middle' style='font-size: 11.00px; font-family: sans;' textLength='105.78px' lengthAdjust='spacingAndGlyphs'>3.12 % Outliers for v3</text>
+<text x='366.36' y='14.19' text-anchor='middle' style='font-size: 11.00px; font-family: sans;' textLength='133.92px' lengthAdjust='spacingAndGlyphs'>v3 contains 3.12 % Outliers</text>
 </g>
 </svg>
