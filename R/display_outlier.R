@@ -1,4 +1,4 @@
-#' Display outliers of an
+#' Display outliers
 #'
 #' @param object object created by identify_outlier()
 #' @param ... not used
@@ -67,7 +67,15 @@ make_data_display <- function(object, ...) {
 }
 
 make_plot_display <- function(data, ...) {
-  if (any(data$outlier_vec, na.rm = TRUE)) pal <- c(col_mid, col_high) else pal <- col_mid
+
+  if (any(data$outlier_vec, na.rm = TRUE)) {
+    pal <- c(col_mid, col_high)
+    limits = c("No Outlier", "Outlier")
+  }
+  else {
+    pal <- col_mid
+    limits = "No Outlier"
+  }
 
   row_count <- max(data$id)
 
@@ -92,7 +100,7 @@ make_plot_display <- function(data, ...) {
       y = "Row",
       x = NULL
     ) +
-    ggplot2::scale_fill_manual(values = pal, na.value = NA, limits = c("No Outlier", "Outlier")) +
+    ggplot2::scale_fill_manual(values = pal, na.value = NA, limits = limits) +
     scale_y_continuous(breaks = round(seq(0, row_count, length.out = 6), 0))
 
   p

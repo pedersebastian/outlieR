@@ -2,7 +2,7 @@
 % Please edit documentation in R/display_outlier.R
 \name{display_outlier}
 \alias{display_outlier}
-\title{Display outliers of an}
+\title{Display outliers}
 \usage{
 display_outlier(object, ...)
 }
@@ -15,7 +15,7 @@ display_outlier(object, ...)
 plot
 }
 \description{
-Display outliers of an
+Display outliers
 }
 \examples{
 print("kommer")

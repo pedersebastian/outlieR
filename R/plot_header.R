@@ -25,7 +25,7 @@ plot_single.outlier_fct_count <- function(data, ...) {
   new_data <- data |>
     dplyr::count(var, value, outlier_vec) |>
     dplyr::mutate(
-      value = fct_reorder(value, n),
+      value = forcats::fct_reorder(value, n),
       pct = n / sum(n)
     )
   title <- glue::glue("Outliers for {var_name}
@@ -97,7 +97,6 @@ plot_single.outlier_lgl_count <- function(data, ...) {
   } else {
     pal <- c(col_low, col_high)
   }
-
 
   p + ggplot2::scale_fill_manual(values = pal)
 }

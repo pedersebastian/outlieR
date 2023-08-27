@@ -15,9 +15,7 @@
 #'
 #' print(filtred)
 #' # ── 4 Outliers were removed of 32 rows. ──────────────────────────────────────────────────
-identify_outlier <- function(.data,
-                             ...,
-                             control = control_outlier()) {
+identify_outlier <- function(.data, ..., control = control_outlier()) {
   if (missing(.data)) {
     rlang::abort(".data must be supplied")
   }
