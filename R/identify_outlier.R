@@ -69,7 +69,7 @@ identify_outlier.data.frame <- function(.data, ...,
     rlang::as_quosures(env = rlang::current_env())
 
 
-  identify_outlier.impl(.data,
+  identify_outlier_impl(.data,
     vars = vars,
     num_method = num_method,
     discrete_method = discrete_method,
@@ -86,7 +86,7 @@ identify_outlier.data.frame <- function(.data, ...,
 }
 
 
-identify_outlier.impl <- function(.data,
+identify_outlier_impl <- function(.data,
                                   vars,
                                   num_method,
                                   discrete_method,
@@ -136,18 +136,20 @@ identify_outlier.impl <- function(.data,
     vecs[[i]] <- vec
   }
 
-
   y <- unlist(vecs)
+  print(y)
   y <- ifelse(is.na(y), na_action == "omit", y)
   y <- matrix(y, ncol = length(vecs))
+  print(y)
 
   filter_res <- vector()
   for (row in seq_len(nrow(y))) {
     filter_res[row] <- sum(y[row, ]) == 0
   }
 
-  names(vecs) <- purrr::map(vars, quo_name)
+  names(vecs) <- purrr::map(vars, rlang::quo_name)
   filtred_data <- subset(.data, filter_res)
+
 
   if (length(factor_variables) > 0) {
     filtred_data <- filtred_data |>
