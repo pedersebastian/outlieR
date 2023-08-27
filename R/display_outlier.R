@@ -67,14 +67,12 @@ make_data_display <- function(object, ...) {
 }
 
 make_plot_display <- function(data, ...) {
-
   if (any(data$outlier_vec, na.rm = TRUE)) {
     pal <- c(col_mid, col_high)
-    limits = c("No Outlier", "Outlier")
-  }
-  else {
+    limits <- c("No Outlier", "Outlier")
+  } else {
     pal <- col_mid
-    limits = "No Outlier"
+    limits <- "No Outlier"
   }
 
   row_count <- max(data$id)
