@@ -24,8 +24,8 @@ fix_zero_variance <- function(variance, outlier_vec, n_uniques) {
 
 factor_na <- function(.data, tbl) {
   vec <-
-    purrr::map2_lgl(.data[[tbl$var]], tbl$outlier_vec[[1]], ~ if (is.na(.x)) FALSE else .y)
-  tbl$outlier_vec <- list(vec)
+    purrr::map2_lgl(.data[[tbl$var]], tbl$filter_vec[[1]], ~ if (is.na(.x)) FALSE else .y)
+  tbl$filter_vec <- list(vec)
   tbl
 }
 
@@ -48,14 +48,16 @@ validate_factor_tbl <- function(.data,
         c("i" = "Negative numbers for {.arg min_times} is not recommend. \n
                       Because it is doing the opposite of finding outliers.")
       cli::cli_warn(mes,
-        .frequency = "regularly", .frequency_id = "min_times_negative"
+        .frequency = "regularly",
+        .frequency_id = "min_times_negative"
       )
     } else if (min_times > tbl$n / 2) {
       mes <-
         c("i" = "{.arg min_time} is greater than half of the rows in data.
           \n It is recommend to use a less number")
       cli::cli_warn(mes,
-        .frequency = "regularly", .frequency_id = "min_times0.5"
+        .frequency = "regularly",
+        .frequency_id = "min_times0.5"
       )
     }
   }

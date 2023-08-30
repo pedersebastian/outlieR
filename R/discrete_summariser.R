@@ -74,8 +74,16 @@ discrete_summariser <- function(.data, var, na_action, forcats_fun, forcats_args
       n_outliers = length(outlier_vars[[1]]),
       "var_type" = pillar::type_sum(!!var),
       "na_vec" = list(is.na(!!var)),
-      outlier_vec2 = outlier_vec,
-      "na_exist" = any(is.na(!!var))
+      "na_exist" = any(is.na(!!var)),
+      filter_vec = filter_fun(outlier_vec, na_vec, na_action)
     )
   tbl
+}
+
+filter_fun <- function(outlier_vec, na_vec, na_action) {
+  if (na_action == "keep") {
+    return(outlier_vec)
+  }
+  #sum(outlier_vec, na_vec) > 0
+  list((outlier_vec[[1]] + na_vec[[1]]) > 0)
 }

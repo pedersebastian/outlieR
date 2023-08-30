@@ -127,7 +127,7 @@ identify_outlier_impl <- function(.data,
         )
       )
     } else if (tbls[[i]]$var_type %in% c("fct", "chr")) {
-      vec <- tbls[[i]]$outlier_vec[[1]]
+      vec <- tbls[[i]]$filter_vec[[1]]
       if (tbls[[i]]$var_type == "fct") {
         factor_variables <- append(factor_variables, tbls[[i]]$var)
       }
@@ -137,10 +137,8 @@ identify_outlier_impl <- function(.data,
   }
 
   y <- unlist(vecs)
-  print(y)
   y <- ifelse(is.na(y), na_action == "omit", y)
   y <- matrix(y, ncol = length(vecs))
-  print(y)
 
   filter_res <- vector()
   for (row in seq_len(nrow(y))) {
