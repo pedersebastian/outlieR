@@ -28,5 +28,7 @@ utils::globalVariables(c(
   "outlier_exist",
   "id",
   "uniques",
-  "variance"
+  "variance",
+  "na_vec",
+  "new"
 ))
