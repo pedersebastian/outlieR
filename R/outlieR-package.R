@@ -25,6 +25,7 @@
 #' @importFrom forcats fct_lump_prop
 #' @importFrom forcats fct_na_value_to_level
 #' @importFrom forcats fct_reorder
+#' @importFrom generics glance
 #' @importFrom ggplot2 %+replace%
 #' @importFrom ggplot2 aes
 #' @importFrom ggplot2 autoplot

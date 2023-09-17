@@ -25,6 +25,9 @@ print_single <- function(x, ...) {
   if (x$na_action == "keep") {
     print_simple(x, ...)
   } else {
+
+
+
     na_count <-
       x$tbls[[1]]$na_count
 
@@ -48,19 +51,14 @@ print_single <- function(x, ...) {
         # Finnes begge deler.
         if (var_type %in% c("chr", "fct")) {
           n_outliers <- n_outliers - na_count
-          if (n_outliers>0) {
+          if (n_outliers > 0) {
 
-          }
-          else {
+          } else {
             text <- glue::glue("None Outliers and {na_count} NA's were removed out of {n} rows. ")
-
           }
-        }
-        else {
+        } else {
           text <- glue::glue("{n_outliers} Outliers and {na_count} NA's were removed out of {n} rows. ")
         }
-
-
       }
     } else if (any(is.na(non_outlier_vars))) {
       # Det finnes NA som IKKE er outlier, men som skal filteres

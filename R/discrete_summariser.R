@@ -84,6 +84,6 @@ filter_fun <- function(outlier_vec, na_vec, na_action) {
   if (na_action == "keep") {
     return(outlier_vec)
   }
-  #sum(outlier_vec, na_vec) > 0
+  # sum(outlier_vec, na_vec) > 0
   list((outlier_vec[[1]] + na_vec[[1]]) > 0)
 }

@@ -13,6 +13,7 @@ Imports:
     cli,
     dplyr,
     forcats,
+    generics,
     ggplot2,
     glue,
     grDevices,
