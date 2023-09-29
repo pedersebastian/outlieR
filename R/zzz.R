@@ -30,5 +30,6 @@ utils::globalVariables(c(
   "uniques",
   "variance",
   "na_vec",
-  "new"
+  "new",
+  "test"
 ))
